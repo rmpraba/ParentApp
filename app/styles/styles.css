@@ -1,5 +1,116 @@
 <style is="custom-style">
 .rom{
 
+}@font-face {
+    font-family: Lato-Black;
+    src: url('../fonts/Lato-Black.ttf');
+}
+@font-face {
+    font-family: Lato-BlackItalic;
+    src: url('../fonts/Lato-BlackItalic.ttf');
+}
+@font-face {
+    font-family: Lato-Bold;
+    src: url('../fonts/Lato-Bold.ttf');
+}
+@font-face {
+    font-family: Lato-BoldItalic;
+    src: url('../fonts/Lato-BoldItalic.ttf');
+}
+@font-face {
+    font-family: Lato-Hairline;
+    src: url('../fonts/Lato-Hairline.ttf');
+}
+@font-face {
+    font-family: Lato-HairlineItalic;
+    src: url('../fonts/Lato-HairlineItalic.ttf');
+}
+@font-face {
+    font-family: Lato-Heavy;
+    src: url('../fonts/Lato-Heavy.ttf');
+}
+@font-face {
+    font-family: Lato-HeavyItalic;
+    src: url('../fonts/Lato-HeavyItalic.ttf');
+}
+@font-face {
+    font-family: Lato-Italic;
+    src: url('../fonts/Lato-Italic.ttf');
+}
+@font-face {
+    font-family: Lato-Light;
+    src: url('../fonts/Lato-Light.ttf');
+}
+@font-face {
+    font-family: Lato-LightItalic;
+    src: url('../fonts/Lato-LightItalic.ttf');
+}
+@font-face {
+    font-family: Lato-Medium;
+    src: url('../fonts/Lato-Medium.ttf');
+}
+@font-face {
+    font-family: Lato-MediumItalic;
+    src: url('../fonts/Lato-MediumItalic.ttf');
+}
+@font-face {
+    font-family: Lato-Regular;
+    src: url('../fonts/Lato-Regular.ttf');
+}
+@font-face {
+    font-family: Lato-Semibold;
+    src: url('../fonts/Lato-Semibold.ttf');
+}
+@font-face {
+    font-family: Lato-SemiboldItalic;
+    src: url('../fonts/Lato-SemiboldItalic.ttf');
+}
+@font-face {
+    font-family: Lato-Thin;
+    src: url('../fonts/Lato-Thin.ttf');
+}
+@font-face {
+    font-family: Lato-ThinItalic;
+    src: url('../fonts/Lato-ThinItalic.ttf');
+}
+section{
+	margin: 0 10%;
+}
+.container{
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:2%;
+  padding-right:2%;
+}
+.page-heading{
+	margin:50px 0;
+}
+.container .page-heading h1{
+	font-size: 40px;
+    font-family: 'Lato-Black';
+    letter-spacing: -50%;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: #000000;
+    font-weight: bolder;
+}
+.container .page-heading p{
+	font-size: 20px;
+    font-family: 'Lato-Light';
+    letter-spacing: -50%;
+    line-height: 1.1;
+    color: #767676;
+    font-weight: normal;
+}
+.container .field{
+	margin: 1% 0;
+}
+.button{
+	margin-top: 2%;
+	width: 1%;
+	color: #ffffff;
+	background-color: #262626;
+	text-align: center;
+    font-family: 'Lato-Black';
 }
 </style>
