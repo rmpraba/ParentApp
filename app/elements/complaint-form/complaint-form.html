@@ -10,37 +10,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="ddreceipt-card">
+<dom-module id="complaint-form">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <div class="dd">
-    <div class="left">
-      DD No:{{ddno}}
-    </div>
-    <div class="center">
-      Bank Name:{{bank}}
-    </div>
-    <div class="right">
-      DD Date:{{dddate}}
-    </div>
-      
-    </div>
+    <div>Hello from <span>{{foo}}</span></div>
   </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'ddreceipt-card',
+      is: 'complaint-form',
 
       properties: {
         foo: {
           type: String,
-          value: 'ddreceipt-card',
+          value: 'complaint-form',
           notify: true
         }
       }
