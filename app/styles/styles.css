@@ -74,19 +74,43 @@
     src: url('../fonts/Lato-ThinItalic.ttf');
 }
 section{
-	margin: 0 10%;
+    margin: 0 auto;
+}
+@media only screen and (max-width: 320px) {
+
+   .container .field iron-autogrow-textarea{ height: 2em; }
+
+}
+.row{
+    margin: 0 auto;
+    padding: 5% 0;
 }
 .container{
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:2%;
-  padding-right:2%;
+  box-shadow: 0 0 5px 0 #a6a6a6 ;
+  margin: 7%; 
+  padding:2%;
+  background-color: #ffffff;
+}
+table th tr td{
+    font-family: 'Lato-Light';
+    font-weight:bolder;
+    font-size: 125%;
+    padding: 1%;
+}
+tbody td{
+    font-family: 'Lato-Light';
+    font-weight:bolder;
+    font-size: 100%;
+    padding: 1%;
+}
+.textarea{
+    margin: 4% 0 !important;
 }
 .page-heading{
-	margin:50px 0;
+	margin:3% 0;
 }
 .container .page-heading h1{
-	font-size: 40px;
+	font-size: 250%;
     font-family: 'Lato-Black';
     letter-spacing: -50%;
     text-transform: uppercase;
@@ -95,7 +119,7 @@ section{
     font-weight: bolder;
 }
 .container .page-heading p{
-	font-size: 20px;
+	font-size: 150%;
     font-family: 'Lato-Light';
     letter-spacing: -50%;
     line-height: 1.1;
@@ -105,12 +129,113 @@ section{
 .container .field{
 	margin: 1% 0;
 }
+paper-button{
+    background: #252626;
+    color: white;
+    @apply(--layout-center);
+    vertical-align: center;
+}
 .button{
 	margin-top: 2%;
-	width: 1%;
+	width: 50%;
 	color: #ffffff;
-	background-color: #262626;
 	text-align: center;
+    vertical-align: center;
+    margin: 0 auto;
     font-family: 'Lato-Black';
+}
+body{
+    background-color: #d9d9d9 !important;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: 'Lato-Light';
+    font-weight:bold;
+}
+.container .field iron-autogrow-textarea{
+    width: 100%;
+    height: 3.5em !important;   
+    padding: 1%;
+}
+.login-card{
+    width: 25%;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+.login-card paper-dropdown-menu{
+    width: 100%;
+}
+.icon{
+    margin: 0 auto;
+    text-align: center;
+}
+.iconbutton{
+  width: 35%;
+  height: 35%;
+ }
+ h2 {
+    font-size: 250%;
+    font-family: 'Lato-Black';
+    letter-spacing: -50%;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: #000000;
+    font-weight: bolder;
+}
+paper-dialog{
+    padding: 1%;
+}
+.top{
+
+}
+.when{
+    width: 100%;
+}
+.when .date{
+    float: right;
+    position: absolute;
+    font-family: 'Lato-Light';
+    font-weight: bold;
+    right: 5.5%;
+
+}
+.greeting{
+    text-align: left;
+    font-family: 'Lato-Light';
+    font-size: 125%;
+    font-weight:bold;
+    padding: 1% 2.5%;
+}
+.close-button{
+    float: right;
+    position:absolute;
+    top:0;
+    right:0;
+}
+.request-id{
+    font-weight: bold;
+    font-family: 'Lato-Light';
+    font-size: 100%;
+    margin: 0 0 0 2.5%;
+}
+.feedback p{
+    text-align: left;
+    font-family: 'Lato-Light';
+    font-weight:bold;
+    font-size: 125%;    
+    padding: 1% 2.5%;
+}
+#parent-message{
+    margin: 0 auto;
+    text-align: center;
+}
+#parent-message .buttons{
+    margin: 0 auto;
+    text-align: center;
+}
+#parent-message .buttons paper-button{
+    margin: 0 auto;
+    text-align: center;
+
 }
 </style>

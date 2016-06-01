@@ -21,24 +21,28 @@
 
   <div class="head">
       <label>{{title}}</label>
-      <paper-button class="in" on-click="signout">Sign Out</paper-button>
     </div>
-
-      <div class="content">
-        <iron-pages selected="{{page}}" attr-for-selected="data-category">
-            <section data-category="complaintpage">
-              <complaint-form></complaint-form>
-            </section>
-          </iron-pages>
-       </div>
-       <div class="footer"></div>
+    <div class="content">
+      <iron-pages selected="{{page}}" attr-for-selected="data-category">
+        <section data-category="complaintpage">
+          <complaint-form></complaint-form>
+        </section>
+        <section data-category="login">
+          <login-form></login-form>
+        </section>
+        <section data-category="parent-inbox">
+          <parent-inbox></parent-inbox>
+        </section>
+      </iron-pages>
+      </div>
+    <div class="footer"></div>
   </template>
   <script>
   Polymer({
     is: "transport-app",
     ready: function() 
     {
-this.page="complaintpage";
+this.page="login";
     }
    
   });

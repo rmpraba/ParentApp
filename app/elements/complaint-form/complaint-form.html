@@ -1,13 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
@@ -16,7 +6,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 
 <dom-module id="complaint-form">
   <template>
@@ -24,37 +14,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .button{
+        @apply(--layout-center);
+      }
     </style>
     <section>
       <div class="container">
-        <div class="page-heading">
-          <h1>HELPDESK</h1>
-          <p>We have answers!</p>
-        </div>
-        <div class="field">
-          <paper-input label="Name" value="{{name}}" id="name" allowed-pattern="[a-zA-Z ]" required error-message="need a name!"></paper-input>
-        </div>
-        <div class="field">
-          <paper-input label="Email" value="{{email}}" id="email" required error-message="need a name!"></paper-input>
-        </div>
-        <div class="field">
-          <paper-dropdown-menu label="Category">
-            <paper-menu id="category" required error-message="Need a Category!" class="dropdown-content" on-iron-select="category" valueattr="value" >
-              <paper-listbox class="dropdown-content">
-                <paper-item value=0>Category</paper-item>
-                <paper-item value="academics">Academics</paper-item>
-                <paper-item value="adminstration">Adminstration</paper-item>
-                <paper-item value="transport">Transport</paper-item>
-                <paper-item value="other">Other</paper-item>
-              </paper-listbox>
-            </paper-menu>
-          </paper-dropdown-menu>
-        </div>
-        <div class="field">
-          <paper-textarea value="{{complaint}}" id="complaint"  error-message="needs Complaint!" label="Complaint" required ></paper-textarea>
-        </div>
-        <div class="button">
-          <paper-button id="button" class="button" on-click="click">Submit</paper-button>
+        <div class="row">
+          <div class="page-heading">
+            <h1>HELPDESK</h1>
+            <p>We have answers!</p>
+          </div>
+          <div class="field">
+            <paper-input label="Student ID" value="{{student_id}}" id="student_id" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a name!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-input label="Name" value="{{name}}" id="name" allowed-pattern="[a-zA-Z ]" required error-message="need a name!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-input label="Email" value="{{email}}" id="email" required error-message="need a name!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-dropdown-menu label="Category">
+              <paper-menu id="category" required error-message="Need a Category!" class="dropdown-content" on-iron-select="category" valueattr="value" >
+                <paper-listbox class="dropdown-content">
+                  <paper-item value=0>Category</paper-item>
+                  <paper-item value="academics">Academics</paper-item>
+                  <paper-item value="adminstration">Adminstration</paper-item>
+                  <paper-item value="transport">Transport</paper-item>
+                  <paper-item value="other">Other</paper-item>
+                </paper-listbox>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+          <div class="field textarea">
+            <iron-autogrow-textarea value="{{complaint}}" id="complaint"  error-message="needs Complaint!" placeholder="Feedback" required ></iron-autogrow-textarea>
+          </div>
+          <div class="button">
+            <paper-button id="button" on-click="click">Submit</paper-button>
+          </div>
         </div>
       </div>
     </section>
