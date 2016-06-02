@@ -91,6 +91,10 @@ section{
   padding:2%;
   background-color: #ffffff;
 }
+table{
+    width: 100%;
+    display: block;
+}
 table th tr td{
     font-family: 'Lato-Light';
     font-weight:bolder;
@@ -130,10 +134,13 @@ tbody td{
 	margin: 1% 0;
 }
 paper-button{
-    background: #252626;
-    color: white;
-    @apply(--layout-center);
-    vertical-align: center;
+  background-color: #252626;
+  font-size: 15px;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  color: white;
+  padding: .5em 1em;
 }
 .button{
 	margin-top: 2%;
@@ -162,6 +169,12 @@ body{
     margin: 0 auto;
     background-color: #ffffff;
 }
+ @media(max-width:767px){
+    .login-card{width: 75%;}
+}
+ @media(max-width:767px){
+    .page-heading{font-size: 10px;}
+}
 .login-card paper-dropdown-menu{
     width: 100%;
 }
@@ -188,16 +201,21 @@ paper-dialog{
 .top{
 
 }
-.when{
-    width: 100%;
-}
-.when .date{
+.inbox-top .date{
     float: right;
     position: absolute;
     font-family: 'Lato-Light';
     font-weight: bold;
-    right: 5.5%;
-
+    right: 8.5%;
+    width: 10%;
+}
+.inbox-top .time{
+    float: right;
+    position: absolute;
+    font-family: 'Lato-Light';
+    font-weight: bold;
+    right: 25%;
+    width: 5%;
 }
 .greeting{
     text-align: left;
@@ -237,5 +255,37 @@ paper-dialog{
     margin: 0 auto;
     text-align: center;
 
+}
+.detail{
+    display: inline-block;
+    height: 4em;
+    width: 100%;
+}
+.inbox-top{
+    width: 50%;
+}
+.action{
+    position: absolute;
+    right: 10%;
+}
+.inbox-message{
+    width: 70%;
+    height: 4em;
+}
+.inbox-content{
+    width: 96%;
+    margin: 2% 0;
+    padding: 2%;
+}
+.from{
+    float: left;
+    font-weight: bolder;
+    font-size: 20px;
+    font-family: 'Lato-Light';
+}
+.when{
+    position: absolute;
+    right: 10%;
+    text-align: justify;
 }
 </style>

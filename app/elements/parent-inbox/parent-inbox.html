@@ -11,9 +11,11 @@
       .top{
         @apply(--layout-horizontal);
       }
-      .when{
+      .inbox-message{
         @apply(--layout-horizontal);
       }
+      .inbox-content:nth-child(even) {background: #CCC}
+      .inbox-content:nth-child(odd) {background: #FFF}
     </style>
     <body>
       <section>
@@ -22,36 +24,44 @@
             <div class="page-heading">
               <h1>INBOX</h1>
             </div>
-            <table>
-              <th>
-                <tr>
-                  <td>S.No</td>
-                  <td>From</td>
-                  <td style="width:50%;">Message</paper-item></td>
-                  <td>Date</td>
-                  <td>Time</td>
-                  <td>Action</td>
-                </tr>
-              </th>
-              <tbody>
-                <tr>
-                  <td>1</paper-item></td>
-                  <td>School</paper-item></td>
-                  <td  style="width:50%;">Reply  jsdfhkjf jsfdhkjf sjfhkdsdkjfh jhfskj kdjfghkj kjsdhk jndv skjdfhkj jkvghj</td>
-                  <td>1/06/2016</td>
-                  <td>3:30pm</td>
-                  <td><paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button></td>
-                </tr>
-                <tr>
-                  <td>2</paper-item></td>
-                  <td>School</paper-item></td>
-                  <td  style="width:50%;">Reply  jsdfhkjf jsfdhkjf sjfhkdsdkjfh jhfskj kdjfghkj kjsdhk jndv skjdfhkj jkvghj</td>
-                  <td>23/08/2016</td>
-                  <td>4:30pm</td>
-                  <td><paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="inbox-content">
+              <div class="detail">
+                <div class="inbox-top">
+                  <div class="from">School</div>
+                </div>
+                <div class="when">
+                  <div class="time">3:30pm</div>
+                  <div class="date">1/06/2016</div>
+                </div>
+              </div>
+              <div class="inbox-message">
+                <div class="msg">
+                  {{ess}}
+                </div>
+                <div class="action">
+                  <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
+                </div>
+              </div>
+            </div>
+            <div class="inbox-content">
+              <div class="detail">
+                <div class="inbox-top">
+                  <div class="from">School</div>
+                </div>
+                <div class="when">
+                  <div class="time">3:30pm</div>
+                  <div class="date">1/06/2016</div>
+                </div>
+              </div>
+              <div class="inbox-message">
+                <div class="msg">
+                  {{ess}}
+                </div>
+                <div class="action">
+                  <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -92,11 +102,15 @@
   <script>
   (function() {
     'use strict';
-
     Polymer({
       is: 'parent-inbox',
     ready:function(){
       this.querySelector("#parent-message").close();
+    var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
+    if(str.length > 60){
+      this.mess = str.substring(0,60);
+      this.ess = str.replace(str,this.mess+'...');
+    } 
       //this.querySelector('#parent-message').close();
     },
     click:function(){
