@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../query-post/query-post.html">
 
 <dom-module id="complaint-form">
   <template>
@@ -26,7 +27,7 @@
             <p>We have answers!</p>
           </div>
           <div class="field">
-            <paper-input label="Student IDS" value="{{student_id}}" id="student_id" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a name!"></paper-input>
+            <paper-input label="Student ID" value="{{student_id}}" id="student_id" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a name!"></paper-input>
           </div>
           <div class="field">
             <paper-input label="Name" value="{{name}}" id="name" allowed-pattern="[a-zA-Z ]" required error-message="need a name!"></paper-input>
@@ -55,13 +56,27 @@
         </div>
       </div>
     </section>
+    <query-post id='qpostid'></query-post>
   </template>
   <script>
   (function() {
     'use strict';
+    var category;
 
     Polymer({
       is: 'complaint-form',
+
+      ready:function(){
+
+      },
+      category:function(e){
+      category=(e.target.selectedItem.textContent).trim();
+      },
+
+      click:function()
+      { //alert(this.student_id+ '  '+this.name+'   '+category);
+        this.$.qpostid.querypostFn(this.student_id,this.name,this.email,category,this.complaint);
+      }
     });
   })();
   </script>

@@ -9,15 +9,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="query-post">
   <template>
+   <iron-ajax
+    method="post"
+    id="querypostid"
+    url="{{queryposturl}}"
+    params="{{querypostparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="querypostResponse"
+    debounce-duration="300"
+  >
     <style>
       :host {
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div></div>
   </template>
   <script>
   (function() {
@@ -25,14 +36,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'query-post',
+      ready:function(){
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'query-post',
-          notify: true
-        }
-      }
+      },
+      querypostFn:function(student_id,name,email,category,complaint){
+        //alert('hai');
+        var obj={"student_id":"","name":"","email":"","category":"","complaint":""};
+        obj.school_id='SCH001';
+        obj.query_id='1';
+        obj.student_id=student_id;
+        obj.name=name;
+        obj.email=email;
+        obj.category=category;
+        obj.complaint=complaint;
+        obj.status='open';
+        this.queryposturl="http://localhost:8082/query-post1";
+        this.querypostparam=obj;
+       // alert(JSON.stringify(obj));
+       this.$.querypostid.generateRequest();
+            },
+
+     
     });
   })();
   </script>

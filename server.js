@@ -5,7 +5,7 @@ var express    = require("express");
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'transport'
+   database : 'helpdesk'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -80,3 +80,26 @@ var host = server.address().address
 var port = server.address().port
 console.log("Example app listening at http://%s:%s", host, port)
 });
+
+
+app.post('/query-post1',  urlencodedParser,function (req, res)
+{
+  var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status};
+
+  //console.log(school_id);
+       connection.query('insert into query set ?',[dv],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
