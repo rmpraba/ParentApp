@@ -103,3 +103,49 @@ app.post('/query-post1',  urlencodedParser,function (req, res)
   
 });
   });
+
+app.post('/query-sequence',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.school_id};
+
+  console.log(school_id);
+       connection.query('select sequenceno from sequence where ?',[school_id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+app.post('/upquery-sequence',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.school_id};
+  var seqno={"sequenceno":req.query.sequence};
+
+  console.log(school_id);
+  console.log(seqno);
+       connection.query('update sequence set ? where ?',[seqno,school_id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
