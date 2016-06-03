@@ -1,0 +1,117 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="query-post">
+  <template>
+   <iron-ajax
+    method="post"
+    id="querypostid"
+    url="{{queryposturl}}"
+    params="{{querypostparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="querypostResponse"
+    debounce-duration="300"
+  >
+  <iron-ajax
+    method="post"
+    id="sequenceid"
+    url="{{sequenceurl}}"
+    params="{{sequenceparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="sequenceResponse"
+    debounce-duration="300"
+  >
+  <iron-ajax
+    method="post"
+    id="upseqid"
+    url="{{upsequrl}}"
+    params="{{upseqparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="upseqResponse"
+    debounce-duration="300"
+  >
+
+
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div></div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var stud_id;
+    var sname;
+    var semail;
+    var scat;
+    var scomplaint;
+
+    Polymer({
+      is: 'query-post',
+      ready:function(){
+
+      },
+      querypostFn:function(student_id,name,email,category,complaint){
+        alert('hai');
+        stud_id=student_id;
+        sname=name;
+        semail=email;
+        scat=category;
+        scomplaint=complaint;
+       var obj={"school_id":""};
+       obj.school_id='SCH001';
+       this.sequenceurl="http://localhost:8082/query-sequence";
+       this.sequenceparam=obj;
+       this.$.sequenceid.generateRequest();
+            },
+
+sequenceResponse:function(e){
+  //alert(JSON.stringify(e.detail.response.returnval));
+  var seq=e.detail.response.returnval[0].sequenceno;
+  var obj={"student_id":"","name":"","email":"","category":"","complaint":"","queryid":""};
+        obj.school_id='SCH001';
+        obj.query_id=seq;
+        obj.student_id=stud_id;
+        obj.name=sname;
+        obj.email=semail;
+        obj.category=scat;
+        obj.complaint=scomplaint;
+        obj.status="open";
+        this.queryposturl="http://localhost:8082/query-post1";
+        this.querypostparam=obj;
+       // alert(JSON.stringify(obj));
+       this.$.querypostid.generateRequest()
+       var obj1={"school_id":"","sequence":""}
+       obj1.school_id='SCH001';
+       obj1.sequence=parseInt(seq)+1;
+       this.upsequrl="http://localhost:8082/upquery-sequence";
+       this.upseqparam=obj1;
+       this.$.upseqid.generateRequest();
+
+},
+querypostResponse:function(e){
+  var s=e.detail.response.returnval;
+  alert("Feedback submited successfuly");
+
+}
+     
+
+    });
+  })();
+  </script>
+</dom-module>
