@@ -1,0 +1,128 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../parent-inbox-card/parent-inbox-card.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<dom-module id="admin-inbox">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .top{
+        @apply(--layout-horizontal);
+      }
+      .inbox-message{
+        @apply(--layout-horizontal);
+      }
+      .inbox-content:nth-child(even) {background: #CCC}
+      .inbox-content:nth-child(odd) {background: #FFF}
+    </style>
+    <body>
+      <section>
+        <div class="row">
+          <div class="container inbox">
+            <div class="page-heading">
+              <h1>INBOX</h1>
+            </div>
+            <div class="inbox-content">
+              <div class="detail">
+                <div class="inbox-top">
+                  <div class="from">School</div>
+                </div>
+                <div class="when">
+                  <div class="time">3:30pm</div>
+                  <div class="date">1/06/2016</div>
+                </div>
+              </div>
+              <div class="inbox-message">
+                <div class="msg">
+                  {{ess}}
+                </div>
+                <div class="action">
+                  <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
+                </div>
+              </div>
+            </div>
+            <div class="inbox-content">
+              <div class="detail">
+                <div class="inbox-top">
+                  <div class="from">School</div>
+                </div>
+                <div class="when">
+                  <div class="time">3:30pm</div>
+                  <div class="date">1/06/2016</div>
+                </div>
+              </div>
+              <div class="inbox-message">
+                <div class="msg">
+                  {{ess}}
+                </div>
+                <div class="action">
+                  <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </body>
+    <div class="message">
+      <paper-dialog id="parent-message">
+        <h2>Message</h2>
+        <div class="close-button">
+          <paper-icon-button on-click="close" src="../../images/close.png"></paper-icon-button>
+        </div>
+        <paper-dialog-scrollable>
+          <div class="top">
+            <div class="request-id">
+              REQ6354263
+            </div>
+            <div class="when">
+              <div class="date">
+                <div class="time">
+                  3:30PM
+                </div>
+                1st June 2016
+              </div>
+            </div>
+          </div>
+          <div class="feedback">
+            <div class="greeting">
+              Hai Sir/Madam,
+            </div>
+            <p>Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd</p>
+          </div>
+        </paper-dialog-scrollable>
+        <div class="buttons">
+          <paper-button dialog-dismiss on-click="reply">Reply</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'admin-inbox',
+
+    ready:function(){
+      this.querySelector("#parent-message").close();
+    var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
+    if(str.length > 60){
+      this.mess = str.substring(0,60);
+      this.ess = str.replace(str,this.mess+'...');
+    } 
+      //this.querySelector('#parent-message').close();
+    },
+    click:function(){
+      this.querySelector("#parent-message").open();
+      //this.querySelector('#parent-message').show();
+    },
+    close:function(){
+      this.querySelector("#parent-message").close();
+    }
+    });
+  })();
+  </script>
+</dom-module>
