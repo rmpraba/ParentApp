@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
   <link rel="import" href="../complaint-form/complaint-form.html">
+    <link rel="import" href="../icon-card/icon-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -24,13 +25,16 @@
     </div>
     <div class="content">
       <iron-pages selected="{{page}}" attr-for-selected="data-category">
-        <section data-category="complaintpage">
-          <complaint-form></complaint-form>
-        </section>
         <section data-category="login">
           <login-form></login-form>
         </section>
-        <section data-category="parent-inbox">
+       <section data-category="iconpage">
+          <icon-card></icon-card>
+        </section>
+         <section data-category="complaintpage">
+          <complaint-form></complaint-form>
+        </section>
+       <section data-category="parent-inbox">
           <parent-inbox></parent-inbox>
         </section>
       </iron-pages>
@@ -42,7 +46,12 @@
     is: "transport-app",
     ready: function() 
     {
-this.page="complaintpage";
+this.page="iconpage";
+    },
+    setPage:function(page)
+    {
+      this.page=page;
+      
     }
    
   });
