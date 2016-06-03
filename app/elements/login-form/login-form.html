@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../login-service/login-service.html">
 
 <dom-module id="login-form">
   <template>
@@ -26,24 +27,22 @@
               <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
             </div>
             <div class="field">
-              <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
+              <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
             </div>
             <div class="field">
               <paper-dropdown-menu label="Student">
-                <paper-menu id="category" required error-message="Need a Category!" class="dropdown-content" on-iron-select="category" valueattr="value" >
-                  <paper-listbox class="dropdown-content">
-                    <paper-item value=0></paper-item>
-                  </paper-listbox>
+                <paper-menu id="student" class="dropdown-content" required on-iron-select="student" valueattr="value" >
+                  <template  is="dom-repeat" items="{{parent}}" as="view">
+                    <paper-item value="{{view.student_id}}">{{view.student_name}}</paper-item>
+                  </template>
                 </paper-menu>
               </paper-dropdown-menu>
-            </div>
-            <div class="button">
-              <paper-button id="button" on-click="click">Login</paper-button>
             </div>
           </div>
         </div>
       </section>
     </body>
+    <login-service id="login"></login-service>
   </template>
   <script>
   (function() {
@@ -51,7 +50,15 @@
 
     Polymer({
       is: 'login-form',
+    ready:function(){
 
+    },
+    mobileno:function(){
+      this.$.login.mobile(this.mobile);
+    },
+    student:function(){
+      alert('Success');
+    }
     });
   })();
   </script>

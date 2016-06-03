@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="login-service">
+  <template>
+    <iron-ajax
+        method="post"
+        id="mobileajax"
+        url="{{mobileurl}}"
+        params="{{mobileparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="mobileResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'login-service',
+
+    mobile:function(mobile){
+      this.mobileurl="http://localhost:8082/mobile";
+      var obj={"mobile":""};
+      obj.mobile=mobile;
+      this.mobileparam=obj;
+      this.$.mobileajax.generateRequest();
+    },
+    mobileResponse:function(e){
+      var parent=e.detail.response.returnval;
+      document.querySelector('login-form').parent=parent;
+    }
+    });
+  })();
+  </script>
+</dom-module>

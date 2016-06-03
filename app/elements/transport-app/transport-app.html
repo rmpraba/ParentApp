@@ -33,6 +33,9 @@
         <section data-category="parent-inbox">
           <parent-inbox></parent-inbox>
         </section>
+        <section data-category="admin-inbox">
+          <admin-inbox></admin-inbox>
+        </section>
       </iron-pages>
       </div>
     <div class="footer"></div>
@@ -40,9 +43,8 @@
   <script>
   Polymer({
     is: "transport-app",
-    ready: function() 
-    {
-this.page="complaintpage";
+    ready: function(){
+      this.page="login";
     }
    
   });
