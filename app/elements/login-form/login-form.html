@@ -53,11 +53,17 @@
     ready:function(){
 
     },
-    mobileno:function(){
+    mobileno:function()
+    {
       this.$.login.mobile(this.mobile);
     },
-    student:function(){
-      alert('Success');
+    student:function(e)
+    {
+      var id=e.target.selectedItem.value;
+      sessionStorage.setItem("studid",id);
+      //alert(e.target.selectedItem.value);
+      document.querySelector('transport-app').setPage("iconpage");
+      
     }
     });
   })();
