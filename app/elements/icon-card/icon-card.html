@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+var id;
     Polymer({
       is: 'icon-card',
 
@@ -56,7 +56,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      {
      // document.querySelector('transport-app').setPage('iconlist');
        document.querySelector('transport-app').setPage("parent-inbox");
-       this.$.qpostid.getmsg();
+       id=sessionStorage.getItem("user");
+       alert(id);
+       if(id=="admin"){
+       this.$.qpostid.getmsg(); 
+       }
+       else if(id=="parent")
+       {
+
+       }
      }
     });
   })();

@@ -131,3 +131,25 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
   
 });
   });
+
+
+app.post('/adminlogin',  urlencodedParser,function (req, res)
+{
+  var user={"id":req.query.user};
+  var pass={"password":req.query.pass};
+       connection.query('select * from query where ?',[user,pass],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });

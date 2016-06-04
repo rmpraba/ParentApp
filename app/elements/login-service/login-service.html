@@ -13,6 +13,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="adminloginajax"
+        url="{{adminloginurl}}"
+        params="{{adminloginparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="adminloginResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -41,7 +52,27 @@
     {
       alert("Invalid Mobile Number");
     }
+    },
+    adminlogin:function(username,password){
+      this.adminloginurl="http://localhost:8082/adminlogin";
+      var obj={"user":"","pass":""}
+      obj.user=username;
+      obj.pass=password;
+      this.adminloginparam=obj;
+      this.$.adminloginajax.generateRequest();
+    },
+    adminloginResponse:function(e){
+      var res=e.detail.response.returnval;
+      if(res!=0){
+      var id=e.detail.response.returnval[0].id;
+      var schoolx=e.detail.response.returnval[0].school_id;
+      document.querySelector('transport-app').setPage("iconpage");
+      }
+      else if(res=='invalid'){
+          alert('Wrong Username and Password');
+      }
     }
+
     });
   })();
   </script>
