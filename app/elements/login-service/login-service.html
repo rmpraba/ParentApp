@@ -28,9 +28,17 @@
       this.mobileparam=obj;
       this.$.mobileajax.generateRequest();
     },
-    mobileResponse:function(e){
+    mobileResponse:function(e)
+    {
+      if(e.detail.response.returnval.length>0)
+      {
       var parent=e.detail.response.returnval;
       document.querySelector('login-form').parent=parent;
+      }
+    else
+    {
+      alert("Invalid Mobile Number");
+    }
     }
     });
   })();
