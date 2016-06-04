@@ -110,3 +110,24 @@ app.post('/upquery-sequence',  urlencodedParser,function (req, res)
 });
   });
 
+
+app.post('/getmsg',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  
+       connection.query('select * from query where ?',[school_id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });

@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../query-post/query-post.html">
 <dom-module id="icon-card">
   <template>
   <style type="text/css">
@@ -37,6 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
     </div>
   </body>
+  <query-post id='qpostid'></query-post>
   </template>
   <script>
   (function() {
@@ -55,6 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      {
      // document.querySelector('transport-app').setPage('iconlist');
        document.querySelector('transport-app').setPage("parent-inbox");
+       this.$.qpostid.getmsg();
      }
     });
   })();
