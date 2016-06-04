@@ -39,20 +39,6 @@
     Polymer({
       is: 'parent-inbox',
     ready:function(){
-      this.querySelector("#parent-message").close();
-    var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
-    if(str.length > 60){
-      this.mess = str.substring(0,60);
-      this.ess = str.replace(str,this.mess+'...');
-    } 
-      //this.querySelector('#parent-message').close();
-    },
-    click:function(){
-      this.querySelector("#parent-message").open();
-      //this.querySelector('#parent-message').show();
-    },
-    close:function(){
-      this.querySelector("#parent-message").close();
     }
     });
   })();
