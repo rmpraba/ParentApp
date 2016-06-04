@@ -26,44 +26,12 @@
               <h1>INBOX</h1>
             </div>
             <template is="dom-repeat" items ="{{msgarr}}" as="view">
-              <parent-inbox-card from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" ></parent-inbox-card>
+              <parent-inbox-card queryid={{view.query_id}} from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" ></parent-inbox-card>
             </template>
           </div>
         </div>
       </section>
     </body>
-    <div class="message">
-      <paper-dialog id="parent-message">
-        <h2>Message</h2>
-        <div class="close-button">
-          <paper-icon-button on-click="close" src="../../images/close.png"></paper-icon-button>
-        </div>
-        <paper-dialog-scrollable>
-          <div class="top">
-            <div class="request-id">
-              REQ6354263
-            </div>
-            <div class="when">
-              <div class="date">
-                <div class="time">
-                  3:30PM
-                </div>
-                1st June 2016
-              </div>
-            </div>
-          </div>
-          <div class="feedback">
-            <div class="greeting">
-              Hai Sir/Madam,
-            </div>
-            <p>Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd</p>
-          </div>
-        </paper-dialog-scrollable>
-        <div class="buttons">
-          <paper-button dialog-dismiss on-click="reply">Reply</paper-button>
-        </div>
-      </paper-dialog>
-    </div>
   </template>
   <script>
   (function() {

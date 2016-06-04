@@ -39,6 +39,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     </div>
+    <div class="message">
+      <paper-dialog id="parent-message">
+        <h2>Message</h2>
+        <div class="close-button">
+          <paper-icon-button on-click="close" src="../../images/close.png"></paper-icon-button>
+        </div>
+        <paper-dialog-scrollable>
+          <div class="top">
+            <div class="request-id">
+              {{queryid}}
+            </div>
+            <div class="when">
+              <div class="date">
+                <div class="time">
+                  {{time}}
+                </div>
+                  {{date}}
+              </div>
+            </div>
+          </div>
+          <div class="feedback">
+            <div class="greeting">
+              Hai Sir/Madam,
+            </div>
+            <p>{{messagequeryid}}</p>
+          </div>
+        </paper-dialog-scrollable>
+        <div class="buttons">
+          <paper-button dialog-dismiss on-click="reply">Reply</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
   </template>
   <script>
   (function() {
@@ -46,14 +78,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'parent-inbox-card',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'parent-inbox-card',
-          notify: true
-        }
-      }
+      
+    ready:function(){
+      this.querySelector("#parent-message").close();
+    var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
+    if(str.length > 60){
+      this.mess = str.substring(0,60);
+      this.ess = str.replace(str,this.mess+'...');
+    } 
+      //this.querySelector('#parent-message').close();
+    },
+    click:function(){
+      this.querySelector("#parent-message").open();
+      //this.querySelector('#parent-message').show();
+    },
+    close:function(){
+      this.querySelector("#parent-message").close();
+    }
     });
   })();
   </script>
