@@ -32,6 +32,8 @@
     {
       if(e.detail.response.returnval.length>0)
       {
+        var school=e.detail.response.returnval[0].school_id;
+        sessionStorage.setItem("schoolx",school);
       var parent=e.detail.response.returnval;
       document.querySelector('login-form').parent=parent;
       }

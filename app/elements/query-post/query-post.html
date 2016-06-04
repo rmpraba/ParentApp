@@ -93,7 +93,7 @@ sequenceResponse:function(e){
   //alert(JSON.stringify(e.detail.response.returnval));
   var seq=e.detail.response.returnval[0].sequenceno;
   var obj={"student_id":"","name":"","email":"","category":"","complaint":"","queryid":""};
-        obj.school_id='SCH001';
+        obj.school_id=sessionStorage.getItem("schoolx");;
         obj.query_id='REQ1600'+seq;
         obj.student_id=stud_id;
         obj.name=sname;
@@ -106,26 +106,31 @@ sequenceResponse:function(e){
        // alert(JSON.stringify(obj));
        this.$.querypostid.generateRequest()
        var obj1={"school_id":"","sequence":""}
-       obj1.school_id='SCH001';
+       obj1.school_id=sessionStorage.getItem("schoolx");
        obj1.sequence=parseInt(seq)+1;
        this.upsequrl="http://localhost:8082/upquery-sequence";
        this.upseqparam=obj1;
        this.$.upseqid.generateRequest();
 
 },
-querypostResponse:function(e){
+querypostResponse:function(e)
+{
   var s=e.detail.response.returnval;
   alert("Feedback submited successfuly");
 
 },
-getmsg:function(){
+getmsg:function()
+{
+
   this.getmsgurl="http://localhost:8082/getmsg";
   var obj={"schol":""}
-  obj.schol="SCH001";
+  obj.schol=sessionStorage.getItem("schoolx");
+
   this.getmsgparam=obj;
   this.$.getmsgid.generateRequest();
 },
-getmsgResponse:function(e){
+getmsgResponse:function(e)
+{
   var msgarr=e.detail.response.returnval;
   alert(JSON.stringify(msgarr));
 }
