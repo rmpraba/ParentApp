@@ -26,17 +26,26 @@
             <div class="icon">
               <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
             </div>
-            <div class="field">
+            <div class="field" id="mob">
               <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
             </div>
             <div class="field">
-              <paper-dropdown-menu label="Student">
+              <paper-dropdown-menu label="Student" id="drop">
                 <paper-menu id="student" class="dropdown-content" required on-iron-select="student" valueattr="value" >
                   <template  is="dom-repeat" items="{{parent}}" as="view">
                     <paper-item value="{{view.student_id}}">{{view.student_name}}</paper-item>
                   </template>
                 </paper-menu>
               </paper-dropdown-menu>
+            </div>
+            <div class="field">
+              <paper-input label="Username" value="{{username}}" id="user"></paper-input>
+            </div>
+            <div class="field">
+              <paper-input label="Password" value="{{Password}}" id="pass"></paper-input>
+            </div>
+            <div>
+              <ahref id="admin" on-click="butclick"><u>{{butname}}</u></ahref>
             </div>
           </div>
         </div>
@@ -47,11 +56,19 @@
   <script>
   (function() {
     'use strict';
-
+      var butad;
+      var temp;
     Polymer({
       is: 'login-form',
     ready:function(){
+      temp=0;
+      butad="Go to Admin Login";
+      this.butname=butad;
 
+      this.$.mob.hidden=false;
+      this.$.drop.hidden=false;
+      this.$.user.hidden=true;
+      this.$.pass.hidden=true;
     },
     mobileno:function()
     {
@@ -63,6 +80,26 @@
       sessionStorage.setItem("studid",id);
       //alert(e.target.selectedItem.value);
       document.querySelector('transport-app').setPage("iconpage");
+    },
+    butclick:function(){
+      if(temp==0){
+        butad="Go to Parent Login";
+        this.butname=butad;
+        this.$.mob.hidden=true;
+      this.$.drop.hidden=true;
+      this.$.user.hidden=false;
+      this.$.pass.hidden=false;    
+        temp=1;
+    }
+      else{
+        butad="Go to Admin Login";
+        this.butname=butad;
+        this.$.mob.hidden=false;
+      this.$.drop.hidden=false;
+      this.$.user.hidden=true;
+      this.$.pass.hidden=true;
+        temp=0;
+      }
       
     }
     });
