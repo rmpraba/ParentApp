@@ -1,6 +1,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../parent-inbox-card/parent-inbox-card.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../parent-inbox-card/parent-inbox-card.html">
 
 <dom-module id="parent-inbox">
   <template>
@@ -24,44 +25,9 @@
             <div class="page-heading">
               <h1>INBOX</h1>
             </div>
-            <div class="inbox-content">
-              <div class="detail">
-                <div class="inbox-top">
-                  <div class="from">School</div>
-                </div>
-                <div class="when">
-                  <div class="time">3:30pm</div>
-                  <div class="date">1/06/2016</div>
-                </div>
-              </div>
-              <div class="inbox-message">
-                <div class="msg">
-                  {{ess}}
-                </div>
-                <div class="action">
-                  <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
-                </div>
-              </div>
-            </div>
-            <div class="inbox-content">
-              <div class="detail">
-                <div class="inbox-top">
-                  <div class="from">School</div>
-                </div>
-                <div class="when">
-                  <div class="time">3:30pm</div>
-                  <div class="date">1/06/2016</div>
-                </div>
-              </div>
-              <div class="inbox-message">
-                <div class="msg">
-                  {{ess}}
-                </div>
-                <div class="action">
-                  <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
-                </div>
-              </div>
-            </div>
+            <template is="dom-repeat" items ="{{msgarr}}" as="view">
+              <parent-inbox-card from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" ></parent-inbox-card>
+            </template>
           </div>
         </div>
       </section>

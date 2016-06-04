@@ -90,9 +90,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
 
 sequenceResponse:function(e){
+  var d1=new Date();
+  var datex=d1.getDate()+'/'+d1.getMonth()+'/'+d1.getFullYear();
+  var h =  d1.getHours(), m = d1.getMinutes();
+    var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
   //alert(JSON.stringify(e.detail.response.returnval));
   var seq=e.detail.response.returnval[0].sequenceno;
-  var obj={"student_id":"","name":"","email":"","category":"","complaint":"","queryid":""};
+  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":""};
         obj.school_id='SCH001';
         obj.query_id='REQ1600'+seq;
         obj.student_id=stud_id;
@@ -100,6 +104,8 @@ sequenceResponse:function(e){
         obj.email=semail;
         obj.category=scat;
         obj.complaint=scomplaint;
+        obj.date=datex;
+        obj.time=thistime;
         obj.status="open";
         this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
@@ -115,7 +121,13 @@ sequenceResponse:function(e){
 },
 querypostResponse:function(e){
   var s=e.detail.response.returnval;
-  alert("Feedback submited successfuly");
+  if(s=='success'){
+  alert("Feedback submited successfuly");  
+  }
+  else{
+    alert("Feedback not submited");
+  }
+  
 
 },
 getmsg:function(){
@@ -127,6 +139,7 @@ getmsg:function(){
 },
 getmsgResponse:function(e){
   var msgarr=e.detail.response.returnval;
+  document.querySelector('parent-inbox').msgarr=msgarr;
   alert(JSON.stringify(msgarr));
 }
      

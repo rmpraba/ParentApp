@@ -12,11 +12,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="parent-inbox-card">
   <template>
-    <style>
-      :host {
-        display: block;
+  <style type="text/css">
+  
+      .inbox-content:nth-child(even) {background: #CCC}
+      .inbox-content:nth-child(odd) {background: #FFF}
+
+      .view_msg{
+        margin-top: -25%;
       }
-    </style>
+</style>
+    <div class="inbox-content">
+      <div class="detail">
+        <div class="inbox-top">
+          <div class="from">{{from}}</div>
+        </div>
+        <div class="when">
+          <div class="time">{{date}}  {{time}}</div>
+        </div>
+      </div>
+      <div class="inbox-message">
+        <div class="msg">
+        {{message}}
+        </div>
+        <div class="action">
+          <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
+        </div>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
