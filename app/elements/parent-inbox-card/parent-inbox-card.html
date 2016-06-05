@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <dom-module id="parent-inbox-card">
   <template>
   <style type="text/css">
@@ -67,11 +67,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </paper-dialog-scrollable>
         <div class="buttons">
-          <paper-button dialog-dismiss on-click="reply">Reply</paper-button>
+          <paper-button  id="read" on-click="answer">Reply</paper-button>
         </div>
       </paper-dialog>
+      <paper-dialog id="adminmsg">
+      <paper-dialog-scrollable>
+      <div class="field textarea1">
+            <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
+          </div>
+          <paper-button on-click="submit">SUBMIT</paper-button>
+          </paper-dialog-scrollable>
+      </paper-dialog>
     </div>
-  </template>
+    <query-post id='qpostid'></query-post>
+  </template> 
   <script>
   (function() {
     'use strict';
@@ -81,11 +90,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
     ready:function(){
       this.querySelector("#parent-message").close();
-    var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
+      var id=sessionStorage.getItem("user");
+      if(id=='parent'){
+        this.$.read.hidden=true;
+      }
+    /*var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
     if(str.length > 60){
       this.mess = str.substring(0,60);
       this.ess = str.replace(str,this.mess+'...');
-    } 
+    } */
       //this.querySelector('#parent-message').close();
     },
     click:function(){
@@ -94,6 +107,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
     close:function(){
       this.querySelector("#parent-message").close();
+    },
+    answer:function(){
+      //alert("reply");
+      this.querySelector("#parent-message").close();
+      this.querySelector("#adminmsg").open();
+    },
+    submit:function(){
+      //alert(this.queryid+   +this.adminreply);
+      this.$.qpostid.postreply(this.queryid,this.adminreply);
+      this.querySelector("#adminmsg").close();
+
     }
     });
   })();

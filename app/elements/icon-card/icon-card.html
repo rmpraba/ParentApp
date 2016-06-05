@@ -55,15 +55,18 @@ var id;
      inbox:function()
      {
      // document.querySelector('transport-app').setPage('iconlist');
-       document.querySelector('transport-app').setPage("parent-inbox");
+       
        id=sessionStorage.getItem("user");
-       alert(id);
+       //alert(id);
        if(id=="admin"){
+        document.querySelector('transport-app').setPage("parent-inbox");
        this.$.qpostid.getmsg(); 
        }
        else if(id=="parent")
        {
+        document.querySelector('transport-app').setPage("parentinbox-itemcard");
 
+        this.$.qpostid.parentinbox();
        }
      }
     });

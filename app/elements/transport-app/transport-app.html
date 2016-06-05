@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
   <link rel="import" href="../complaint-form/complaint-form.html">
+  <link rel="import" href="../parentinbox-itemcard/parentinbox-itemcard.html">
     <link rel="import" href="../icon-card/icon-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
@@ -37,8 +38,8 @@
        <section data-category="parent-inbox">
           <parent-inbox></parent-inbox>
         </section>
-        <section data-category="admin-inbox">
-          <admin-inbox></admin-inbox>
+        <section data-category="parentinbox-itemcard">
+          <parentinbox-itemcard></parentinbox-itemcard>
         </section>
       </iron-pages>
       </div>
@@ -47,7 +48,7 @@
   <script>
   Polymer({
     is: "transport-app",
-    ready: function() 
+    ready: function()
     {
 this.page="login";
     },

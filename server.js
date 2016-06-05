@@ -114,8 +114,36 @@ app.post('/upquery-sequence',  urlencodedParser,function (req, res)
 app.post('/getmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
+  var status={"query_status":"open"};
+  //console.log(school_id+   +status);
+       connection.query('select * from query where ? and ?',[school_id,status],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
   
-       connection.query('select * from query where ?',[school_id],
+});
+  });
+
+
+app.post('/adminlogin',  urlencodedParser,function (req, res)
+{
+  var user={"id":req.query.user};
+  var pass={"password":req.query.pass};
+       connection.query('select * from employee where ?',[user,pass],
         function(err, rows)
         {
     if(!err)
@@ -133,17 +161,76 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
   });
 
 
-app.post('/adminlogin',  urlencodedParser,function (req, res)
+
+app.post('/querypost',  urlencodedParser,function (req, res)
 {
-  var user={"id":req.query.user};
-  var pass={"password":req.query.pass};
-       connection.query('select * from query where ?',[user,pass],
+    var id={"query_id":req.query.id};
+    var msg={"query_reply":req.query.msg,"query_status":"closed","reply_date":req.query.replydate,"reply_time":req.query.replytime};
+    var school_id={"school_id":req.query.schol};
+
+  //console.log(school_id);
+       connection.query('update query set ? WHERE ? and ?',[msg,id,school_id],
         function(err, rows)
         {
     if(!err)
     {
     
-      res.status(200).json({'returnval': rows});
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+app.post('/getdetails',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var stud={"student_id":req.query.id};
+  //console.log(school_id+   +status);
+       connection.query('select * from parent where ? and ?',[school_id,stud],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+app.post('/parentinbox',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var stud={"student_id":req.query.id};
+  //console.log(school_id+   +stud);
+       connection.query('select * from query where ? and ?',[school_id,stud],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
     }
     else
     {
