@@ -192,9 +192,10 @@ querypostResponse:function(e){
 parentinbox:function(){
         //alert('1');
 this.parentinboxurl="http://localhost:8082/parentinbox";
-var obj={"id":"","schol":""}
+var obj={"id":"","schol":"","status":""}
 obj.id=sessionStorage.getItem("studid");
 obj.schol=sessionStorage.getItem("schoolx");
+obj.status="closed";
 this.parentinboxparam=obj;
 this.$.parentinboxid.generateRequest();
 },
