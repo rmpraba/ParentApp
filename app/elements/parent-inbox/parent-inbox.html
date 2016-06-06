@@ -26,7 +26,7 @@
               <h1>INBOX</h1>
             </div>
             <template is="dom-repeat" items ="{{msgarr}}" as="view">
-              <parent-inbox-card queryid={{view.query_id}} from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" ></parent-inbox-card>
+              <parent-inbox-card queryid={{view.query_id}} from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" flag="{{view.flag}}"></parent-inbox-card>
             </template>
           </div>
         </div>

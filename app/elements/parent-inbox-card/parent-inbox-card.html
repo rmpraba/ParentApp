@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="inbox-content">
       <div class="detail">
         <div class="inbox-top">
-          <div class="from">{{from}}</div>
+          <div class="from">{{from}} {{flag}}</div>
         </div>
         <div class="when">
           <div class="time">{{date}}  {{time}}</div>
@@ -71,8 +71,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p>{{message}}</p>
           </div>
         </paper-dialog-scrollable>
+        <div class="field">
+            <paper-dropdown-menu id="read" label="Category">
+              <paper-menu  required error-message="Need a Status!" class="dropdown-content" on-iron-select="status" valueattr="value" >
+                <paper-listbox class="dropdown-content">
+                  <paper-item value="open">Open</paper-item>
+                  <paper-item value="closed">Closed</paper-item>
+                  
+                </paper-listbox>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
         <div class="buttons">
-          <paper-button  id="read" on-click="answer">Reply</paper-button>
+          <paper-button on-click="answer">Reply</paper-button>
         </div>
       </paper-dialog>
       <paper-dialog id="adminmsg">
@@ -89,14 +100,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+      var statusx="closed";
+      var flag=1;
     Polymer({
       is: 'parent-inbox-card',
       
     ready:function(){
       this.querySelector("#parent-message").close();
       var id=sessionStorage.getItem("user");
-      if(id=='parent'){
+      if(id=='admin'){
         this.$.read.hidden=true;
       }
     /*var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
@@ -118,11 +130,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.querySelector("#parent-message").close();
       this.querySelector("#adminmsg").open();
     },
+    status:function(e){
+        statusx=(e.target.selectedItem.textContent).trim();
+    },
     submit:function(){
       //alert(this.queryid+   +this.adminreply);
-      this.$.qpostid.postreply(this.queryid,this.adminreply);
-      this.querySelector("#adminmsg").close();
+      var id=sessionStorage.getItem("user");
+      if(id=='parent'){
+        
+        var flag=this.flag+1;  
+        var id=sessionStorage.getItem("id");
+        var par=sessionStorage.getItem("prname");
+        var mail=sessionStorage.getItem("mail");
+      this.$.qpostid.postquery(this.queryid,this.adminreply,statusx,flag,id,par,mail);
+      this.querySelector("#adminmsg").close();  
+      }
+      else{
 
+      this.$.qpostid.postreply(this.queryid,this.adminreply,statusx,this.date,this.time);
+      this.querySelector("#adminmsg").close(); 
+        }
     }
     });
   })();
