@@ -20,6 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .view_msg{
         margin-top: -25%;
       }
+      .dialog{
+        width:40%;
+      }
 </style>
     <div class="inbox-content">
       <div class="detail">
@@ -40,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
     <div class="message">
-      <paper-dialog id="parent-message">
+      <paper-dialog id="parent-message" class="dialog">
         <h2>Message</h2>
         <div class="close-button">
           <paper-icon-button on-click="close" src="../../images/close.png"></paper-icon-button>
@@ -63,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="greeting">
               Hai Sir/Madam,
             </div>
-            <p>{{messagequeryid}}</p>
+            <p>{{message}}</p>
           </div>
         </paper-dialog-scrollable>
         <div class="buttons">
@@ -72,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog>
       <paper-dialog id="adminmsg">
       <paper-dialog-scrollable>
-      <div class="field textarea1">
+      <div class="field textarea">
             <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
           </div>
           <paper-button on-click="submit">SUBMIT</paper-button>
