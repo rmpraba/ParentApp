@@ -31,9 +31,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
 
     <div class="frontpage">
-      <paper-icon-button class="iconbutton" src="../../images/feedback.png" on-click="insertfeedback"></paper-icon-button>
+      <paper-icon-button id="form" class="iconbutton" src="../../images/feedback.png" on-click="insertfeedback"></paper-icon-button>
       <paper-icon-button class="iconbutton" src="../../images/inbox.jpg" on-click="inbox"></paper-icon-button>
-       
+       <paper-icon-button id="report" class="iconbutton" src="../../images/report.png" on-click="report"></paper-icon-button>
    
     </div>
   </body>
@@ -43,10 +43,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
 var id;
+var role;
     Polymer({
       is: 'icon-card',
 
-     
+     ready:function(){
+
+     },
      insertfeedback:function()
      {
        //document.querySelector('transport-app').setPage('iconlist');
@@ -57,17 +60,35 @@ var id;
      // document.querySelector('transport-app').setPage('iconlist');
        
        id=sessionStorage.getItem("user");
-       //alert(id);
-       if(id=="admin"){
+       role=sessionStorage.getItem("role");
+       //alert(id+'    '+role);
+       if((id=="admin")&&(role=='manager')){
+        //alert('hello');
         document.querySelector('transport-app').setPage("parent-inbox");
-       this.$.qpostid.getmsg(); 
+
+        this.$.qpostid.managerinbox();
        }
+       
        else if(id=="parent")
        {
         document.querySelector('transport-app').setPage("parentinbox-itemcard");
 
         this.$.qpostid.parentinbox();
        }
+       else if(id=="admin"){
+        document.querySelector('transport-app').setPage("parent-inbox");
+       this.$.qpostid.getmsg(); 
+       }
+     },
+     Fnparent:function(){
+      this.$.report.hidden=true;
+     },
+     Fnadmin:function(){
+        this.$.form.hidden=true;
+     },
+     report:function(){
+        document.querySelector('transport-app').setPage("report");
+        
      }
     });
   })();

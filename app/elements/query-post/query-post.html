@@ -73,6 +73,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="parentinboxResponse"
     debounce-duration="300"
   ></iron-ajax>
+<iron-ajax
+    method="post"
+    id="managerinboxid"
+    url="{{managerinboxurl}}"
+    params="{{managerinboxparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="managerinboxResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="updatefwdid"
+    url="{{updatefwdurl}}"
+    params="{{updatefwdparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="updatefwdResponse"
+    debounce-duration="300"
+  ></iron-ajax>
 
     <style>
       :host {
@@ -89,21 +109,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var semail;
     var scat;
     var scomplaint;
+    var sub;
+    var mobile;
 
     Polymer({
       is: 'query-post',
       ready:function(){
 
       },
-      querypostFn:function(student_id,name,email,category,complaint){
+      querypostFn:function(student_id,name,email,category,complaint,subject,mob){
         //alert('hai');
         stud_id=student_id;
         sname=name;
         semail=email;
         scat=category;
         scomplaint=complaint;
+        sub=subject;
+        mobile=mob;
        var obj={"school_id":""};
-       obj.school_id='SCH001';
+       obj.school_id=sessionStorage.getItem("schoolx");
        this.sequenceurl="http://localhost:8082/query-sequence";
        this.sequenceparam=obj;
        this.$.sequenceid.generateRequest();
@@ -116,7 +140,7 @@ sequenceResponse:function(e){
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
   //alert(JSON.stringify(e.detail.response.returnval));
   var seq=e.detail.response.returnval[0].sequenceno;
-  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":""};
+  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":""};
         obj.school_id=sessionStorage.getItem("schoolx");
         obj.query_id='REQ1600'+seq;
         obj.student_id=stud_id;
@@ -128,6 +152,8 @@ sequenceResponse:function(e){
         obj.time=thistime;
         obj.flag=1;
         obj.status="open";
+        obj.subject=sub;
+        obj.mob=mobile;
         this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
@@ -203,12 +229,12 @@ parentinboxResponse:function(e){
   document.querySelector('parentinbox-itemcard').msgarr=resarr;
 //alert(JSON.stringify(resarr));
 },
-postquery:function(queryid,reply,status,flag,id,par,mail){
+postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
     var d1=new Date();
   var datex=d1.getDate()+'/'+(d1.getMonth()+1)+'/'+d1.getFullYear();
   var h =  d1.getHours(), m = d1.getMinutes();
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
-    var obj={"schoolid":"","queryid":"","name":"","complaint":"","date":"","time":"","status":"","flag":""}
+    var obj={"schoolid":"","queryid":"","name":"","complaint":"","date":"","time":"","status":"","flag":"","category":"","mob":""}
     obj.school_id=sessionStorage.getItem("schoolx");
     obj.query_id=queryid;
     obj.complaint=reply;
@@ -219,11 +245,49 @@ postquery:function(queryid,reply,status,flag,id,par,mail){
     obj.student_id=id;
         obj.name=par;
         obj.email=mail;
+        obj.category=category;
+        obj.mob=mobile;
     this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
        this.$.querypostid.generateRequest()
 
+},
+managerinbox:function(){
+        //alert('1');
+this.managerinboxurl="http://localhost:8082/managerinbox";
+var obj={"schol":"","frwd":""}
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.frwd="manager";
+this.managerinboxparam=obj;
+this.$.managerinboxid.generateRequest();
+},
+managerinboxResponse:function(e){
+  //alert('2');
+   var msgarr=e.detail.response.returnval;
+  document.querySelector('parent-inbox').msgarr=msgarr;
+  alert(JSON.stringify(msgarr));
+},
+updatefrwd:function(querid,date,time){
+  this.updatefwdurl="http://localhost:8082/updatefwd";
+  var obj={"id":"","date":"","time":"","frwd":"","schol":""}
+  obj.id=querid;
+  obj.date=date;
+  obj.time=time;
+  obj.frwd="manager";
+  obj.schol=sessionStorage.getItem("schoolx");
+  this.updatefwdparam=obj;
+  this.$.updatefwdid.generateRequest();
+
+},
+updatefwdResponse:function(e){
+  var res=e.detail.response.returnval;
+  if(res=='success'){
+    alert('Forwarded to Manager');
+  }
+  else{
+   alert('Not Forwarded'); 
+  }
 }
      
 

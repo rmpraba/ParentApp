@@ -27,13 +27,25 @@
             <p>We have answers!</p>
           </div>
           <div class="field">
-            <paper-input label="Student ID" value="{{student_id}}" id="student_id" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a name!"></paper-input>
+            <paper-input label="Student ID" value="{{student_id}}" id="student_id" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a id!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-input label="Student Name" value="{{student_name}}" id="student_name" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a name!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-input label="Class" value="{{classes}}" id="class" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need class!"></paper-input>
           </div>
           <div class="field">
             <paper-input label="Parent Name" value="{{name}}" id="name" allowed-pattern="[a-zA-Z ]" required error-message="need a name!"></paper-input>
           </div>
           <div class="field">
-            <paper-input label="Email" value="{{email}}" id="email" required error-message="need a name!"></paper-input>
+            <paper-input label="Email" value="{{email}}" id="email" required error-message="need a e-mail ID!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-input label="Mobile" value="{{mobile}}" id="mobile" required error-message="need a mobile number!"></paper-input>
+          </div>
+          <div class="field">
+            <paper-input label="Subject" value="{{subject}}" id="subject" required error-message="need subject!"></paper-input>
           </div>
           <div class="field">
             <paper-dropdown-menu label="Category">
@@ -75,7 +87,7 @@
 
       click:function()
       { //alert(this.student_id+ '  '+this.name+'   '+category);
-        this.$.qpostid.querypostFn(this.student_id,this.name,this.email,category,this.complaint);
+        this.$.qpostid.querypostFn(this.student_id,this.name,this.email,category,this.complaint,this.subject,this.mobile);
       }
     });
   })();

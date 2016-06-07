@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <dom-module id="parent-inbox-card">
   <template>
   <style>
@@ -17,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .inbox-content{
         background: #CCC;
         box-shadow: currentColor;
+        height: auto;
       }
 
       .view_msg{
@@ -25,19 +28,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .dialog{
         width:40%;
       }
+      .when .time{
+        margin-left: -28%;
+        margin-top: 4%;
+      }
+      .inbox-top .from{
+        @apply(--layout-horizontal);
+        width:150%;
+      }
 </style>
     <div class="inbox-content">
       <div class="detail">
         <div class="inbox-top">
-          <div class="from">{{from}} {{flag}}</div>
+          <div class="from">{{from}} : {{flag}}  -   ({{category}}) - [{{status}}] </div>
         </div>
         <div class="when">
           <div class="time">{{date}}  {{time}}</div>
-        </div>
-      </div>
-      <div class="inbox-message">
-        <div class="msg">
-        {{message}}
         </div>
         <div class="action">
           <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
@@ -45,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
     <div class="message">
-      <paper-dialog id="parent-message" class="dialog">
+      <paper-dialog id="parent-message" class="dialog" style="margin-left:25%;">
         <h2>Message</h2>
         <div class="close-button">
           <paper-icon-button on-click="close" src="../../images/close.png"></paper-icon-button>
@@ -57,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div class="when">
               <div class="date">
-                <div class="time">
+                <div class="time1">
                   {{time}}
                 </div>
                   {{date}}
@@ -71,22 +77,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p>{{message}}</p>
           </div>
         </paper-dialog-scrollable>
-        <div class="field">
-            <paper-dropdown-menu id="read" label="Category">
-              <paper-menu  required error-message="Need a Status!" class="dropdown-content" on-iron-select="status" valueattr="value" >
-                <paper-listbox class="dropdown-content">
-                  <paper-item value="open">Open</paper-item>
-                  <paper-item value="closed">Closed</paper-item>
-                  
-                </paper-listbox>
-              </paper-menu>
-            </paper-dropdown-menu>
+        <div id="details">
+          <paper-item>Contact:{{mob}},<div>{{mail}}</div></paper-item>
+          <paper-button id="fwd" on-click="frwd">Forward to Manager</paper-button>
+        </div>
+        <div class="field" id="reads">
+        Status : Close
+            <paper-checkbox id="read" on-change="changeHandler"></paper-checkbox>
           </div>
         <div class="buttons">
           <paper-button on-click="answer">Reply</paper-button>
         </div>
       </paper-dialog>
-      <paper-dialog id="adminmsg">
+      <paper-dialog id="adminmsg" class="dialog">
       <paper-dialog-scrollable>
       <div class="field textarea">
             <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
@@ -100,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-      var statusx="closed";
+      var statusx="open";
       var flag=1;
     Polymer({
       is: 'parent-inbox-card',
@@ -108,8 +111,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ready:function(){
       this.querySelector("#parent-message").close();
       var id=sessionStorage.getItem("user");
+      var role=sessionStorage.getItem("role");
       if(id=='admin'){
-        this.$.read.hidden=true;
+        this.$.reads.hidden=true;
+      }
+      if(id=='parent'){
+        this.$.details.hidden=true;
+      }
+      if(role='manager'){
+       this.$.fwd.hidden=true; 
       }
     /*var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
     if(str.length > 60){
@@ -130,8 +140,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.querySelector("#parent-message").close();
       this.querySelector("#adminmsg").open();
     },
-    status:function(e){
-        statusx=(e.target.selectedItem.textContent).trim();
+    changeHandler:function(e){
+      if(e.target.checked==true){
+        statusx="closed";
+      }
+      else{
+        statusx="open"; 
+      }
+      alert(statusx);
     },
     submit:function(){
       //alert(this.queryid+   +this.adminreply);
@@ -142,7 +158,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var id=sessionStorage.getItem("id");
         var par=sessionStorage.getItem("prname");
         var mail=sessionStorage.getItem("mail");
-      this.$.qpostid.postquery(this.queryid,this.adminreply,statusx,flag,id,par,mail);
+        var mob=sessionStorage.getItem("mob");
+      this.$.qpostid.postquery(this.queryid,this.adminreply,statusx,flag,id,par,mail,this.category,mob);
       this.querySelector("#adminmsg").close();  
       }
       else{
@@ -150,6 +167,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.$.qpostid.postreply(this.queryid,this.adminreply,statusx,this.date,this.time);
       this.querySelector("#adminmsg").close(); 
         }
+    },
+    frwd:function(){
+      this.$.qpostid.updatefrwd(this.queryid,this.date,this.time);
     }
     });
   })();

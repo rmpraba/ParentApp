@@ -35,6 +35,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="studetailsajax"
+        url="{{studetailsurl}}"
+        params="{{studetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -52,6 +63,7 @@
     },
     mobileResponse:function(e)
     {
+      document.querySelector('icon-card').Fnparent();
       if(e.detail.response.returnval.length>0)
       {
         var school=e.detail.response.returnval[0].school_id;
@@ -71,18 +83,21 @@
       obj.user=username;
       obj.pass=password;
       this.adminloginparam=obj;
+      //alert(JSON.stringify(obj));
       this.$.adminloginajax.generateRequest();
     },
     adminloginResponse:function(e){
+      document.querySelector('icon-card').Fnadmin();
       var res=e.detail.response.returnval;
       if(res!=0){
-      var id=e.detail.response.returnval[0].id;
+      var role=e.detail.response.returnval[0].role;
       var schoolx=e.detail.response.returnval[0].school_id;
       sessionStorage.setItem("schoolx",schoolx);
+      sessionStorage.setItem("role",role);
       //alert(schoolx);
       document.querySelector('transport-app').setPage("iconpage");
       }
-      else if(res=='invalid'){
+      else{
           alert('Wrong Username and Password');
       }
     },
@@ -98,13 +113,34 @@
         var stud_id=e.detail.response.returnval[0].student_id;
         var parent_name=e.detail.response.returnval[0].parent_name;
         var email=e.detail.response.returnval[0].email;
+        var mob=e.detail.response.returnval[0].mobile;
         document.querySelector('complaint-form').student_id=stud_id;
         document.querySelector('complaint-form').name=parent_name;
         document.querySelector('complaint-form').email=email;
+        document.querySelector('complaint-form').mobile=mob;
 
         sessionStorage.setItem("id",stud_id);
         sessionStorage.setItem("prname",parent_name);
         sessionStorage.setItem("mail",email);
+        sessionStorage.setItem("mob",mob);
+//alert('1'+stud_id);
+        this.studetailsurl="http://localhost:8082/studetails";
+        var obj={"schol":"","studid":""}
+        obj.studid=stud_id;
+        obj.schol=sessionStorage.getItem("schoolx");
+        this.studetailsparam=obj;
+        //alert(JSON.stringify(obj));
+        //alert('2'+stud_id);
+        this.$.studetailsajax.generateRequest();
+    },
+    studetailsResponse:function(e){
+        var stud_name=e.detail.response.returnval[0].student_name;
+        var std=e.detail.response.returnval[0].std;
+        var sec=e.detail.response.returnval[0].sec;
+        var classs=std+'-'+sec;
+        //alert(stud_name+'   '+classs);
+        document.querySelector('complaint-form').student_name=stud_name;
+        document.querySelector('complaint-form').classes=classs;
     }
 
     });

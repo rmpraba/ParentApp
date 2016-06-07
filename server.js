@@ -45,7 +45,7 @@ console.log("Example app listening at http://%s:%s", host, port)
 
 app.post('/query-post1',  urlencodedParser,function (req, res)
 {
-  var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag};
+  var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag,"subject":req.query.subject,"mobile":req.query.mob};
 
   //console.log(school_id);
        connection.query('insert into query set ?',[dv],
@@ -143,7 +143,7 @@ app.post('/adminlogin',  urlencodedParser,function (req, res)
 {
   var user={"id":req.query.user};
   var pass={"password":req.query.pass};
-       connection.query('select * from employee where ?',[user,pass],
+       connection.query('select * from employee where ? and ?',[user,pass],
         function(err, rows)
         {
     if(!err)
@@ -222,7 +222,7 @@ app.post('/parentinbox',  urlencodedParser,function (req, res)
   var stud={"student_id":req.query.id};
   var status={"query_status":req.query.status};
   //console.log(school_id+   +stud);
-       connection.query('select * from query where ? and ? and ?',[school_id,stud,status],
+       connection.query('select * from query where ? and ? and ? and query_reply!=""',[school_id,stud,status],
         function(err, rows)
         {
     if(!err)
@@ -238,6 +238,87 @@ app.post('/parentinbox',  urlencodedParser,function (req, res)
     else
     {
 
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+app.post('/studetails',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var stud_id = {"id":req.query.studid};
+  
+  connection.query('select student_name,(select class from class_details where id=class_id and school_id=school_id)as std, (select section from class_details where id=class_id and school_id=school_id)as sec from student_details where ? and ?',[stud_id,school_id],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+app.post('/managerinbox',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var fwd = {"user":req.query.frwd};
+  
+  connection.query('select * from query where ? and ?',[fwd,school_id],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+app.post('/updatefwd',  urlencodedParser,function (req, res)
+{
+    var id={"query_id":req.query.id};
+    var date={"updated_date":req.query.date};
+    var time={"time":req.query.time};
+    var fwd={"user":req.query.frwd};
+    var school_id={"school_id":req.query.schol};
+
+  //console.log(school_id);
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[fwd,id,school_id,date,time],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
   
