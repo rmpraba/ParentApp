@@ -93,7 +93,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="updatefwdResponse"
     debounce-duration="300"
   ></iron-ajax>
-
+<iron-ajax
+    method="post"
+    id="openreportid"
+    url="{{openreporturl}}"
+    params="{{openreportparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="openreportResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="closereportid"
+    url="{{closereporturl}}"
+    params="{{closereportparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="closereportResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -266,7 +285,7 @@ managerinboxResponse:function(e){
   //alert('2');
    var msgarr=e.detail.response.returnval;
   document.querySelector('parent-inbox').msgarr=msgarr;
-  alert(JSON.stringify(msgarr));
+  //alert(JSON.stringify(msgarr));
 },
 updatefrwd:function(querid,date,time){
   this.updatefwdurl="http://localhost:8082/updatefwd";
@@ -288,6 +307,37 @@ updatefwdResponse:function(e){
   else{
    alert('Not Forwarded'); 
   }
+},
+getreport:function(){
+this.openreporturl="http://localhost:8082/openreport";
+var obj={"schol":"","status":""}
+obj.schol=sessionStorage.getItem("schoolx");
+obj.status="open";
+this.openreportparam=obj;
+this.$.openreportid.generateRequest();
+
+this.closereporturl="http://localhost:8082/closereport";
+var obj1={"schol":"","status":""}
+obj1.schol=sessionStorage.getItem("schoolx");
+obj1.status="closed";
+this.closereportparam=obj1;
+this.$.closereportid.generateRequest();
+
+},
+openreportResponse:function(e){
+  var tex=e.detail.response.returnval;
+//alert(JSON.stringify(tex));
+var len=tex.length;
+document.querySelector('reportstatus-card').pendingarr=tex;
+document.querySelector('reportstatus-card').noofpend=len;
+
+},
+closereportResponse:function(e){
+  var tex=e.detail.response.returnval; 
+  //alert(JSON.stringify(tex)); 
+  var len=tex.length;
+  document.querySelector('reportstatus-card').closedarr=tex;
+   document.querySelector('reportstatus-card').noofclose=len;
 }
      
 

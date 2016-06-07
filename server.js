@@ -324,3 +324,59 @@ app.post('/updatefwd',  urlencodedParser,function (req, res)
   
 });
   });
+
+
+app.post('/openreport',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var status = {"query_status":req.query.status};
+  
+  connection.query('select distinct query_id,parent_email,mobile,parent_name from query where ? and ?',[status,school_id],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+app.post('/closereport',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var status = {"query_status":req.query.status};
+  
+  connection.query('select distinct query_id,parent_email,mobile,parent_name from query where ? and ?',[status,school_id],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });

@@ -9,7 +9,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../transportfee-service/transportfee-service.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+<link rel="import" href="../reportstatus-item-card/reportstatus-item-card.html">
 <dom-module id="reportstatus-card">
   <template>
     <style>
@@ -17,7 +25,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <p><strong>Pending Request :</strong></p>
+     <div class="pending-card">
+      <div class="headtabs">
+        <paper-tabs selected="0">
+          <paper-tab>Request ID</paper-tab>
+          <paper-tab>Parent Name</paper-tab>
+          <paper-tab>Mobile</paper-tab>
+          <paper-tab>E-Mail ID</paper-tab>
+        </paper-tabs>
+      </div>
+      <template  is="dom-repeat" items="{{pendingarr}}" as="view">
+        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" ></reportstatus-item-card>
+      </template>
+      <p></p>
+      <p>Total pending request : {{noofpend}}</p>
+      <p>
+        <paper-item></paper-item>
+        <hr>
+        <paper-item></paper-item>
+      </p>
+      <p><strong>Closed Request :</strong></p>
+     <div class="pending-card">
+      <div class="headtabs">
+        <paper-tabs selected="0">
+          <paper-tab>Request ID</paper-tab>
+          <paper-tab>Parent Name</paper-tab>
+          <paper-tab>Mobile</paper-tab>
+          <paper-tab>E-Mail ID</paper-tab>
+        </paper-tabs>
+      </div>
+      <template  is="dom-repeat" items="{{closedarr}}" as="view">
+        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" ></reportstatus-item-card>
+      </template>
+      <p></p>
+      <p>Total closed request : {{noofclose}}</p>
+      <p></p>
   </template>
   <script>
   (function() {
