@@ -313,6 +313,7 @@ this.openreporturl="http://localhost:8082/openreport";
 var obj={"schol":"","status":""}
 obj.schol=sessionStorage.getItem("schoolx");
 obj.status="open";
+obj.flag=1;
 this.openreportparam=obj;
 this.$.openreportid.generateRequest();
 
@@ -320,24 +321,29 @@ this.closereporturl="http://localhost:8082/closereport";
 var obj1={"schol":"","status":""}
 obj1.schol=sessionStorage.getItem("schoolx");
 obj1.status="closed";
+obj1.flag=1;
 this.closereportparam=obj1;
 this.$.closereportid.generateRequest();
 
 },
 openreportResponse:function(e){
+  if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval;
 //alert(JSON.stringify(tex));
 var len=tex.length;
+
 document.querySelector('reportstatus-card').pendingarr=tex;
 document.querySelector('reportstatus-card').noofpend=len;
-
+}
 },
 closereportResponse:function(e){
+  if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval; 
   //alert(JSON.stringify(tex)); 
   var len=tex.length;
   document.querySelector('reportstatus-card').closedarr=tex;
    document.querySelector('reportstatus-card').noofclose=len;
+}
 }
      
 

@@ -24,20 +24,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .body2{
+        margin-top: 2%;
+      }
     </style>
     <p><strong>Pending Request :</strong></p>
      <div class="pending-card">
       <div class="headtabs">
-        <paper-tabs selected="0">
-          <paper-tab>Request ID</paper-tab>
-          <paper-tab>Parent Name</paper-tab>
-          <paper-tab>Mobile</paper-tab>
+        <paper-tabs>
+          <paper-tab >Request ID</paper-tab>
+          <paper-tab style="margin-left:-10%;">Name</paper-tab>
+          <paper-tab style="margin-left:-2%;">Subject</paper-tab>
           <paper-tab>E-Mail ID</paper-tab>
+          <paper-tab >Mobile</paper-tab>
         </paper-tabs>
       </div>
+      <div class="body2">
       <template  is="dom-repeat" items="{{pendingarr}}" as="view">
-        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" ></reportstatus-item-card>
+        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card>
       </template>
+      </div>
       <p></p>
       <p>Total pending request : {{noofpend}}</p>
       <p>
@@ -48,16 +54,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p><strong>Closed Request :</strong></p>
      <div class="pending-card">
       <div class="headtabs">
-        <paper-tabs selected="0">
+        <paper-tabs >
           <paper-tab>Request ID</paper-tab>
-          <paper-tab>Parent Name</paper-tab>
-          <paper-tab>Mobile</paper-tab>
+          <paper-tab style="margin-left:-10%;">Name</paper-tab>
+          <paper-tab style="margin-left:-2%;">Subject</paper-tab>
           <paper-tab>E-Mail ID</paper-tab>
+          <paper-tab >Mobile</paper-tab>
         </paper-tabs>
       </div>
+      <div class="body2">
       <template  is="dom-repeat" items="{{closedarr}}" as="view">
-        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" ></reportstatus-item-card>
+        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card>
       </template>
+      </div>
       <p></p>
       <p>Total closed request : {{noofclose}}</p>
       <p></p>
