@@ -2,6 +2,22 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+   <link rel="import" href="bower_components/paper-styles/demo-pages.html">
+       <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+       <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
+       <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
+       <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+       <link rel="import" href="bower_components/paper-item/paper-item.html">
+       <link rel="import" href="bower_components/paper-card/paper-card.html">
+       <link rel="import" href="bower_components/paper-input/paper-input.html">
+       <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+       <link rel="import" href="bower_components/iron-pages/iron-pages.html">
+       <link rel="import" href="bower_components/paper-button/paper-button.html">
+       <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+       <link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
+       <link rel="import" href="bower_components/paper-menu-button/paper-menu-button.html">
+       <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+       <link rel="import" href="bower_components/paper-badge/paper-badge.html">
   <link rel="import" href="../complaint-form/complaint-form.html">
   <link rel="import" href="../parentinbox-itemcard/parentinbox-itemcard.html">
     <link rel="import" href="../icon-card/icon-card.html">
@@ -26,6 +42,27 @@
       <label>{{title}}</label>
     </div>
     <div class="content">
+    <paper-drawer-panel responsiveWith="300px">
+      <paper-header-panel drawer>
+        <paper-toolbar>
+           <div><paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button></div>
+        </paper-toolbar>
+        <div>
+      <paper-menu class="content fit">
+       <icon-card></icon-card>
+      <!-- Dynamic menu creation for drawer panel -->
+    <br/>
+      </paper-menu>
+        </div>
+      </paper-header-panel>
+      
+      <paper-header-panel main>
+      <paper-toolbar>
+            <div><paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button></div>
+        <div><paper-item class="title">{{title}}</paper-item></div>
+            <div class="flex"></div>
+          <paper-button class="in" on-click="signout">signout</paper-button>
+          </paper-toolbar>
       <iron-pages selected="{{page}}" attr-for-selected="data-category">
         <section data-category="login">
           <login-form></login-form>
@@ -46,6 +83,8 @@
           <reportstatus-card></reportstatus-card>
         </section>
       </iron-pages>
+      </paper-header-panel>
+      </paper-drawer-panel>
       </div>
     <div class="footer"></div>
   </template>
@@ -59,7 +98,13 @@ this.page="login";
     setPage:function(page)
     {
       this.page=page;
-    }
+    },
+    signout:function()
+ {
+  window.location.href="../index.html";
+
+   //document.querySelector('app-card').setPage("loginpage");
+ },
    
   });
 

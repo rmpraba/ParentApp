@@ -92,9 +92,8 @@
       var id=e.target.selectedItem.value;
       //alert(e.target.selectedItem.value);
         sessionStorage.setItem("studid",id);
-      
-      document.querySelector('transport-app').setPage("iconpage");
       this.$.login.getdetails(id);
+      
     },
     butclick:function(){
       if(temp==0){

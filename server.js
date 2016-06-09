@@ -221,7 +221,7 @@ app.post('/parentinbox',  urlencodedParser,function (req, res)
   var school_id={"school_id":req.query.schol};
   var stud={"student_id":req.query.id};
   var status={"query_status":req.query.status};
-  //console.log(school_id+   +stud);
+  console.log(school_id+''+stud+''+status);
        connection.query('select * from query where ? and ? and ? and query_reply!=""',[school_id,stud,status],
         function(err, rows)
         {
