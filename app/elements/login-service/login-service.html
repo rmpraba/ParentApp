@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../query-post/query-post.html">
 <dom-module id="login-service">
   <template>
     <iron-ajax
@@ -46,6 +47,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <query-post id='qpostid'></query-post>
   </template>
   <script>
   (function() {
@@ -54,7 +56,8 @@
     Polymer({
       is: 'login-service',
 
-    mobile:function(mobile){
+    mobile:function(mobile)
+    {
       this.mobileurl="http://localhost:8082/mobile";
       var obj={"mobile":""};
       obj.mobile=mobile;
@@ -63,7 +66,7 @@
     },
     mobileResponse:function(e)
     {
-      document.querySelector('icon-card').Fnparent();
+
       if(e.detail.response.returnval.length>0)
       {
         var school=e.detail.response.returnval[0].school_id;
@@ -95,7 +98,29 @@
       sessionStorage.setItem("schoolx",schoolx);
       sessionStorage.setItem("role",role);
       //alert(schoolx);
-      document.querySelector('transport-app').setPage("iconpage");
+        var id=sessionStorage.getItem("user");
+        var role=sessionStorage.getItem("role");
+       //alert(id+'    '+role);
+       if((id=="admin")&&(role=='manager')){
+        //alert('hello');
+         document.querySelector('app-card').setPage("transport");
+        document.querySelector('transport-app').setPage("parent-inbox");
+
+        this.$.qpostid.managerinbox();
+       }
+       
+       else if(id=="parent")
+       {
+         document.querySelector('app-card').setPage("transport");
+        document.querySelector('transport-app').setPage("parentinbox-itemcard");
+
+        this.$.qpostid.parentinbox();
+       }
+       else if(id=="admin"){
+         document.querySelector('app-card').setPage("transport");
+        document.querySelector('transport-app').setPage("parent-inbox");
+       this.$.qpostid.getmsg(); 
+       }
       }
       else{
           alert('Wrong Username and Password');
@@ -110,6 +135,35 @@
         this.$.getdetailsajax.generateRequest();
     },
     getdetailsResponse:function(e){
+      //document.querySelector('app-card').setPage("transport");
+      //document.querySelector('transport-app').setPage("iconpage");
+       var id=sessionStorage.getItem("user");
+        var role=sessionStorage.getItem("role");
+       //alert(id+'    '+role);
+       if((id=="admin")&&(role=='manager')){
+        //alert('hello');
+         document.querySelector('app-card').setPage("transport");
+        document.querySelector('transport-app').setPage("parent-inbox");
+
+        this.$.qpostid.managerinbox();
+       }
+       
+       else if(id=="parent")
+       {
+        
+         this.$.qpostid.parentinbox();
+         document.querySelector('app-card').setPage("transport");
+        document.querySelector('transport-app').setPage("parentinbox-itemcard");
+       
+       }
+       else if(id=="admin"){
+      
+         document.querySelector('app-card').setPage("transport");
+        document.querySelector('transport-app').setPage("parent-inbox");
+       this.$.qpostid.getmsg(); 
+       }
+      document.querySelector('icon-card').Fnparent();
+
         var stud_id=e.detail.response.returnval[0].student_id;
         var parent_name=e.detail.response.returnval[0].parent_name;
         var email=e.detail.response.returnval[0].email;

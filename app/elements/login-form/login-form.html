@@ -51,6 +51,7 @@
             </div>
             <div class="field">
               <paper-input type="password" label="Password" value="{{password}}" id="pass"></paper-input>
+              <paper-input label="Password" value="{{password}}" type="password" id="pass"></paper-input>
             </div>
             <div class="field">
               <paper-button id="sub" class="sub" on-click="login">LOGIN</paper-button>
@@ -92,9 +93,8 @@
       var id=e.target.selectedItem.value;
       //alert(e.target.selectedItem.value);
         sessionStorage.setItem("studid",id);
-      
-      document.querySelector('transport-app').setPage("iconpage");
       this.$.login.getdetails(id);
+      
     },
     butclick:function(){
       if(temp==0){

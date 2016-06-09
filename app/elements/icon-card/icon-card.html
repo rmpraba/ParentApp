@@ -18,6 +18,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   margin:0 auto;
     text-align: center;
     width: 100%;
+    @apply(--layout-vertical);
+ }
+ .hori
+ {
+   @apply(--layout-horizontal);
  }
 .iconbutton
  {
@@ -31,10 +36,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
 
     <div class="frontpage">
-      <paper-icon-button id="form" class="iconbutton" src="../../images/feedback.png" on-click="insertfeedback"></paper-icon-button>
+    <div class="hori">
+      <paper-icon-button id="form" class="iconbutton" src="../../images/feedback.png"  on-click="insertfeedback"></paper-icon-button>
+      <div>Feedback</div>
+      </div>
+          <div class="hori">
       <paper-icon-button class="iconbutton" src="../../images/inbox.jpg" on-click="inbox"></paper-icon-button>
+       <div>Inbox</div>
+         </div>
+          <div class="hori">
+
        <paper-icon-button id="report" class="iconbutton" src="../../images/report.png" on-click="report"></paper-icon-button>
-   
+        <div>Report</div>
+   </div>
     </div>
   </body>
   <query-post id='qpostid'></query-post>

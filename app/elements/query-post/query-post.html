@@ -189,7 +189,8 @@ querypostResponse:function(e)
 {
   var s=e.detail.response.returnval;
   if(s=='success'){
-  alert("Feedback submited successfuly");  
+  alert("Feedback submited successfuly"); 
+  document.querySelector('complaint-form').refresh(); 
   }
   else{
     alert("Feedback not submited");
@@ -233,18 +234,20 @@ postreply:function(queryid,reply,statusx,date,time){
 },
 
 parentinbox:function(){
-        //alert('1');
+       // alert('1');
 this.parentinboxurl="http://localhost:8082/parentinbox";
 var obj={"id":"","schol":"","status":""}
 obj.id=sessionStorage.getItem("studid");
 obj.schol=sessionStorage.getItem("schoolx");
 obj.status="closed";
+//alert(JSON.stringify(obj));
 this.parentinboxparam=obj;
 this.$.parentinboxid.generateRequest();
 },
 parentinboxResponse:function(e){
   //alert('2');
   var resarr=e.detail.response.returnval;
+  //alert(JSON.stringify(resarr));
   document.querySelector('parentinbox-itemcard').msgarr=resarr;
 //alert(JSON.stringify(resarr));
 },
