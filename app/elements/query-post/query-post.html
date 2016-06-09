@@ -189,7 +189,8 @@ querypostResponse:function(e)
 {
   var s=e.detail.response.returnval;
   if(s=='success'){
-  alert("Feedback submited successfuly");  
+  alert("Feedback submited successfuly"); 
+  document.querySelector('complaint-form').refresh(); 
   }
   else{
     alert("Feedback not submited");

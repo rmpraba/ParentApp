@@ -88,6 +88,12 @@
       click:function()
       { //alert(this.student_id+ '  '+this.name+'   '+category);
         this.$.qpostid.querypostFn(this.student_id,this.name,this.email,category,this.complaint,this.subject,this.mobile);
+      },
+      refresh:function()
+      {
+        this.complaint="";
+        this.subject="";
+        document.querySelector('#category').selected=-1;
       }
     });
   })();
