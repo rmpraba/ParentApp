@@ -77,7 +77,7 @@ section{
     margin: 0 auto;
 }
 @media only screen and (max-width: 320px) {
-   .container .field iron-autogrow-textarea{ height: 2em; }
+   
 }
 .row{
     margin: 0 auto;
@@ -106,6 +106,10 @@ tbody td{
 }
 .textarea{
     margin: 4% 2% 4% 0!important;
+    width: 100%;
+}
+.textarea iron-autogrow-textarea{
+    width: 100%;
 }
 .page-heading{
 	margin:3% 0;
@@ -156,7 +160,7 @@ body{
     font-weight:bold;
 }
 .container .field iron-autogrow-textarea{
-    width: 100%;
+    width: 95%;
     height: 3.5em !important;   
     padding: 1%;
 }
@@ -171,6 +175,14 @@ body{
 }
  @media(max-width:767px){
     .page-heading{font-size: 10px;}
+    .heading-messsage{font-size: 23px;}
+    .feedback .greeting{font-size: 20px;}
+    .feedback .message-content{font-size: 20px;}
+    .container .field iron-autogrow-textarea{ height: 2em; width:97% !important; }
+    .from{font-size: 10px;}
+    #details .mobile{float: none;}
+    #details .mail{float: none;}
+    .when .time p{font-size: 12px;}
 }
 .login-card paper-dropdown-menu{
     width: 100%;
@@ -240,18 +252,17 @@ paper-dialog{
     font-size: 125%;    
     padding: 1% 2.5%;
 }
-#parent-message{
+.parent-message{
     margin: 0 auto;
     text-align: center;
 }
-#parent-message .buttons{
-    margin: 0 auto;
+.parent-message .buttons, .dialog .buttons{
+    margin: 2% auto;
     text-align: center;
 }
-#parent-message .buttons paper-button{
+.parent-message .buttons paper-button, .dialog .buttons paper-button{
     margin: 0 auto;
     text-align: center;
-
 }
 .detail{
     display: inline-block;
@@ -284,5 +295,19 @@ paper-dialog{
     position: absolute;
     right: 10%;
     text-align: justify;
+}
+.from p, .time p{
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+}
+#details{
+    display: block;
+    width: 100%;
+    margin: 2%;
+}
+.when p{
+    margin: 0;
+    padding: 0;
 }
 </style>

@@ -26,11 +26,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-top: -25%;
       }
       .dialog{
-        width:40%;
+        width:100%;
       }
       .when .time{
-        margin-left: -28%;
-        margin-top: 4%;
+        margin-left: -80%;
+        margin-top: -10%;
+      }
+      .when .time p{
+        font-size: 14px;
       }
       .inbox-top .from{
         @apply(--layout-horizontal);
@@ -40,23 +43,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="inbox-content">
       <div class="detail">
         <div class="inbox-top">
-          <div class="from">{{from}} : {{flag}}  -   ({{category}}) - [{{status}}] </div>
+          <div class="from"><p>{{from}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
         </div>
         <div class="when">
-          <div class="time">{{date}}  {{time}}</div>
+          <div class="time">
+            <div>
+              <p>{{time}}</p>
+            </div>
+            <p>{{date}}</p>
+          </div>
         </div>
         <div class="action">
-          <paper-icon-button class="view_msg" on-click="click" src="../../images/open_message.png"></paper-icon-button>
+          <paper-icon-button class="view_msg" on-click="toggle" src="../../images/open_message.png"></paper-icon-button>
         </div>
       </div>
     </div>
     <div class="message">
-      <paper-dialog id="parent-message" class="dialog" style="margin-left:25%;">
-        <h2>Message</h2>
-        <div class="close-button">
-          <paper-icon-button on-click="close" src="../../images/close.png"></paper-icon-button>
-        </div>
-        <paper-dialog-scrollable>
+      </paper-dialog>
+      <iron-collapse id="{{queryid}}" class="parent-message">
+        <h2 class="heading-messsage">Message</h2>
           <div class="top">
             <div class="request-id">
               {{queryid}}
@@ -74,29 +79,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="greeting">
               Hai Sir/Madam,
             </div>
-            <p>{{message}}</p>
+            <p class="message-content">{{message}}</p>
           </div>
-        </paper-dialog-scrollable>
         <div id="details">
-          <paper-item>Contact:{{mob}},<div>{{mail}}</div></paper-item>
-          <paper-button id="fwd" on-click="frwd">Forward to Manager</paper-button>
+          <p class="mobile">Contact:{{mob}},</p>
+          <p class="mail">{{mail}}</p>
         </div>
+        <!--<div class="buttons">
+          <paper-button id="fwd" on-click="frwd">Forward to Manager</paper-button>
+        </div>-->
         <div class="field" id="reads">
-        Status : Close
+          Status : Close
+          <div class="buttons">
             <paper-checkbox id="read" on-change="changeHandler"></paper-checkbox>
           </div>
-        <div class="buttons">
-          <paper-button on-click="answer">Reply</paper-button>
         </div>
-      </paper-dialog>
-      <paper-dialog id="adminmsg" class="dialog">
-      <paper-dialog-scrollable>
-      <div class="field textarea">
-            <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
-          </div>
+        <div class="buttons" >
+          <paper-button id="reply-button" on-click="answer">Reply</paper-button>
+        </div>
+      </iron-collapse>
+      <iron-collapse id="adminmsg" class="dialog">
+        <div class="field textarea">
+          <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
+        </div>
+        <div class="buttons">
           <paper-button on-click="submit">SUBMIT</paper-button>
-          </paper-dialog-scrollable>
-      </paper-dialog>
+        </div>
+      </iron-collapse>
     </div>
     <query-post id='qpostid'></query-post>
   </template> 
@@ -109,7 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'parent-inbox-card',
       
     ready:function(){
-      this.querySelector("#parent-message").close();
+      //this.querySelector("#parent-message").close();
       var id=sessionStorage.getItem("user");
       var role=sessionStorage.getItem("role");
       if(id=='admin'){
@@ -128,17 +137,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     } */
       //this.querySelector('#parent-message').close();
     },
-    click:function(){
+    /*click:function(){
       this.querySelector("#parent-message").open();
       //this.querySelector('#parent-message').show();
     },
     close:function(){
       this.querySelector("#parent-message").close();
+    }*/
+    toggle: function() {
+      document.querySelector("#"+this.queryid).toggle();
+      if(document.querySelector("#adminmsg").opened = true){
+        document.querySelector("#adminmsg").opened = false;
+      }
     },
     answer:function(){
       //alert("reply");
-      this.querySelector("#parent-message").close();
-      this.querySelector("#adminmsg").open();
+      document.querySelector("#adminmsg").toggle();
     },
     changeHandler:function(e){
       if(e.target.checked==true){
