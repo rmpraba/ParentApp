@@ -244,12 +244,13 @@ this.unopenmsgurl="http://localhost:8082/unopenmsg";
   obj.schol=sessionStorage.getItem("schoolx");
   obj.status=1;
   this.unopenmsgparam=obj;
+  alert(JSON.stringify(obj));
   this.$.unopenmsgid.generateRequest();
 
 },
 unopenmsgResponse:function(e){
     var res=e.detail.response.returnval;
-    alert('unread msg for admin   '+res);
+    alert('unread msg for admin   '+JSON.stringify(res));
 },
 getmsgResponse:function(e)
 {
@@ -412,6 +413,7 @@ obj.schol=sessionStorage.getItem("schoolx");
 obj.msg_status=2;
 
 this.upmsgstatparam=obj;
+alert(JSON.stringify(obj));
 this.$.upmsgstatid.generateRequest();
 },
 upmsgstatResponse:function(e){
@@ -427,13 +429,14 @@ upmsgstatResponse:function(e){
   obj.schol=sessionStorage.getItem("schoolx");
   obj.status=1;
   this.unreadmsgparam=obj;
+  alert(JSON.stringify(obj));
   this.$.unreadmsgid.generateRequest();
 
 },
-unreadmsgResponse:function(e);
+unreadmsgResponse:function(e)
 {
   var resno=e.detail.response.returnval;
-  alert('total unread msg for this id is'+resno);
+  alert('total unread msg for this id is'+JSON.stringify(resno));
 }
      
 

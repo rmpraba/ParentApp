@@ -115,7 +115,7 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
   var status={"query_status":"open"};
-  //console.log(school_id+   +status);
+  console.log(school_id+   +status);
        connection.query('select * from query where ? and ?',[school_id,status],
         function(err, rows)
         {
@@ -385,20 +385,19 @@ app.post('/closereport',  urlencodedParser,function (req, res)
 
 app.post('/upmsgstat',  urlencodedParser,function (req, res)
 {
-    var id={"query_id":req.query.id};
+    var id={"query_id":req.query.sid};
     var date={"updated_date":req.query.date};
     var time={"time":req.query.time};
     var status={"msg_status":req.query.msg_status};
     var school_id={"school_id":req.query.schol};
 
-  //console.log(school_id);
+  //console.log('update  '+);
        connection.query('update query set ? WHERE ? and ? and ? and ?',[status,id,school_id,date,time],
         function(err, rows)
         {
     if(!err)
     {
-    
-      res.status(200).json({'returnval': 'success'});
+          res.status(200).json({'returnval': 'success'});
     }
     else
     {
@@ -413,10 +412,10 @@ app.post('/upmsgstat',  urlencodedParser,function (req, res)
 app.post('/unreadmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
-  var status = {"query_status":req.query.status};
+  var status = {"msg_status":req.query.status};
   var id={"student_id":req.query.sid};
   
-  connection.query('select count msg_status from query where ? and ? and ?',[status,school_id,id],
+  connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ? AND ?',[status,school_id,id],
   function(err, rows)
   {
     if(!err)
@@ -442,9 +441,9 @@ app.post('/unreadmsg',  urlencodedParser,function (req, res)
 app.post('/unopenmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
-  var status = {"query_status":req.query.status};
+  var status = {"msg_status":req.query.status};
   
-  connection.query('select count msg_status from query where ? and ?',[status,school_id],
+  connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ?',[status,school_id],
   function(err, rows)
   {
     if(!err)
