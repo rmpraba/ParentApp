@@ -70,9 +70,13 @@
       if(e.detail.response.returnval.length>0)
       {
         var school=e.detail.response.returnval[0].school_id;
+        var school_name = e.detail.response.returnval[0].school_name;
         sessionStorage.setItem("schoolx",school);
+        sessionStorage.setItem("school_name", school_name);
+
         
       var parent=e.detail.response.returnval;
+
       document.querySelector('login-form').parent=parent;
       }
     else
@@ -95,6 +99,7 @@
       if(res!=0){
       var role=e.detail.response.returnval[0].role;
       var schoolx=e.detail.response.returnval[0].school_id;
+      var school_name=e.detail.response.returnval[0].school_name;
       sessionStorage.setItem("schoolx",schoolx);
       sessionStorage.setItem("role",role);
       //alert(schoolx);
@@ -133,7 +138,7 @@
         obj.id=id;
         obj.schol=sessionStorage.getItem("schoolx");
         this.getdetailsparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.getdetailsajax.generateRequest();
     },
     getdetailsResponse:function(e){

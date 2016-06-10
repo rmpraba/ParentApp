@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 
 app.post('/mobile',  urlencodedParser,function (req, res){
   var mobile={"mobile":req.query.mobile};
-  connection.query('SELECT school_id,student_id, (select student_name from student_details where id = student_id) as student_name from parent where ? ',[mobile],
+  connection.query('SELECT school_id,(Select name from md_school where id = school_id) as school_name ,student_id, (select student_name from student_details where id = student_id) as student_name from parent where ? ',[mobile],
   function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -143,7 +143,7 @@ app.post('/adminlogin',  urlencodedParser,function (req, res)
 {
   var user={"id":req.query.user};
   var pass={"password":req.query.pass};
-       connection.query('select * from employee where ? and ?',[user,pass],
+       connection.query('select school_id,(Select name from md_school where id = school_id) as school_name , id, password, role from employee where ? and ?',[user,pass],
         function(err, rows)
         {
     if(!err)
