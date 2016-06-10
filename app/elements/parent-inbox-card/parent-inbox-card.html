@@ -1,0 +1,208 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<dom-module id="parent-inbox-card">
+  <template>
+  <style>
+  
+      .inbox-content{
+        background: #CCC;
+        box-shadow: currentColor;
+        height: auto;
+      }
+
+      .view_msg{
+        margin-top: -25%;
+      }
+      .dialog{
+        width:100%;
+      }
+      .when .time{
+        margin-left: -80%;
+        margin-top: -10%;
+      }
+      .when .time p{
+        font-size: 14px;
+      }
+      .inbox-top .from{
+        @apply(--layout-horizontal);
+        width:150%;
+      }
+</style>
+    <div class="inbox-content">
+      <div class="detail" on-click="toggle">
+        <div class="inbox-top">
+          <div class="from"><p>{{from}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
+        </div>
+        <div class="when">
+          <div class="time">
+            <div>
+              <p>{{time}}</p>
+            </div>
+            <p>{{date}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="message">
+      </paper-dialog>
+      <iron-collapse id="{{queryid}}" class="parent-message">
+        <h2 class="heading-messsage">Message</h2>
+          <div class="top">
+            <div class="request-id">
+              {{queryid}} - {{stid}}
+            </div>
+            <div class="when">
+              <div class="date">
+                <div class="time1">
+                  {{time}}
+                </div>
+                  {{date}}
+              </div>
+            </div>
+          </div>
+          <div class="feedback">
+            <div class="greeting">
+              Hai Sir/Madam,
+            </div>
+            <p class="message-content">{{message}}</p>
+          </div>
+        <div id="details">
+        <div class="field">
+                      <paper-dropdown-menu  label="Priority">
+                        <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
+                          <paper-item >Critical</paper-item>
+                          <paper-item >Moderate</paper-item>
+                          <paper-item >Low</paper-item>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
+          <p class="mobile">Contact:{{mob}},</p>
+          <p class="mail">{{mail}}</p>
+        </div>
+        <!--<div class="buttons">
+          <paper-button id="fwd" on-click="frwd">Forward to Manager</paper-button>
+        </div>-->
+        <div class="field" id="reads">
+          Status : Close
+          <div class="buttons">
+            <paper-checkbox id="read" on-change="changeHandler"></paper-checkbox>
+          </div>
+        </div>
+        <div class="buttons" >
+          <paper-button id="reply-button" on-click="answer">Reply</paper-button>
+        </div>
+      </iron-collapse>
+      <iron-collapse id="adminmsg{{queryid}}" class="dialog">
+        <div class="field textarea">
+          <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
+        </div>
+        <div class="buttons">
+          <paper-button on-click="submit">SUBMIT</paper-button>
+        </div>
+      </iron-collapse>
+    </div>
+    <query-post id='qpostid'></query-post>
+  </template> 
+  <script>
+  (function() {
+    'use strict';
+      var statusx="open";
+      var flag=1;
+    Polymer({
+      is: 'parent-inbox-card',
+      
+    ready:function(){
+      //this.querySelector("#parent-message").close();
+      var id=sessionStorage.getItem("user");
+      var role=sessionStorage.getItem("role");
+      if(id=='admin'){
+        this.$.reads.hidden=true;
+      }
+      if(id=='parent'){
+        this.$.details.hidden=true;
+      }
+      if(role=='manager'){
+       this.$.fwd.hidden=true; 
+      }
+    /*var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
+    if(str.length > 60){
+      this.mess = str.substring(0,60);
+      this.ess = str.replace(str,this.mess+'...');
+    } */
+      //this.querySelector('#parent-message').close();
+    },
+    /*click:function(){
+      this.querySelector("#parent-message").open();
+      //this.querySelector('#parent-message').show();
+    },
+    close:function(){
+      this.querySelector("#parent-message").close();
+    }*/
+    toggle: function() {
+      document.querySelector("#"+this.queryid).toggle();
+      if(document.querySelector("#adminmsg"+this.queryid).opened = true){
+        document.querySelector("#adminmsg"+this.queryid).opened = false;
+      }
+      var id=sessionStorage.getItem("user");
+      if(id=='parent')
+      {
+        this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
+      }else{
+      this.$.qpostid.upmsgstat(this.queryid,this.stid,this.time,this.date);
+      }
+    },
+    answer:function(){
+      //alert("reply");
+      document.querySelector("#adminmsg"+this.queryid).toggle();
+    },
+    changeHandler:function(e){
+      if(e.target.checked==true){
+        statusx="closed";
+      }
+      else{
+        statusx="open"; 
+      }
+      alert(statusx);
+    },
+    submit:function(){
+      //alert(this.queryid+   +this.adminreply);
+      var id=sessionStorage.getItem("user");
+      if(id=='parent'){
+        
+        var flag=this.flag+1;  
+        var id=sessionStorage.getItem("id");
+        var par=sessionStorage.getItem("prname");
+        var mail=sessionStorage.getItem("mail");
+        var mob=sessionStorage.getItem("mob");
+      this.$.qpostid.postquery(this.queryid,this.adminreply,statusx,flag,id,par,mail,this.category,mob);
+      this.querySelector("#adminmsg").close();  
+      }
+      else{
+        statusx="closed";
+      this.$.qpostid.postreply(this.queryid,this.adminreply,statusx,this.date,this.time);
+      this.querySelector("#adminmsg").close(); 
+        }
+    },
+    frwd:function(){
+      this.$.qpostid.updatefrwd(this.queryid,this.date,this.time);
+    },
+    priority:function(e){
+        var level=(e.target.selectedItem.textContent).trim();
+        this.$.qpostid.uppri(level,this.queryid,this.date,this.time);
+    }
+    });
+  })();
+  </script>
+</dom-module>
