@@ -23,9 +23,6 @@
       <section>
         <div class="row">
           <div class="container inbox">
-            <div class="page-heading">
-              <h1>INBOX</h1>
-            </div>
             <template is="dom-repeat" items ="{{msgarr}}" as="view">
               <parent-inbox-card queryid={{view.query_id}} from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" flag="{{view.flag}}" category="{{view.category}}" status="{{view.query_status}}" mail="{{view.parent_email}}" mob="{{view.mobile}}"></parent-inbox-card>
             </template>

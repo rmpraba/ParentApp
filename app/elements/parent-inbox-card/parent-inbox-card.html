@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 </style>
     <div class="inbox-content">
-      <div class="detail">
+      <div class="detail" on-click="toggle">
         <div class="inbox-top">
           <div class="from"><p>{{from}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
         </div>
@@ -52,9 +52,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <p>{{date}}</p>
           </div>
-        </div>
-        <div class="action">
-          <paper-icon-button class="view_msg" on-click="toggle" src="../../images/open_message.png"></paper-icon-button>
         </div>
       </div>
     </div>
@@ -98,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button id="reply-button" on-click="answer">Reply</paper-button>
         </div>
       </iron-collapse>
-      <iron-collapse id="adminmsg" class="dialog">
+      <iron-collapse id="adminmsg{{queryid}}" class="dialog">
         <div class="field textarea">
           <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
         </div>
@@ -146,13 +143,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }*/
     toggle: function() {
       document.querySelector("#"+this.queryid).toggle();
-      if(document.querySelector("#adminmsg").opened = true){
-        document.querySelector("#adminmsg").opened = false;
+      if(document.querySelector("#adminmsg"+this.queryid).opened = true){
+        document.querySelector("#adminmsg"+this.queryid).opened = false;
       }
     },
     answer:function(){
       //alert("reply");
-      document.querySelector("#adminmsg").toggle();
+      document.querySelector("#adminmsg"+this.queryid).toggle();
     },
     changeHandler:function(e){
       if(e.target.checked==true){

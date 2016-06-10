@@ -75,6 +75,8 @@
 }
 section{
     margin: 0 auto;
+    height: 643px;
+    overflow: auto;
 }
 @media only screen and (max-width: 320px) {
    
@@ -86,7 +88,6 @@ section{
   box-shadow: 0 0 5px 0 #a6a6a6 ;
   margin: 7%; 
   padding:2%;
-  background-color: #ffffff;
 }
 table{
     width: 100%;
@@ -196,7 +197,7 @@ body{
   height: 35%;
  }
  h2 {
-    font-size: 250%;
+    font-size: 150%;
     font-family: 'Lato-Black';
     letter-spacing: -50%;
     text-transform: uppercase;
@@ -268,6 +269,7 @@ paper-dialog{
     display: inline-block;
     height: 1.2em;
     width: 100%;
+    cursor:pointer;
 }
 .inbox-top{
     width: 50%;
@@ -292,9 +294,8 @@ paper-dialog{
     font-family: 'Lato-Light';
 }
 .when{
-    position: absolute;
-    right: 10%;
     text-align: justify;
+    float: right;
 }
 .from p, .time p{
     margin: 0;
