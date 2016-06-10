@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="frontpage">
     <div class="hori">
       <paper-icon-button class="iconbutton" src="../../images/inbox.jpg" on-click="inbox"></paper-icon-button>
-       <a class="cur" on-click="inbox">Inbox</a>
+       <a class="cur" on-click="inbox">Inbox({{unread}})</a>
          </div>
     <div class="hori">
       <paper-icon-button id="form" class="iconbutton" src="../../images/feedback.png"  on-click="insertfeedback"></paper-icon-button>
@@ -77,7 +77,7 @@ var role;
      inbox:function()
      {
      // document.querySelector('transport-app').setPage('iconlist');
-       
+       //alert(this.unread);
        id=sessionStorage.getItem("user");
        role=sessionStorage.getItem("role");
        //alert(id+'    '+role);

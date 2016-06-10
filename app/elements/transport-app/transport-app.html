@@ -49,7 +49,9 @@
         </paper-toolbar>
         <div>
       <paper-menu class="content fit">
+      
        <icon-card></icon-card>
+       
       <!-- Dynamic menu creation for drawer panel -->
     <br/>
       </paper-menu>
@@ -66,9 +68,6 @@
       <iron-pages selected="{{page}}" attr-for-selected="data-category">
         <section data-category="login">
           <login-form></login-form>
-        </section>
-       <section data-category="iconpage">
-          <icon-card></icon-card>
         </section>
          <section data-category="complaintpage">
           <complaint-form></complaint-form>
@@ -94,6 +93,7 @@
     ready: function()
     {
 this.page="login";
+this.fpage="iconpage";
     },
     setPage:function(page)
     {

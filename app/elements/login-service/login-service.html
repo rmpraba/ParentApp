@@ -133,7 +133,7 @@
         obj.id=id;
         obj.schol=sessionStorage.getItem("schoolx");
         this.getdetailsparam=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.getdetailsajax.generateRequest();
     },
     getdetailsResponse:function(e){
@@ -164,7 +164,7 @@
         document.querySelector('transport-app').setPage("parent-inbox");
        this.$.qpostid.getmsg(); 
        }
-          alert(e.detail.response.returnval);
+         // alert(e.detail.response.returnval);
         var stud_id=e.detail.response.returnval[0].student_id;
         var parent_name=e.detail.response.returnval[0].parent_name;
         var email=e.detail.response.returnval[0].email;
