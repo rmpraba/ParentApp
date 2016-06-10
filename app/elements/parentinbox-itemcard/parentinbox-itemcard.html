@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="row">
           <div class="container inbox">
             <div class="page-heading">
-              <h1>INBOX</h1>
+              <h1>INBOX - Parent</h1>
             </div>
             <template is="dom-repeat" items ="{{msgarr}}" as="view">
               <parent-inbox-card queryid={{view.query_id}} from="Administrator" message="{{view.query_reply}}" time="{{view.reply_time}}" date="{{view.reply_date}}" flag="{{view.flag}}" category="{{view.category}}" status="{{view.query_status}}" stid="{{view.student_id}}"></parent-inbox-card>

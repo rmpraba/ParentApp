@@ -167,7 +167,7 @@ app.post('/querypost',  urlencodedParser,function (req, res)
     var id={"query_id":req.query.id};
     var date={"updated_date":req.query.date};
     var time={"time":req.query.time};
-    var msg={"query_reply":req.query.msg,"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"msg_status":req.query.msq_status};
+    var msg={"query_reply":req.query.msg,"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
     var school_id={"school_id":req.query.schol};
 
   //console.log(school_id);
@@ -412,7 +412,7 @@ app.post('/upmsgstat',  urlencodedParser,function (req, res)
 app.post('/unreadmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
-  var status = {"msg_status":req.query.status};
+  var status = {"admin_read":req.query.status};
   var id={"student_id":req.query.sid};
   
   connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ? AND ?',[status,school_id,id],
@@ -459,6 +459,32 @@ app.post('/unopenmsg',  urlencodedParser,function (req, res)
     else
     {
 
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+app.post('/upmsgstatpr',  urlencodedParser,function (req, res)
+{
+    var id={"query_id":req.query.sid};
+    var date={"reply_date":req.query.date};
+    var time={"reply_time":req.query.time};
+    var status={"admin_read":req.query.msgstatus};
+    var school_id={"school_id":req.query.schol};
+
+  //console.log('update  '+);
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[status,id,school_id,date,time],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
   

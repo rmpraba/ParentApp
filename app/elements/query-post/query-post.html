@@ -143,6 +143,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="unopenmsgResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="upmsgstatprid"
+    url="{{upmsgstatprurl}}"
+    params="{{upmsgstatprparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="upmsgstatprResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+  
     <style>
       :host {
         display: block;
@@ -264,7 +275,7 @@ postreply:function(queryid,reply,statusx,date,time){
   var h =  d1.getHours(), m = d1.getMinutes();
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
   this.queryposturl="http://localhost:8082/querypost";
-  var obj={"id":"","msg":"","schol":"","replydate":"","replytime":"","status":"","flag":"","date":"","time":""}
+  var obj={"id":"","msg":"","schol":"","msg_status":"","replydate":"","replytime":"","status":"","flag":"","date":"","time":""}
   obj.id=queryid;
   obj.msg=reply;
   obj.replydate=datex;
@@ -273,6 +284,7 @@ postreply:function(queryid,reply,statusx,date,time){
   obj.date=date;
   obj.time=time;
   obj.schol=sessionStorage.getItem("schoolx");
+  obj.msg_status=1;
   this.querypostparam=obj;
   this.$.querypostid.generateRequest();
 },
@@ -284,7 +296,7 @@ var obj={"id":"","schol":"","status":""}
 obj.id=sessionStorage.getItem("studid");
 obj.schol=sessionStorage.getItem("schoolx");
 obj.status="closed";
-//alert(JSON.stringify(obj));
+alert(JSON.stringify(obj));
 this.parentinboxparam=obj;
 this.$.parentinboxid.generateRequest();
 
@@ -302,7 +314,7 @@ parentinboxResponse:function(e){
   var resarr=e.detail.response.returnval;
   //alert(JSON.stringify(resarr));
   document.querySelector('parentinbox-itemcard').msgarr=resarr;
-//alert(JSON.stringify(resarr));
+alert('hi'+JSON.stringify(resarr));
 },
 postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
     var d1=new Date();
@@ -403,7 +415,6 @@ closereportResponse:function(e){
 }
 },
 upmsgstat:function(id,sid,time,date){
-  stid=sid;
 this.upmsgstaturl="http://localhost:8082/upmsgstat";
 var obj={"sid":"","time":"","date":"","msg_status":"","schol":""}
 obj.sid=id;
@@ -423,6 +434,43 @@ upmsgstatResponse:function(e){
     alert('messaged is opened now');
   }
 
+  this.unopenmsgurl="http://localhost:8082/unopenmsg";
+  var obj={"schol":"","status":""}
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.status=1;
+  this.unopenmsgparam=obj;
+  alert(JSON.stringify(obj));
+  this.$.unopenmsgid.generateRequest();
+
+},
+unopenmsgResponse:function(e)
+{
+  var resno=e.detail.response.returnval;
+  alert('total unread msg for this id is'+JSON.stringify(resno));
+},
+upmsgstatpr:function(id,sid,time,date){
+    stid=sid;
+this.upmsgstatprurl="http://localhost:8082/upmsgstatpr";
+var obj={"sid":"","time":"","date":"","msgstatus":"","schol":""}
+obj.sid=id;
+obj.time=time;
+obj.date=date;
+obj.msgstatus=2;
+obj.schol=sessionStorage.getItem("schoolx");
+
+
+this.upmsgstatprparam=obj;
+alert('parent reply  '+JSON.stringify(obj));
+this.$.upmsgstatprid.generateRequest();
+
+},
+upmsgstatprResponse:function(e){
+  var res=e.detail.response.returnval;
+  if(res=='success')
+  {
+    alert('parent messaged is opened now');
+  }
+
   this.unreadmsgurl="http://localhost:8082/unreadmsg";
   var obj={"sid":"","schol":"","status":""}
   obj.sid=stid;
@@ -431,12 +479,10 @@ upmsgstatResponse:function(e){
   this.unreadmsgparam=obj;
   alert(JSON.stringify(obj));
   this.$.unreadmsgid.generateRequest();
-
 },
-unreadmsgResponse:function(e)
-{
+unreadmsgResponse:function(e){
   var resno=e.detail.response.returnval;
-  alert('total unread msg for this id is'+JSON.stringify(resno));
+  alert('total parent unread msg for this id is'+JSON.stringify(resno));
 }
      
 
