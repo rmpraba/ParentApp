@@ -407,20 +407,54 @@ this.$.closereportid.generateRequest();
 
 },
 openreportResponse:function(e){
+  var cp=0,mp=0,lp=0;
   if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval;
 //alert(JSON.stringify(tex));
 var len=tex.length;
+for(var i=0;i<len;i++){
+  //alert('1'+tex[0].priority);
+
+  if(tex[0].priority=='Critical'){
+    cp++;
+  }
+  else if(tex[0].priority=='Moderate'){
+    mp++;
+    //alert('1'+mp);
+  }
+  else if(tex[0].priority=='Low'){
+    lp++;
+  }
+}
 
 document.querySelector('reportstatus-card').pendingarr=tex;
+document.querySelector('reportstatus-card').noofcricpend=cp;
+document.querySelector('reportstatus-card').noofmodpend=mp;
+document.querySelector('reportstatus-card').nooflowpend=lp;
 document.querySelector('reportstatus-card').noofpend=len;
 }
 },
 closereportResponse:function(e){
+  var cc=0,mc=0,lc=0;
   if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval; 
+
   //alert(JSON.stringify(tex)); 
   var len=tex.length;
+  for(var i=0;i<len;i++){
+  if(tex[0].priority=='Critical'){
+    cc++;
+  }
+  else if(tex[0].priority=='Moderate'){
+    mc++;
+  }
+  else if(tex[0].priority=='Low'){
+    lc++;
+  }
+}
+document.querySelector('reportstatus-card').noofcricclose=cc;
+document.querySelector('reportstatus-card').noofmodclose=mc;
+document.querySelector('reportstatus-card').nooflowclose=lc;
   document.querySelector('reportstatus-card').closedarr=tex;
    document.querySelector('reportstatus-card').noofclose=len;
 }
