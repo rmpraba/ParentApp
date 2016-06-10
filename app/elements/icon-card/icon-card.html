@@ -31,23 +31,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   width: 13%;
   height: 33%;
  }
+ .cur
+ {
+  cursor: pointer;
+ }
   </style>
    <body style="height: auto;">
   
 
     <div class="frontpage">
     <div class="hori">
-      <paper-icon-button id="form" class="iconbutton" src="../../images/feedback.png"  on-click="insertfeedback"></paper-icon-button>
-      <div>Feedback</div>
-      </div>
-          <div class="hori">
       <paper-icon-button class="iconbutton" src="../../images/inbox.jpg" on-click="inbox"></paper-icon-button>
-       <div>Inbox</div>
+       <a class="cur" on-click="inbox">Inbox</a>
          </div>
+    <div class="hori">
+      <paper-icon-button id="form" class="iconbutton" src="../../images/feedback.png"  on-click="insertfeedback"></paper-icon-button>
+      <a  class="cur" on-click="insertfeedback">Feedback</a>
+      </div>
+          
           <div class="hori">
 
        <paper-icon-button id="report" class="iconbutton" src="../../images/report.png" on-click="report"></paper-icon-button>
-        <div>Report</div>
+        <a class="cur" on-click="report">Report</a>
    </div>
     </div>
   </body>
