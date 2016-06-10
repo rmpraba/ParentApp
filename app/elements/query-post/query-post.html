@@ -113,6 +113,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="closereportResponse"
     debounce-duration="300"
   ></iron-ajax>
+   <iron-ajax
+    method="post"
+    id="upmsgstatid"
+    url="{{upmsgstaturl}}"
+    params="{{upmsgstatparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="upmsgstatResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+   <iron-ajax
+    method="post"
+    id="unreadmsgid"
+    url="{{unreadmsgurl}}"
+    params="{{unreadmsgparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="unreadmsgResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="unopenmsgid"
+    url="{{unopenmsgurl}}"
+    params="{{unopenmsgparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="unopenmsgResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -130,7 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var scomplaint;
     var sub;
     var mobile;
-
+    var stid;
     Polymer({
       is: 'query-post',
       ready:function(){
@@ -159,7 +189,7 @@ sequenceResponse:function(e){
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
   //alert(JSON.stringify(e.detail.response.returnval));
   var seq=e.detail.response.returnval[0].sequenceno;
-  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":""};
+  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":"","msq_status":""};
         obj.school_id=sessionStorage.getItem("schoolx");
         obj.query_id='REQ1600'+seq;
         obj.student_id=stud_id;
@@ -173,6 +203,7 @@ sequenceResponse:function(e){
         obj.status="open";
         obj.subject=sub;
         obj.mob=mobile;
+        obj.msq_status=1;
         this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
@@ -207,6 +238,18 @@ getmsg:function()
   this.getmsgparam=obj;
   //alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
+
+this.unopenmsgurl="http://localhost:8082/unopenmsg";
+  var obj={"schol":"","status":""}
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.status=1;
+  this.unopenmsgparam=obj;
+  this.$.unopenmsgid.generateRequest();
+
+},
+unopenmsgResponse:function(e){
+    var res=e.detail.response.returnval;
+    alert('unread msg for admin   '+res);
 },
 getmsgResponse:function(e)
 {
@@ -243,6 +286,15 @@ obj.status="closed";
 //alert(JSON.stringify(obj));
 this.parentinboxparam=obj;
 this.$.parentinboxid.generateRequest();
+
+
+this.unreadmsgurl="http://localhost:8082/unreadmsg";
+  var obj={"sid":"","schol":"","status":""}
+  obj.sid=sessionStorage.getItem("studid");
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.status=1;
+  this.unreadmsgparam=obj;
+  this.$.unreadmsgid.generateRequest();
 },
 parentinboxResponse:function(e){
   //alert('2');
@@ -256,7 +308,7 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
   var datex=d1.getDate()+'/'+(d1.getMonth()+1)+'/'+d1.getFullYear();
   var h =  d1.getHours(), m = d1.getMinutes();
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
-    var obj={"schoolid":"","queryid":"","name":"","complaint":"","date":"","time":"","status":"","flag":"","category":"","mob":""}
+    var obj={"schoolid":"","queryid":"","name":"","complaint":"","date":"","time":"","status":"","flag":"","category":"","mob":"","msq_status":""}
     obj.school_id=sessionStorage.getItem("schoolx");
     obj.query_id=queryid;
     obj.complaint=reply;
@@ -269,6 +321,7 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
         obj.email=mail;
         obj.category=category;
         obj.mob=mobile;
+        obj.msq_status=1;
     this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
@@ -347,6 +400,40 @@ closereportResponse:function(e){
   document.querySelector('reportstatus-card').closedarr=tex;
    document.querySelector('reportstatus-card').noofclose=len;
 }
+},
+upmsgstat:function(id,sid,time,date){
+  stid=sid;
+this.upmsgstaturl="http://localhost:8082/upmsgstat";
+var obj={"sid":"","time":"","date":"","msg_status":"","schol":""}
+obj.sid=id;
+obj.time=time;
+obj.date=date;
+obj.schol=sessionStorage.getItem("schoolx");
+obj.msg_status=2;
+
+this.upmsgstatparam=obj;
+this.$.upmsgstatid.generateRequest();
+},
+upmsgstatResponse:function(e){
+  var res=e.detail.response.returnval;
+  if(res=='success')
+  {
+    alert('messaged is opened now');
+  }
+
+  this.unreadmsgurl="http://localhost:8082/unreadmsg";
+  var obj={"sid":"","schol":"","status":""}
+  obj.sid=stid;
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.status=1;
+  this.unreadmsgparam=obj;
+  this.$.unreadmsgid.generateRequest();
+
+},
+unreadmsgResponse:function(e);
+{
+  var resno=e.detail.response.returnval;
+  alert('total unread msg for this id is'+resno);
 }
      
 
