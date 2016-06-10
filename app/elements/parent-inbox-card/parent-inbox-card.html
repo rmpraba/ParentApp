@@ -58,19 +58,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="message">
       </paper-dialog>
       <iron-collapse id="{{queryid}}" class="parent-message">
-        <h2 class="heading-messsage">Message</h2>
+        <!-- <h2 class="heading-messsage">Message</h2> -->
           <div class="top">
             <div class="request-id">
-              {{queryid}} - {{stid}}
+              {{queryid}}
             </div>
-            <div class="when">
-              <div class="date">
+            <div>
+              {{studentname}} - {{stid}}
+            </div>
+            <div class="when" id="reads">
+              <!-- <div class="date">
                 <div class="time1">
                   {{time}}
                 </div>
                   {{date}}
+              </div>-->
+              <div class="buttons">
+              Status : Close <paper-checkbox id="read" on-change="changeHandler" checked></paper-checkbox>
               </div>
-            </div>
+            </div> 
           </div>
           <div class="feedback">
             <div class="greeting">
@@ -79,18 +85,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p class="message-content">{{message}}</p>
           </div>
         <div id="details">
-          <p class="mobile">Contact:{{mob}},</p>
-          <p class="mail">{{mail}}</p>
+          <p class="mobile">Contact:{{mob}}</p>
+          <!-- <p class="mail">{{mail}}</p> -->
         </div>
         <!--<div class="buttons">
           <paper-button id="fwd" on-click="frwd">Forward to Manager</paper-button>
         </div>-->
-        <div class="field" id="reads">
-          Status : Close
-          <div class="buttons">
-            <paper-checkbox id="read" on-change="changeHandler"></paper-checkbox>
-          </div>
-        </div>
         <div class="buttons" >
           <paper-button id="reply-button" on-click="answer">Reply</paper-button>
         </div>
@@ -157,6 +157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     answer:function(){
       //alert("reply");
       document.querySelector("#adminmsg"+this.queryid).toggle();
+      document.querySelector("#read").checked=false;
     },
     changeHandler:function(e){
       if(e.target.checked==true){

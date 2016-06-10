@@ -296,6 +296,7 @@ paper-dialog{
 .when{
     text-align: justify;
     float: right;
+    margin-right: 2%; 
 }
 .from p, .time p{
     margin: 0;
@@ -308,7 +309,8 @@ paper-dialog{
     margin: 2%;
 }
 .when p{
-    margin: 0;
+    margin: 1%;
     padding: 0;
+    float: right;
 }
 </style>
