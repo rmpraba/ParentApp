@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 
 app.post('/mobile',  urlencodedParser,function (req, res){
   var mobile={"mobile":req.query.mobile};
-  connection.query('SELECT school_id,student_id, (select student_name from student_details where id = student_id) as student_name from parent where ? ',[mobile],
+  connection.query('SELECT school_id,(Select name from md_school where id = school_id) as school_name ,student_id, (select student_name from student_details where id = student_id) as student_name from parent where ? ',[mobile],
   function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -45,7 +45,7 @@ console.log("Example app listening at http://%s:%s", host, port)
 
 app.post('/query-post1',  urlencodedParser,function (req, res)
 {
-  var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag,"subject":req.query.subject,"mobile":req.query.mob,"msg_status":req.query.msq_status};
+  var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag,"subject":req.query.subject,"mobile":req.query.mob,"msg_status":req.query.msq_status,"priority":req.query.priority};
 
   //console.log(school_id);
        connection.query('insert into query set ?',[dv],
@@ -143,7 +143,7 @@ app.post('/adminlogin',  urlencodedParser,function (req, res)
 {
   var user={"id":req.query.user};
   var pass={"password":req.query.pass};
-       connection.query('select * from employee where ? and ?',[user,pass],
+       connection.query('select school_id,(Select name from md_school where id = school_id) as school_name , id, password, role from employee where ? and ?',[user,pass],
         function(err, rows)
         {
     if(!err)
@@ -222,7 +222,7 @@ app.post('/parentinbox',  urlencodedParser,function (req, res)
   var stud={"student_id":req.query.id};
   var status={"query_status":req.query.status};
   console.log(school_id+''+stud+''+status);
-       connection.query('select * from query where ? and ? and ? and query_reply!=""',[school_id,stud,status],
+       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ? and query_reply!=""',[school_id,stud,status],
         function(err, rows)
         {
     if(!err)
@@ -332,7 +332,7 @@ app.post('/openreport',  urlencodedParser,function (req, res)
   var status = {"query_status":req.query.status};
   var flag={"flag":req.query.flag};
   
-  connection.query('select query_id,parent_email,subject,mobile,parent_name from query where ? and ? and ?',[status,school_id,flag],
+  connection.query('select query_id,priority,parent_email,subject,mobile,parent_name from query where ? and ? and ?',[status,school_id,flag],
   function(err, rows)
   {
     if(!err)
@@ -361,7 +361,7 @@ app.post('/closereport',  urlencodedParser,function (req, res)
   var status = {"query_status":req.query.status};
   var flag={"flag":req.query.flag};
   
-  connection.query('select query_id,parent_email,mobile,subject,parent_name from query where ? and ? and ?',[status,school_id,flag],
+  connection.query('select query_id,priority,parent_email,mobile,subject,parent_name from query where ? and ? and ?',[status,school_id,flag],
   function(err, rows)
   {
     if(!err)
@@ -472,6 +472,32 @@ app.post('/upmsgstatpr',  urlencodedParser,function (req, res)
     var date={"reply_date":req.query.date};
     var time={"reply_time":req.query.time};
     var status={"admin_read":req.query.msgstatus};
+    var school_id={"school_id":req.query.schol};
+
+  //console.log('update  '+);
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[status,id,school_id,date,time],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+app.post('/uppri',  urlencodedParser,function (req, res)
+{
+    var id={"query_id":req.query.queryid};
+    var date={"updated_date":req.query.date};
+    var time={"time":req.query.time};
+    var status={"priority":req.query.level};
     var school_id={"school_id":req.query.schol};
 
   //console.log('update  '+);

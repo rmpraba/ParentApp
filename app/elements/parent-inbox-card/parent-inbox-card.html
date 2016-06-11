@@ -79,6 +79,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p class="message-content">{{message}}</p>
           </div>
         <div id="details">
+        <div class="field">
+                      <paper-dropdown-menu  label="Priority">
+                        <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
+                          <paper-item >Critical</paper-item>
+                          <paper-item >Moderate</paper-item>
+                          <paper-item >Low</paper-item>
+                        </paper-menu>
+                      </paper-dropdown-menu>
+                    </div>
           <p class="mobile">Contact:{{mob}},</p>
           <p class="mail">{{mail}}</p>
         </div>
@@ -188,6 +197,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
     frwd:function(){
       this.$.qpostid.updatefrwd(this.queryid,this.date,this.time);
+    },
+    priority:function(e){
+        var level=(e.target.selectedItem.textContent).trim();
+        this.$.qpostid.uppri(level,this.queryid,this.date,this.time);
     }
     });
   })();

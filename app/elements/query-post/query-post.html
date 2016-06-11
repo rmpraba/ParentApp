@@ -153,7 +153,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="upmsgstatprResponse"
     debounce-duration="300"
   ></iron-ajax>
-  
+  <iron-ajax
+    method="post"
+    id="uppriid"
+    url="{{uppriurl}}"
+    params="{{uppriparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="uppriResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -200,7 +209,7 @@ sequenceResponse:function(e){
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
   //alert(JSON.stringify(e.detail.response.returnval));
   var seq=e.detail.response.returnval[0].sequenceno;
-  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":"","msq_status":""};
+  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":"","msq_status":"","priority":""};
         obj.school_id=sessionStorage.getItem("schoolx");
         obj.query_id='REQ1600'+seq;
         obj.student_id=stud_id;
@@ -215,6 +224,7 @@ sequenceResponse:function(e){
         obj.subject=sub;
         obj.mob=mobile;
         obj.msq_status=1;
+        obj.priority="Critical";
         this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
@@ -309,7 +319,8 @@ this.unreadmsgurl="http://localhost:8082/unreadmsg";
 parentinboxResponse:function(e){
   //alert('2');
   var resarr=e.detail.response.returnval;
-  //alert(JSON.stringify(resarr));
+  alert('hi');
+  alert(JSON.stringify(resarr));
   document.querySelector('parentinbox-itemcard').msgarr=resarr;
 //alert('hi'+JSON.stringify(resarr));
 },
@@ -318,7 +329,7 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
   var datex=d1.getDate()+'/'+(d1.getMonth()+1)+'/'+d1.getFullYear();
   var h =  d1.getHours(), m = d1.getMinutes();
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
-    var obj={"schoolid":"","queryid":"","name":"","complaint":"","date":"","time":"","status":"","flag":"","category":"","mob":"","msq_status":""}
+    var obj={"schoolid":"","queryid":"","name":"","complaint":"","date":"","time":"","status":"","flag":"","category":"","mob":"","msq_status":"","priority":""}
     obj.school_id=sessionStorage.getItem("schoolx");
     obj.query_id=queryid;
     obj.complaint=reply;
@@ -332,6 +343,7 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
         obj.category=category;
         obj.mob=mobile;
         obj.msq_status=1;
+        obj.priority="Critical";
     this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
@@ -393,20 +405,54 @@ this.$.closereportid.generateRequest();
 
 },
 openreportResponse:function(e){
+  var cp=0,mp=0,lp=0;
   if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval;
 //alert(JSON.stringify(tex));
 var len=tex.length;
+for(var i=0;i<len;i++){
+  //alert('1'+tex[0].priority);
+
+  if(tex[0].priority=='Critical'){
+    cp++;
+  }
+  else if(tex[0].priority=='Moderate'){
+    mp++;
+    //alert('1'+mp);
+  }
+  else if(tex[0].priority=='Low'){
+    lp++;
+  }
+}
 
 document.querySelector('reportstatus-card').pendingarr=tex;
+document.querySelector('reportstatus-card').noofcricpend=cp;
+document.querySelector('reportstatus-card').noofmodpend=mp;
+document.querySelector('reportstatus-card').nooflowpend=lp;
 document.querySelector('reportstatus-card').noofpend=len;
 }
 },
 closereportResponse:function(e){
+  var cc=0,mc=0,lc=0;
   if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval; 
+
   //alert(JSON.stringify(tex)); 
   var len=tex.length;
+  for(var i=0;i<len;i++){
+  if(tex[0].priority=='Critical'){
+    cc++;
+  }
+  else if(tex[0].priority=='Moderate'){
+    mc++;
+  }
+  else if(tex[0].priority=='Low'){
+    lc++;
+  }
+}
+document.querySelector('reportstatus-card').noofcricclose=cc;
+document.querySelector('reportstatus-card').noofmodclose=mc;
+document.querySelector('reportstatus-card').nooflowclose=lc;
   document.querySelector('reportstatus-card').closedarr=tex;
    document.querySelector('reportstatus-card').noofclose=len;
 }
@@ -481,11 +527,29 @@ upmsgstatprResponse:function(e){
   this.$.unreadmsgid.generateRequest();
 },
 unreadmsgResponse:function(e){
+
   var resno=e.detail.response.returnval[0].total;
    //document.querySelector('transport-app').setPage("iconpage");
   document.querySelector('icon-card').unread=resno;
   //alert(e.detail.response.returnval[0].total);
- // alert('total parent unread msg for this id is'+JSON.stringify(resno));
+ // alert('total parent unread msg for this id is'+JSON.stringify(resno))
+},
+uppri:function(level,qid,date,time){
+this.uppriurl="http://localhost:8082/uppri";
+var obj={"queryid":"","level":"","date":"","time":"","schol":""}
+obj.queryid=qid;
+obj.level=level;
+obj.date=date;
+obj.time=time;
+obj.schol=sessionStorage.getItem("schoolx");
+this.uppriparam=obj;
+this.$.uppriid.generateRequest();
+},
+uppriResponse:function(e){
+  var res=e.detail.response.returnval;
+  if(res=='success'){
+    alert('Priority Changed');
+  }
 }
      
 
