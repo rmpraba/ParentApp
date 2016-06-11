@@ -163,6 +163,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="uppriResponse"
     debounce-duration="300"
   ></iron-ajax>
+
+  <iron-ajax
+    method="post"
+    id="summaryreportid"
+    url="{{summaryreporturl}}"
+    params="{{summaryreportparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="summaryreportResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -453,8 +464,8 @@ closereportResponse:function(e){
 document.querySelector('reportstatus-card').noofcricclose=cc;
 document.querySelector('reportstatus-card').noofmodclose=mc;
 document.querySelector('reportstatus-card').nooflowclose=lc;
-  document.querySelector('reportstatus-card').closedarr=tex;
-   document.querySelector('reportstatus-card').noofclose=len;
+document.querySelector('reportstatus-card').closedarr=tex;
+document.querySelector('reportstatus-card').noofclose=len;
 }
 },
 upmsgstat:function(id,sid,time,date){
@@ -550,9 +561,15 @@ uppriResponse:function(e){
   if(res=='success'){
     alert('Priority Changed');
   }
+},
+FnFetchSummaryReport:function(){
+this.summaryreporturl="http://localhost:8082/fetchsummaryreport";
+this.$.summaryreportid.generateRequest();
+},
+summaryreportResponse:function(e){
+// alert(JSON.stringify(e.detail.response));e.detail.response
+document.querySelector('issue-summary-report').summaryarr=e.detail.response.returnval;
 }
-     
-
     });
   })();
   </script>
