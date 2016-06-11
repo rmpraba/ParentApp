@@ -342,7 +342,7 @@ app.post('/openreport',  urlencodedParser,function (req, res)
         //console.log(rows);
         } else {
         console.log(err);
-        res.status(200).json({'returnval': 'invalid'});
+        res.status(200).json({'returnval': '0'});
       }
     }
     else
@@ -371,7 +371,7 @@ app.post('/closereport',  urlencodedParser,function (req, res)
         //console.log(rows);
         } else {
         console.log(err);
-        res.status(200).json({'returnval': 'invalid'});
+        res.status(200).json({'returnval': '0'});
       }
     }
     else
