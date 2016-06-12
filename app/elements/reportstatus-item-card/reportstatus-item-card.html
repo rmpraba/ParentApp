@@ -18,32 +18,92 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .flex-vertical {
         @apply(--layout-vertical);
-        height: 1px;
-        padding: 2% !important;
-        width: 95%;
-        
       }
       .flexchild-vertical {
         @apply(--layout-horizontal);
-        margin-top: -3%;
-        margin-left: -10%;
       }
-      .flexchild-vertical paper-item{
-        width: 100%;
+      table { 
+        width: 100%; 
+        border-collapse: collapse; 
       }
-      .flexchild-vertical .field{
-        padding: 0;
-        width: auto;
+      /* Zebra striping */
+      tr:nth-of-type(odd) { 
+        background: #eee; 
+      }
+      th { 
+        background: #333; 
+        color: white; 
+        font-weight: bold; 
+      }
+      td, th { 
+        padding: 6px; 
+        border: 1px solid #ccc; 
+        text-align: left; 
+      }
+      @media 
+      only screen and (max-width: 760px),
+      (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr { 
+          display: block; 
+        }
+        
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr { 
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+        
+        tr { border: 1px solid #ccc; }
+        
+        td { 
+          /* Behave  like a "row" */
+          border: none;
+          border-bottom: 1px solid #eee; 
+          position: relative;
+          padding-left: 50%; 
+        }
+        
+        td:before { 
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 45%; 
+          padding-right: 10px; 
+          white-space: nowrap;
+        }
+        
+        /*
+        Label the data
+        */
+        td:nth-of-type(1):before { content: "Request ID"; }
+        td:nth-of-type(2):before { content: "Name"; }
+        td:nth-of-type(3):before { content: "Subject"; }
+        td:nth-of-type(4):before { content: "Email ID"; }
+        td:nth-of-type(5):before { content: "MObile"; }
       }
     </style>
      <div class="flex-vertical">
       <div class="flexchild-vertical">
-          <div class="field" style="width: 5%; margin-left: 15%;"><paper-item>{{queryid}}</paper-item></div>
-          <div class="field" style="width: 20%; margin-left: 6%;"><paper-item>{{parentname}}</paper-item></div>
-          <div class="field" style="width: 20%; margin-left: -4%;"><paper-item>{{subject}}</paper-item></div>
-          <div class="field" style="width: 10%; margin-left: 2%;"><paper-item>{{email}}</paper-item></div>
-          <div class="field" style="width: 10%; margin-left: 14%;"><paper-item>{{mobile}}</paper-item></div>
-              
+            <td>
+              {{queryid}}
+            </td>
+            <td>
+              {{parentname}}
+            </td>
+            <td>
+              {{subject}}
+            </td>
+            <td>
+              {{email}}
+            </td>
+            <td>
+              {{mobile}}
+            </td>
       </div>
     </div>
   </template>
