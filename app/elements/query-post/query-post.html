@@ -192,6 +192,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var sub;
     var mobile;
     var stid;
+    var inboxlen;
+    var inboxcount;
+    var resarr;
+    var startcount;
     Polymer({
       is: 'query-post',
       ready:function(){
@@ -265,8 +269,9 @@ getmsg:function()
 {
 
   this.getmsgurl="http://localhost:8082/getmsg";
-  var obj={"schol":"","status":""}
+  var obj={"schol":"","status":"","userid":""}
   obj.schol=sessionStorage.getItem("schoolx");
+  obj.userid=sessionStorage.getItem("role");
   this.getmsgparam=obj;
   //alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
@@ -280,11 +285,19 @@ this.unopenmsgurl="http://localhost:8082/unopenmsg";
   this.$.unopenmsgid.generateRequest();
 
 },
-
+unopenmsgResponse:function(e){
+    var resno=e.detail.response.returnval[0].total;
+  document.querySelector('icon-card').unread=resno;
+},
 getmsgResponse:function(e)
 {
-  var msgarr=e.detail.response.returnval;
-  document.querySelector('parent-inbox').msgarr=msgarr;
+resarr=e.detail.response.returnval;
+  inboxlen=e.detail.response.returnval.length;
+  var inbox=resarr.slice(0,5);
+  inboxcount=5;
+   document.querySelector('parent-inbox').msgarr=inbox;
+  //var msgarr=e.detail.response.returnval;
+  //document.querySelector('parent-inbox').msgarr=msgarr;
   //alert(JSON.stringify(msgarr));
 },
 postreply:function(queryid,reply,statusx,date,time){
@@ -328,12 +341,96 @@ this.unreadmsgurl="http://localhost:8082/unreadmsg";
   this.$.unreadmsgid.generateRequest();
 },
 parentinboxResponse:function(e){
-  //alert('2');
-  var resarr=e.detail.response.returnval;
-  alert('hi');
-  alert(JSON.stringify(resarr));
-  document.querySelector('parentinbox-itemcard').msgarr=resarr;
-//alert('hi'+JSON.stringify(resarr));
+ resarr=e.detail.response.returnval;
+  inboxlen=e.detail.response.returnval.length;
+  var inbox=resarr.slice(0,5);
+  inboxcount=5;
+  //alert(JSON.stringify(resarr));
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+},
+Fnmoveforward:function()
+{
+  //alert(inboxcount+''+inboxlen);
+if(inboxlen>inboxcount)
+{
+  //alert('t');
+  var inbox=resarr.slice(inboxcount,inboxcount+5);
+  if(inboxcount+5<=inboxlen)
+  {
+    startcount=inboxcount;
+  
+  inboxcount+=5;
+}
+else
+{
+  startcount=inboxcount;
+  inboxcount=inboxlen;
+}
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+}
+},
+Fnmovebackward:function()
+{
+  alert(inboxcount);
+if(inboxcount>0)
+{
+  //alert('tt');
+  var inbox=resarr.slice(startcount-5,startcount);
+  if(startcount-5>0)
+  {
+  startcount-=5;
+  inboxcount-=5;
+  }
+  else
+  {
+  startcount=0;
+  inboxcount=0;
+ }
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+}
+
+},
+Fnmoveforward:function()
+{
+  //alert(inboxcount+''+inboxlen);
+if(inboxlen>inboxcount)
+{
+  //alert('t');
+  var inbox=resarr.slice(inboxcount,inboxcount+5);
+  if(inboxcount+5<=inboxlen)
+  {
+    startcount=inboxcount;
+  
+  inboxcount+=5;
+}
+else
+{
+  startcount=inboxcount;
+  inboxcount=inboxlen;
+}
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+}
+},
+Fnmovebackward:function()
+{
+  alert(inboxcount);
+if(inboxcount>0)
+{
+  //alert('tt');
+  var inbox=resarr.slice(startcount-5,startcount);
+  if(startcount-5>0)
+  {
+  startcount-=5;
+  inboxcount-=5;
+  }
+  else
+  {
+  startcount=0;
+  inboxcount=0;
+ }
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+}
+
 },
 postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
     var d1=new Date();
@@ -500,10 +597,7 @@ upmsgstatResponse:function(e){
 unopenmsgResponse:function(e)
 {
   var resno=e.detail.response.returnval[0].total;
-  document.querySelector('transport-app').setPage("iconpage");
   document.querySelector('icon-card').unread=resno;
-  //alert(e.detail.response.returnval[0].total);
-  //alert('total unread msg for this id is'+JSON.stringify(resno));
 },
 upmsgstatpr:function(id,sid,time,date){
     stid=sid;
@@ -517,7 +611,7 @@ obj.schol=sessionStorage.getItem("schoolx");
 
 
 this.upmsgstatprparam=obj;
-//alert('parent reply  '+JSON.stringify(obj));
+alert('parent reply  '+JSON.stringify(obj));
 this.$.upmsgstatprid.generateRequest();
 
 },
@@ -538,12 +632,9 @@ upmsgstatprResponse:function(e){
   this.$.unreadmsgid.generateRequest();
 },
 unreadmsgResponse:function(e){
-
   var resno=e.detail.response.returnval[0].total;
-   //document.querySelector('transport-app').setPage("iconpage");
-  document.querySelector('icon-card').unread=resno;
-  //alert(e.detail.response.returnval[0].total);
- // alert('total parent unread msg for this id is'+JSON.stringify(resno))
+   document.querySelector('icon-card').unread=resno;
+  //alert('total parent unread msg for this id is'+JSON.stringify(resno));
 },
 uppri:function(level,qid,date,time){
 this.uppriurl="http://localhost:8082/uppri";

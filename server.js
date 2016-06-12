@@ -105,8 +105,10 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
   var status={"query_status":"open"};
+  var userid={"category":req.query.userid};
+
   console.log(school_id+   +status);
-       connection.query('select * from query where ? and ?',[school_id,status],
+       connection.query('select * from query where ? and ? and ?',[school_id,status,userid],
         function(err, rows)
         {
     if(!err)

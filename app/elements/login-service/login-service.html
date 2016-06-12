@@ -83,6 +83,7 @@
     },
     adminlogin:function(username,password){
       this.adminloginurl="http://localhost:8082/adminlogin";
+       sessionStorage.setItem("userid",username);
       var obj={"user":"","pass":""}
       obj.user=username;
       obj.pass=password;
@@ -119,7 +120,7 @@
 
         
        }
-       else if(id=="admin"){
+       else if(id=="admin"||role=="Academics"||role=="Administrator"){
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
        this.$.qpostid.getmsg(); 

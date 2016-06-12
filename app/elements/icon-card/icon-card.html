@@ -96,7 +96,9 @@ var role;
 
         this.$.qpostid.parentinbox();
        }
-       else if(id=="admin"){
+       else if(id=="admin")
+       {
+        document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
        this.$.qpostid.getmsg(); 
        }
