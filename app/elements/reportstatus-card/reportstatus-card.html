@@ -30,11 +30,12 @@
           <paper-tab style="margin-left:-2%;">Subject</paper-tab>
           <paper-tab>E-Mail ID</paper-tab>
           <paper-tab >Mobile</paper-tab>
+          <paper-tab >Days by Open</paper-tab>
         </paper-tabs>
       </div>
       <div class="body2">
       <template  is="dom-repeat" items="{{pendingarr}}" as="view">
-        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card>
+        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}" noofdays="{{view.days}}"></reportstatus-item-card>
       </template>
       </div>
       <p></p>
@@ -58,11 +59,12 @@
           <paper-tab style="margin-left:-2%;">Subject</paper-tab>
           <paper-tab>E-Mail ID</paper-tab>
           <paper-tab >Mobile</paper-tab>
+          <paper-tab >Days after closed</paper-tab>
         </paper-tabs>
       </div>
       <div class="body2">
       <template  is="dom-repeat" items="{{closedarr}}" as="view">
-        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card>
+        <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}" noofdays="{{view.days}}"></reportstatus-item-card>
       </template>
       </div>
       <p></p>

@@ -325,7 +325,7 @@ app.post('/openreport',  urlencodedParser,function (req, res)
   var status = {"query_status":req.query.status};
   var flag={"flag":req.query.flag};
   
-  connection.query('select query_id,priority,parent_email,subject,mobile,parent_name from query where ? and ? and ?',[status,school_id,flag],
+  connection.query('select query_id,priority,datetime,parent_email,subject,mobile,parent_name from query where ? and ? and ?',[status,school_id,flag],
   function(err, rows)
   {
     if(!err)
@@ -354,7 +354,7 @@ app.post('/closereport',  urlencodedParser,function (req, res)
   var status = {"query_status":req.query.status};
   var flag={"flag":req.query.flag};
   
-  connection.query('select query_id,priority,parent_email,mobile,subject,parent_name from query where ? and ? and ?',[status,school_id,flag],
+  connection.query('select query_id,priority,datetime,parent_email,mobile,subject,parent_name from query where ? and ? and ?',[status,school_id,flag],
   function(err, rows)
   {
     if(!err)

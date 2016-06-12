@@ -474,27 +474,45 @@ this.$.closereportid.generateRequest();
 
 },
 openreportResponse:function(e){
+  var date=new Date();
+  var date2;
+  var days;
+  var zxarr=[];
   var cp=0,mp=0,lp=0;
   if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval;
-//alert(JSON.stringify(tex));
+
 var len=tex.length;
 for(var i=0;i<len;i++){
   //alert('1'+tex[0].priority);
 
-  if(tex[0].priority=='Critical'){
+  if(tex[i].priority=='Critical'){
     cp++;
   }
-  else if(tex[0].priority=='Moderate'){
+  else if(tex[i].priority=='Moderate'){
     mp++;
     //alert('1'+mp);
   }
-  else if(tex[0].priority=='Low'){
+  else if(tex[i].priority=='Low'){
     lp++;
   }
+  date2=new Date(tex[i].datetime);
+  days=date.getDate() - date2.getDate();
+  alert(days);
+  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":""}
+  obj.query_id=tex[i].query_id;
+  obj.priority=tex[i].priority;
+  obj.datetime=tex[i].datetime;
+  obj.parent_email=tex[i].parent_email;
+  obj.parent_name=tex[i].parent_name;
+  obj.mobile=tex[i].mobile;
+  obj.subject=tex[i].subject;
+  obj.days=days;
+//alert(JSON.stringify(obj));  
+zxarr.push(obj);
 }
-
-document.querySelector('reportstatus-card').pendingarr=tex;
+//alert(JSON.stringify(zxarr));
+document.querySelector('reportstatus-card').pendingarr=zxarr;
 document.querySelector('reportstatus-card').noofcricpend=cp;
 document.querySelector('reportstatus-card').noofmodpend=mp;
 document.querySelector('reportstatus-card').nooflowpend=lp;
@@ -502,6 +520,10 @@ document.querySelector('reportstatus-card').noofpend=len;
 }
 },
 closereportResponse:function(e){
+  var date=new Date();
+  var date2;
+  var days;
+  var zxarr=[];
   var cc=0,mc=0,lc=0;
   if(e.detail.response.returnval!=0){
   var tex=e.detail.response.returnval; 
@@ -518,11 +540,25 @@ closereportResponse:function(e){
   else if(tex[0].priority=='Low'){
     lc++;
   }
+   date2=new Date(tex[i].datetime);
+  days=date.getDate() - date2.getDate();
+  alert(days);
+  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":""}
+  obj.query_id=tex[i].query_id;
+  obj.priority=tex[i].priority;
+  obj.datetime=tex[i].datetime;
+  obj.parent_email=tex[i].parent_email;
+  obj.parent_name=tex[i].parent_name;
+  obj.mobile=tex[i].mobile;
+  obj.subject=tex[i].subject;
+  obj.days=days;
+//alert(JSON.stringify(obj));  
+zxarr.push(obj);
 }
 document.querySelector('reportstatus-card').noofcricclose=cc;
 document.querySelector('reportstatus-card').noofmodclose=mc;
 document.querySelector('reportstatus-card').nooflowclose=lc;
-document.querySelector('reportstatus-card').closedarr=tex;
+document.querySelector('reportstatus-card').closedarr=zxarr;
 document.querySelector('reportstatus-card').noofclose=len;
 }
 },
