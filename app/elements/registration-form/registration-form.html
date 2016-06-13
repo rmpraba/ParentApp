@@ -45,10 +45,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-input label="Email ID(Optional)" value="" id="mobile"></paper-input>
             </div>
             <div class="buttons">
-              <paper-button id="sub" class="sub" on-click="submit">SUBMIT</paper-button>
+              <paper-button id="sub" class="sub" on-click="register">REGISTER</paper-button>
             </div>
           </div>
         </div>
+        <paper-dialog id="registered">
+          <h2>Please Wait</h2>
+          <paper-dialog-scrollable>
+            <p>Ask the Registered Mobile User to confirm this request.</p>
+          </paper-dialog-scrollable>
+          <div class="buttons">
+            <paper-button dialog-dismiss>Close</paper-button>
+          </div>
+        </paper-dialog>
       </section>
   </template>
   <script>
@@ -57,13 +66,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'registration-form',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'registration-form',
-          notify: true
-        }
+      register:function(){
+        document.querySelector('#registered').open();
       }
     });
   })();
