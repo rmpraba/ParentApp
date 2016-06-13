@@ -706,7 +706,7 @@ obj.username=username;
 obj.relation=relation;
 obj.newmob=newmob;
 obj.email=email;
-obj.verifykey=7576;
+obj.verifykey=Math.floor(100000 + Math.random() * 900000);
 obj.activate=0;
 this.regmobparam=obj;
 this.$.regmobid.generateRequest();
