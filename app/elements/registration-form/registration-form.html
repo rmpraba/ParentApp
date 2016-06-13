@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="field">
 
               <paper-dropdown-menu label="Relation">
-                <paper-menu id="student" class="dropdown-content" required on-iron-select="student" valueattr="value" >
+                <paper-menu id="student" class="dropdown-content" required on-iron-select="relate" valueattr="value" >
                   <paper-item value="parent">Parent</paper-item>
                   <paper-item value="grandparent">Grand Parent</paper-item>
                   <paper-item value="guardian">Guardian</paper-item>
@@ -90,7 +90,7 @@ var relation;
       },
       relate:function(e){
         relation=e.target.selectedItem.textContent.trim();
-        alert(relation);
+       // alert(relation);
       },
       
       back:function(){
