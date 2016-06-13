@@ -598,6 +598,28 @@ app.post('/regmob',  urlencodedParser,function (req, res)
   });
 
 
+
+app.post('/activate',  urlencodedParser,function (req, res)
+{
+    var mob={"new_mobile":req.query.reg};
+    var key={"verify_key":req.query.key};
+    var flag={"activate_flag":req.query.acti};
+       connection.query('update alternate_no set ? WHERE ? and ?',[flag,key,mob],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
+
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

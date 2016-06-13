@@ -48,6 +48,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- To login with alternative number -->
   <iron-ajax
         method="post"
         id="loginalterajax"
@@ -56,6 +57,18 @@
         handle-as="json"
         content-type="application/json"
         on-response="loginalterResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+<!-- Activate the Account -->
+   <iron-ajax
+        method="post"
+        id="activateajax"
+        url="{{activateurl}}"
+        params="{{activateparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="activateResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -239,6 +252,22 @@ var res=e.detail.response.returnval;
         //alert(stud_name+'   '+classs);
         document.querySelector('complaint-form').student_name=stud_name;
         document.querySelector('complaint-form').classes=classs;
+    },
+    activate:function(regno,veri){
+      this.activateurl="http://localhost:8082/activate";
+      var obj={"reg":"","key":"","acti":""}
+      obj.reg=regno;
+      obj.key=veri;
+      obj.acti=1;
+      this.activateparam=obj;
+      this.$.activateajax.generateRequest();
+    },
+    activateResponse:function(e){
+      var res=e.detail.response.returnval;
+      if(res=='success'){
+        document.querySelector('login-form').fnacti();  
+        //alert('Activated!!');
+      }
     }
 
     });

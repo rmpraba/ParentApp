@@ -6,6 +6,8 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../login-service/login-service.html">
 
@@ -63,14 +65,31 @@
             <div>
               <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
             </div>
+            <div id="id">
             <div class="or"><strong>OR</strong></div>
           <div class="field">
             If don't have an account
               <ahref class="admin" on-click="link"><u>Register Here...!</u></ahref>
           </div>
+          <div class="field">
+            
+              <ahref class="admin" on-click="link2"><u>Activate the Account Here...!</u></ahref>
           </div>
-          
+          </div>
+          </div>
+          <div>
+          <paper-dialog id="registered">
+          <h2>Activate Here</h2>
+          <paper-dialog-scrollable>
+              <paper-input class="field" label="Newly Registered Mobile No" value="{{newregmob}}"></paper-input>
+              <paper-input class="field" label="Verification Key" value="{{verify}}"></paper-input>
+          </paper-dialog-scrollable>
+          <div class="buttons">
+            <paper-button on-click="activate" >Activate</paper-button>
+          </div>
+        </paper-dialog></div>
         </div>
+        <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
       </section>
     </body>
     <login-service id="login"></login-service>
@@ -93,6 +112,7 @@
       this.$.user.hidden=true;
       this.$.pass.hidden=true;
       this.$.sub.hidden=true;
+      this.$.id.hidden=false;
     },
     mobileno:function()
     {
@@ -116,12 +136,14 @@
       this.$.user.hidden=false;
       this.$.pass.hidden=false;    
       this.$.sub.hidden=false;
+      this.$.id.hidden=true;
         temp=1;
     }
       else{
         butad="Go to Admin Login";
         sessionStorage.setItem("user","parent");
         this.butname=butad;
+        this.$.id.hidden=false;
         this.$.mob.hidden=false;
       this.$.drop.hidden=false;
       this.$.user.hidden=true;
@@ -136,6 +158,18 @@
     },
     link:function(){
       document.querySelector('app-card').setPage('registration');
+    },
+    link2:function(){
+        document.querySelector('#registered').open();
+    },
+    activate:function(){
+        this.$.login.activate(this.newregmob,this.verify);
+    },
+    fnacti:function(){
+      //alert('1');
+      document.querySelector('#registered').close();  
+        this.$.toast.open();
+        //alert('2');
     }
     });
   })();
