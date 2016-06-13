@@ -33,10 +33,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <h1>REGISTRATION</h1>
             </div>
             <div class="field">
-              <paper-input label="Registered Mobile Number" value="{{regmobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
+              <paper-input label="Registered Mobile Number" id="mobileno" value="{{regmobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
             </div>
             <div class="field">
-              <paper-input label="Username" value="{{username}}" allowed-pattern="[A-Z a-z]" required error-message="User Name"></paper-input>
+              <paper-input label="Username"  id="username" value="{{username}}" allowed-pattern="[A-Z a-z]" required error-message="User Name"></paper-input>
             </div>
             <div class="field">
 
@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-dropdown-menu>
             </div>
             <div class="field">
-              <paper-input label="New Mobile Number" value="{{newmobile}}" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
+              <paper-input label="New Mobile Number" id="newmobileno" value="{{newmobile}}" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
             </div>
             <div class="field" id="mob">
               <paper-input label="Email ID(Optional)" value="{{email}}" id="mobile"></paper-input>
@@ -96,9 +96,19 @@ var relation;
       back:function(){
         document.querySelector('app-card').setPage('login');
       },
-      register:function(){
+      register:function()
+      {
+        if(this.regmobile==""&&this.username==""&&this.newmobile=="")
+        {
+          this.$.mobileno.validate();
+           this.$.username.validate();
+           this.$.newmobileno.validate();
+        }
+        else
+        {
         document.querySelector('#registered').open();
         this.$.qpostid.regmob(this.regmobile,this.username,relation,this.newmobile,this.email);
+       }
       },
       close:function(){
         document.querySelector('app-card').setPage("login");
