@@ -171,6 +171,12 @@ body{
     margin: 5% auto;
     background-color: #ffffff;
 }
+.container.registration{
+    width: 50%;
+    height: 100%;
+    margin: 5% auto;
+    background-color: #ffffff;
+}
  @media(max-width:767px){
     .login-card{width: 75%;}
 }

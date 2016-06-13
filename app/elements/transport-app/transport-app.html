@@ -87,6 +87,9 @@
         <section data-category="summaryreport">
           <issue-summary-report></issue-summary-report>
         </section>
+        <section data-category="registration">
+          <registration-form></registration-form>
+        </section>
       </iron-pages>
       </paper-header-panel>
       </paper-drawer-panel>
@@ -98,7 +101,7 @@
     is: "transport-app",
     ready: function()
     {
-    this.page="login";
+    this.page="registration";
     this.school_name = sessionStorage.getItem("school_name");
   //alert(this.school_name);
     },

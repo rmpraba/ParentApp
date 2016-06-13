@@ -1,0 +1,71 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="registration-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+      <section>
+        <div class="row">
+          <div class="container registration">
+            <div class="icon">
+              <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
+            </div>
+            <div class="field" id="mob">
+              <paper-input label="Registered Mobile Number" value="{{regmobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
+            </div>
+            <div class="field" id="mob">
+              <paper-input label="Username" value="{{username}}" allowed-pattern="[A-Z a-z]" required error-message="User Name"></paper-input>
+            </div>
+            <div class="field">
+              <paper-dropdown-menu label="Relation" id="drop">
+                <paper-menu id="student" class="dropdown-content" required on-iron-select="student" valueattr="value" >
+                  <paper-item value="parent">Parent</paper-item>
+                  <paper-item value="grandparent">Grand Parent</paper-item>
+                  <paper-item value="guardian">Guardian</paper-item>
+                </paper-menu>
+              </paper-dropdown-menu>
+            </div>
+            <div class="field" id="mob">
+              <paper-input label="New Mobile Number" value="{{newmobile}}" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
+            </div>
+            <div class="field" id="mob">
+              <paper-input label="Email ID(Optional)" value="" id="mobile"></paper-input>
+            </div>
+            <div class="buttons">
+              <paper-button id="sub" class="sub" on-click="submit">SUBMIT</paper-button>
+            </div>
+          </div>
+        </div>
+      </section>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'registration-form',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'registration-form',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>
