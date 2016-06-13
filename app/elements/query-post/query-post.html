@@ -728,7 +728,7 @@ regmobResponse:function(e){
     document.querySelector('registration-form').Fnclear();
     this.regmailurl="http://localhost:8082/regemailsend";
     this.$.regmailid.generateRequest();
-    
+    document.querySelector('app-card').setPage("login");
   }
 }
     });
