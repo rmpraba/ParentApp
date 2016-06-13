@@ -20,17 +20,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <section>
         <div class="row">
           <div class="container registration">
-            <div class="icon">
-              <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
+            <div class="page-heading">
+              <h1>REGISTRATION</h1>
             </div>
-            <div class="field" id="mob">
+            <div class="field">
               <paper-input label="Registered Mobile Number" value="{{regmobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
             </div>
-            <div class="field" id="mob">
+            <div class="field">
               <paper-input label="Username" value="{{username}}" allowed-pattern="[A-Z a-z]" required error-message="User Name"></paper-input>
             </div>
             <div class="field">
-              <paper-dropdown-menu label="Relation" id="drop">
+              <paper-dropdown-menu label="Relation">
                 <paper-menu id="student" class="dropdown-content" required on-iron-select="student" valueattr="value" >
                   <paper-item value="parent">Parent</paper-item>
                   <paper-item value="grandparent">Grand Parent</paper-item>
@@ -38,10 +38,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </paper-menu>
               </paper-dropdown-menu>
             </div>
-            <div class="field" id="mob">
+            <div class="field">
               <paper-input label="New Mobile Number" value="{{newmobile}}" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
             </div>
-            <div class="field" id="mob">
+            <div class="field">
               <paper-input label="Email ID(Optional)" value="" id="mobile"></paper-input>
             </div>
             <div class="buttons">

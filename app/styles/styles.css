@@ -172,10 +172,17 @@ body{
     background-color: #ffffff;
 }
 .container.registration{
-    width: 50%;
+    width: 60%;
     height: 100%;
     margin: 5% auto;
     background-color: #ffffff;
+}
+.registration h1{
+    margin: 5% 0 0 0;
+}
+.registration .buttons{
+    margin: 2% auto;
+    text-align: center;
 }
  @media(max-width:767px){
     .login-card{width: 75%;}
