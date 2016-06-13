@@ -80,26 +80,31 @@
     },
     mobileResponse:function(e)
     {
+//alert(JSON.stringify(e.detail.response.returnval));
 
-      if(e.detail.response.returnval.length>0)
-      {
-        var school=e.detail.response.returnval[0].school_id;
-        sessionStorage.setItem("schoolx",school);
-        
-      var parent=e.detail.response.returnval;
-      document.querySelector('login-form').parent=parent;
-      }
-    else
-    {
-      this.loginalterurl="http://localhost:8082/loginalter";
-      var obj={"mob":""}
-      obj.mob=mobile;
-      this.loginalterparam=obj;
-      this.$.loginalterajax.generateRequest();
-    }
+var res=e.detail.response.returnval;
+              if(res!="no")
+              {
+                  //alert('1');
+                  var school=e.detail.response.returnval[0].school_id;
+                  sessionStorage.setItem("schoolx",school);
+                  var parent=e.detail.response.returnval;
+                  document.querySelector('login-form').parent=parent;
+              }
+              else
+              {
+                  this.loginalterurl="http://localhost:8082/loginalter";
+                  var obj={"mobile":""}
+                  obj.mobile=mob;
+                  this.loginalterparam=obj;
+                  //alert(JSON.stringify(obj));
+                  this.$.loginalterajax.generateRequest();
+              }
     },
     loginalterResponse:function(e){
-     if(e.detail.response.returnval.length>0)
+      //alert('2'+e.detail.response.returnval);
+      var res=e.detail.response.returnval;
+     if(res!='no')
       {
         var school=e.detail.response.returnval[0].school_id;
         sessionStorage.setItem("schoolx",school);
@@ -109,7 +114,7 @@
       }
     else
     {
-      alert('Invalid Username and Password');
+      alert('Invalid Mobile number');
     } 
     },
     adminlogin:function(username,password){

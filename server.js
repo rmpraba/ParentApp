@@ -27,11 +27,32 @@ app.post('/mobile',  urlencodedParser,function (req, res){
       if(rows.length>0){
         res.status(200).json({'returnval': rows});
       } else {
-        res.status(200).json({'returnval': 'invalid'});
+        res.status(200).json({'returnval': 'no'});
       }
     }
   });
 });
+
+
+app.post('/loginalter',  urlencodedParser,function (req, res){
+  var mobile={"new_mobile":req.query.mobile};
+  connection.query('SELECT school_id, (SELECT name FROM md_school WHERE id = school_id) AS school_name, student_id, (SELECT student_name FROM student_details WHERE id = student_id) AS student_name FROM parent WHERE mobile = (SELECT registered_no FROM alternate_no WHERE ? ) ',[mobile],
+  function(err, rows){
+    if(!err){
+      if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+      } else {
+        res.status(200).json({'returnval': 'no'});
+      }
+    }
+    else{
+      console.log(err);
+    }
+  });
+});
+
+
 
 app.post('/query-post1',  urlencodedParser,function (req, res)
 {
