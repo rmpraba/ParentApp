@@ -48,17 +48,30 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="loginalterajax"
+        url="{{loginalterurl}}"
+        params="{{loginalterparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="loginalterResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
    <query-post id='qpostid'></query-post>
   </template>
   <script>
   (function() {
     'use strict';
+    var mob;
 
     Polymer({
       is: 'login-service',
 
     mobile:function(mobile)
     {
+      mob=mobile;
       this.mobileurl="http://localhost:8082/mobile";
       var obj={"mobile":""};
       obj.mobile=mobile;
@@ -78,8 +91,26 @@
       }
     else
     {
-      alert("Invalid Mobile Number");
+      this.loginalterurl="http://localhost:8082/loginalter";
+      var obj={"mob":""}
+      obj.mob=mobile;
+      this.loginalterparam=obj;
+      this.$.loginalterajax.generateRequest();
     }
+    },
+    loginalterResponse:function(e){
+     if(e.detail.response.returnval.length>0)
+      {
+        var school=e.detail.response.returnval[0].school_id;
+        sessionStorage.setItem("schoolx",school);
+        
+      var parent=e.detail.response.returnval;
+      document.querySelector('login-form').parent=parent;
+      }
+    else
+    {
+      alert('Invalid Username and Password');
+    } 
     },
     adminlogin:function(username,password){
       this.adminloginurl="http://localhost:8082/adminlogin";

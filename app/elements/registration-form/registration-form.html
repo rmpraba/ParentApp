@@ -65,7 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p>Ask the Registered Mobile User to confirm this request.</p>
           </paper-dialog-scrollable>
           <div class="buttons">
-            <paper-button dialog-dismiss>Close</paper-button>
+            <paper-button on-click="close" dialog-dismiss>Close</paper-button>
           </div>
         </paper-dialog>
       </section>
@@ -84,23 +84,24 @@ var relation;
       Fnclear:function(){
         this.regmobile='';
         this.username='';
-        this.student.selected=-1;
-        this.drop.selected=-1;
+        document.querySelector('#student').selected=-1;
         this.newmobile='';
-        this.email=-1;
+        this.email='';
       },
       relate:function(e){
         relation=e.target.selectedItem.textContent.trim();
         alert(relation);
       },
-      submit:function(){
-        this.$.qpostid.regmob(this.regmobile,this.username,relation,this.newmobile,this.email);
-      },
+      
       back:function(){
         document.querySelector('app-card').setPage('login');
       },
       register:function(){
         document.querySelector('#registered').open();
+        this.$.qpostid.regmob(this.regmobile,this.username,relation,this.newmobile,this.email);
+      },
+      close:function(){
+        document.querySelector('app-card').setPage("login");
       }
     
     });
