@@ -35,26 +35,91 @@
          width: 20%;
         margin-left: 10%;
       }
+      table { 
+        width: 100%; 
+        border-collapse: collapse;
+        margin: 2% 10%;
+      }
+      /* Zebra striping */
+      tr:nth-of-type(odd) { 
+        background: #eee; 
+      }
+      th { 
+        background: #333; 
+        color: white; 
+        font-weight: bold; 
+      }
+      td, th { 
+        padding: 6px; 
+        border: 1px solid #ccc; 
+        text-align: left; 
+      }
+      @media 
+      only screen and (max-width: 760px),
+      (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr { 
+          display: block; 
+        }
+        
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr { 
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+        
+        tr { border: 1px solid #ccc; }
+        
+        td { 
+          /* Behave  like a "row" */
+          border: none;
+          border-bottom: 1px solid #eee; 
+          position: relative;
+          padding-left: 50%; 
+        }
+        
+        td:before { 
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 45%; 
+          padding-right: 10px; 
+          white-space: nowrap;
+        }
+        
+        /*
+        Label the data
+        */
+        td:nth-of-type(1):before { content: "School Name"; }
+        td:nth-of-type(2):before { content: "Issue Category"; }
+        td:nth-of-type(3):before { content: "Issue Status"; }
+        td:nth-of-type(4):before { content: "Total"; }
+      }
     </style>
     <div class="card">
-        <div class="tabcard">
-        <paper-tabs>
-          <paper-tab >School Name</paper-tab>
-          <paper-tab >Issue Category</paper-tab>
-          <paper-tab >Issue Status</paper-tab>
-          <paper-tab>Total</paper-tab>          
-        </paper-tabs>
-        </div>
-        <div class="itemcard">
-        <template  is="dom-repeat" items="{{summaryarr}}" as="view">
-        <div class="innercard">
-        <paper-item class="i1">{{view.name}}</paper-item>
-        <paper-item class="i2">{{view.category}}</paper-item>
-        <paper-item class="i2">{{view.query_status}}</paper-item>
-        <paper-item class="i3">{{view.total}}</paper-item> 
-        </div>       
-        </template>
-        </div>
+          <div class="page-heading summary">
+            <h1>SUMMARY</h1>
+          </div>
+      <table>
+        <thead>
+          <tr>
+            <th>School Name</th>
+            <th>Issue Category</th>
+            <th>Issue Status</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template  is="dom-repeat" items="{{summaryarr}}" as="view">
+            <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
+            <tr><td>{{view.name}}</td><td>{{view.category}}</td><td>{{view.query_status}}</td><td>{{view.total}}</td></tr>
+          </template>
+        </tbody>
+      </table>
     </div>
   </template>
   <script>
