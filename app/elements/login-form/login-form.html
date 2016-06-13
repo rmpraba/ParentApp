@@ -18,6 +18,10 @@
       .button{
         @apply(--layout-center);
       }
+      .or{
+       @apply(--layout-center);
+        margin-left: 45%;
+      }
       .sub{
         margin-top: 5%;
         margin-left: 30%;
@@ -59,7 +63,13 @@
             <div>
               <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
             </div>
+            <div class="or"><strong>OR</strong></div>
+          <div class="field">
+            If don't have an account
+              <ahref class="admin" on-click="link"><u>Register Here...!</u></ahref>
           </div>
+          </div>
+          
         </div>
       </section>
     </body>
@@ -123,6 +133,9 @@
     },
     login:function(){
       this.$.login.adminlogin(this.username,this.password);
+    },
+    link:function(){
+      document.querySelector('app-card').setPage('registration');
     }
     });
   })();

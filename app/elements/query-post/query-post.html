@@ -174,6 +174,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="summaryreportResponse"
     debounce-duration="300"
   ></iron-ajax>
+<!-- verify the registered number for new registration -->
+   <iron-ajax
+    method="post"
+    id="verifymobid"
+    url="{{verifymoburl}}"
+    params="{{verifymobparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="verifymobResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+<!-- submit the new registration details for helpdesk -->
+  <iron-ajax
+    method="post"
+    id="regmobid"
+    url="{{regmoburl}}"
+    params="{{regmobparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="regmobResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -659,6 +681,44 @@ this.$.summaryreportid.generateRequest();
 summaryreportResponse:function(e){
 // alert(JSON.stringify(e.detail.response));e.detail.response
 document.querySelector('issue-summary-report').summaryarr=e.detail.response.returnval;
+},
+verifymob:function(oldmob){
+  this.verifymoburl="http://localhost:8082/verifymob";
+  var obj={"exmob":""}
+  obj.exmob=oldmob;
+  this.verifymobparam=obj;
+   //alert(JSON.stringify(obj));
+  this.$.verifymobid.generateRequest();
+},
+verifymobResponse:function(e){
+  var res=e.detail.response.returnval;
+  //alert('resdf'+res);
+  if(res=='0'){
+    alert('Given number is not Registered');
+    document.querySelector('registration-form').Fnclear();
+  }
+},
+regmob:function(regmob,username,relation,newmob,email){
+this.regmoburl="http://localhost:8082/regmob";
+var obj={"regmob":"","username":"","relation":"","newmob":"","email":"","verifykey":"","activate":""}
+obj.regmob=regmob;
+obj.username=username;
+obj.relation=relation;
+obj.newmob=newmob;
+obj.email=email;
+obj.verifykey=7576;
+obj.activate=0;
+this.regmobparam=obj;
+this.$.regmobid.generateRequest();
+},
+regmobResponse:function(e){
+  var res=e.detail.response.returnval;
+  //alert(res);
+  if(res=='success'){
+    alert('The new registration is done successfully');
+    document.querySelector('registration-form').Fnclear();
+    document.querySelector('app-card').setPage('login');
+  }
 }
     });
   })();

@@ -531,6 +531,52 @@ app.post('/fetchsummaryreport',  urlencodedParser,function (req, res)
 });
 
 
+
+app.post('/verifymob',  urlencodedParser,function (req, res)
+{
+  var flag={"mobile":req.query.exmob};
+  connection.query('select * from parent where ?',[flag],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': '0'});
+        //console.log('empty');
+      }
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
+
+
+app.post('/regmob',  urlencodedParser,function (req, res)
+{
+  var dv={"registered_no":req.query.regmob,"user_name":req.query.username,"relationship":req.query.relation,"new_mobile":req.query.newmob,"email":req.query.email,"verify_key":req.query.verifykey,"activate_flag":req.query.activate};
+       connection.query('insert into alternate_no set ?',[dv],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
