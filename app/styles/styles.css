@@ -75,8 +75,8 @@
 }
 section{
     margin: 0 auto;
-    height: 643px;
-    overflow: auto;
+    height: 600px;
+    overflow-y: auto;
 }
 @media only screen and (max-width: 320px) {
    
@@ -172,10 +172,17 @@ body{
     background-color: #ffffff;
 }
 .container.registration{
-    width: 50%;
+    width: 60%;
     height: 100%;
     margin: 5% auto;
     background-color: #ffffff;
+}
+.registration h1{
+    margin: 5% 0 0 0;
+}
+.registration .buttons{
+    margin: 2% auto;
+    text-align: center;
 }
  @media(max-width:767px){
     .login-card{width: 75%;}
@@ -325,5 +332,48 @@ paper-dialog{
 .category_icon1{
     height: 100%;
 }
-
+.page-heading.summary{
+    font-size: 150%;
+    font-family: 'Lato-Black';
+    letter-spacing: -50%;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: #000000;
+    font-weight: bolder;
+    margin: 0 auto;
+    text-align: center;
+}
+.report{
+    margin:0 auto; 
+    position:relative;
+}
+#registered{
+    padding: 1%;
+    position: absolute;
+    top: 25%;
+    right: 25%;
+    left: 25%;
+}
+#registered p{
+    text-align: center;
+    margin: 0 auto;
+    font-size: 100%;
+    font-family: 'Lato-Light';
+    font-weight: bold;
+}
+#registered h2{
+    margin: 2% auto;
+    text-align: center;
+    font-size: 150%;
+    font-family: 'Lato-Black';
+    letter-spacing: -50%;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: #000000;
+    font-weight: bolder;
+}
+#registered .buttons{
+    margin: 0 40%;
+    text-align: center;
+}
 </style>
