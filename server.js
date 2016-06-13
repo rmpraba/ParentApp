@@ -17,7 +17,31 @@ app.get('/', function (req, res) {
    res.sendFile("app/index.html" );
 })
 
+app.post('/regemailsend', urlencodedParser,function (req, res) {
 
+var server  = email.server.connect({
+   user:    "mlzssamsidh@yahoo.com",
+   password:"bgl12345",
+   host:    "smtp.mail.yahoo.com",
+   ssl:     true
+
+});
+// send the message and get a callback with an error or details of the message that was sent
+server.send({
+   text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
+   from:    "mlzssamsidh@yahoo.com",
+   to:      "ntamilselvimca@gmail.com",
+   subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
+    attachment:
+
+      [
+        {data:"Please <a href=\"http://localhost:8082/index.html\">http://www.example.com/login.aspx</a>", alternative:true}
+
+   ]
+}, function(err, message) { console.log(err || message); });
+res.status(200).json('mail sent');
+
+});
 
 app.post('/mobile',  urlencodedParser,function (req, res){
   var mobile={"mobile":req.query.mobile};

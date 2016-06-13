@@ -196,6 +196,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="regmobResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="regmailid"
+    url="{{regmailurl}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="regmailResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -717,6 +726,8 @@ regmobResponse:function(e){
   if(res=='success'){
     //alert('The new registration is done successfully');
     document.querySelector('registration-form').Fnclear();
+    this.regmailurl="http://localhost:8082/regemailsend";
+    this.$.regmailid.generateRequest();
     
   }
 }
