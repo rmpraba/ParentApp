@@ -357,6 +357,9 @@ paper-dialog{
 #registered p{
     text-align: center;
     margin: 0 auto;
+    font-size: 100%;
+    font-family: 'Lato-Light';
+    font-weight: bold;
 }
 #registered h2{
     margin: 2% auto;
