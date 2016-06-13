@@ -36,7 +36,7 @@ app.post('/mobile',  urlencodedParser,function (req, res){
 
 app.post('/loginalter',  urlencodedParser,function (req, res){
   var mobile={"new_mobile":req.query.mobile};
-  connection.query('SELECT school_id, (SELECT name FROM md_school WHERE id = school_id) AS school_name, student_id, (SELECT student_name FROM student_details WHERE id = student_id) AS student_name FROM parent WHERE mobile = (SELECT registered_no FROM alternate_no WHERE ? ) ',[mobile],
+  connection.query('SELECT school_id, (SELECT name FROM md_school WHERE id = school_id) AS school_name, student_id, (SELECT student_name FROM student_details WHERE id = student_id) AS student_name FROM parent WHERE mobile = (SELECT registered_no FROM alternate_no WHERE ? and activate_flag=1) ',[mobile],
   function(err, rows){
     if(!err){
       if(rows.length>0){
