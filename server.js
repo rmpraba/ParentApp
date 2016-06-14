@@ -116,7 +116,7 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
   var school_id={"school_id":req.query.schol};
   var status={"query_status":"open"};
   console.log(school_id+   +status);
-       connection.query('select * from query where ? and ?',[school_id,status],
+       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ?',[school_id,status],
         function(err, rows)
         {
     if(!err)

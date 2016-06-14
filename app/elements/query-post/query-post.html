@@ -265,7 +265,7 @@ this.unopenmsgurl="http://localhost:8082/unopenmsg";
   obj.schol=sessionStorage.getItem("schoolx");
   obj.status=1;
   this.unopenmsgparam=obj;
-  alert(JSON.stringify(obj));
+  //alert(JSON.stringify(obj));
   this.$.unopenmsgid.generateRequest();
 
 },
@@ -322,10 +322,10 @@ this.unreadmsgurl="http://localhost:8082/unreadmsg";
 parentinboxResponse:function(e){
   //alert('2');
   var resarr=e.detail.response.returnval;
-  alert('hi');
-  alert(JSON.stringify(resarr));
+  //alert('hi');
+  //alert(JSON.stringify(resarr));
   document.querySelector('parentinbox-itemcard').msgarr=resarr;
-alert('hi'+JSON.stringify(resarr));
+//alert('hi'+JSON.stringify(resarr));
 },
 postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
     var d1=new Date();
@@ -470,7 +470,7 @@ obj.schol=sessionStorage.getItem("schoolx");
 obj.msg_status=2;
 
 this.upmsgstatparam=obj;
-alert(JSON.stringify(obj));
+//alert(JSON.stringify(obj));
 this.$.upmsgstatid.generateRequest();
 },
 upmsgstatResponse:function(e){
@@ -485,7 +485,7 @@ upmsgstatResponse:function(e){
   obj.schol=sessionStorage.getItem("schoolx");
   obj.status=1;
   this.unopenmsgparam=obj;
-  alert(JSON.stringify(obj));
+  //alert(JSON.stringify(obj));
   this.$.unopenmsgid.generateRequest();
 
 },
@@ -523,7 +523,7 @@ upmsgstatprResponse:function(e){
   obj.schol=sessionStorage.getItem("schoolx");
   obj.status=1;
   this.unreadmsgparam=obj;
-  alert(JSON.stringify(obj));
+  //alert(JSON.stringify(obj));
   this.$.unreadmsgid.generateRequest();
 },
 unreadmsgResponse:function(e){

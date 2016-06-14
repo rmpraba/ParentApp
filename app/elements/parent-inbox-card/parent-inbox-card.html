@@ -58,17 +58,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="message">
       </paper-dialog>
       <iron-collapse id="{{queryid}}" class="parent-message">
-        <h2 class="heading-messsage">Message</h2>
+        <!-- <h2 class="heading-messsage">Message</h2> -->
           <div class="top">
             <div class="request-id">
-              {{queryid}} - {{stid}}
+              {{queryid}}
+            </div>
+            <div>
+              {{studentname}} - {{stid}}
             </div>
             <div class="when">
-              <div class="date">
+              <!-- <div class="date">
                 <div class="time1">
                   {{time}}
                 </div>
                   {{date}}
+              </div> -->
+              <div class="field" id="reads">
+                <div class="buttons">
+                  Status : Close <paper-checkbox id="read" on-change="changeHandler" checked></paper-checkbox>
+                </div>
+              </div>
+              <div class="field" id="prio">
+                <paper-dropdown-menu  label="Priority">
+                  <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
+                    <paper-item >Critical</paper-item>
+                    <paper-item >Moderate</paper-item>
+                    <paper-item >Low</paper-item>
+                  </paper-menu>
+                </paper-dropdown-menu>
               </div>
             </div>
           </div>
@@ -79,27 +96,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <p class="message-content">{{message}}</p>
           </div>
         <div id="details">
-        <div class="field">
-                      <paper-dropdown-menu  label="Priority">
-                        <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
-                          <paper-item >Critical</paper-item>
-                          <paper-item >Moderate</paper-item>
-                          <paper-item >Low</paper-item>
-                        </paper-menu>
-                      </paper-dropdown-menu>
-                    </div>
-          <p class="mobile">Contact:{{mob}},</p>
-          <p class="mail">{{mail}}</p>
+          <p class="mobile">Contact:{{mob}}</p>
+          <!-- <p class="mail">{{mail}}</p> -->
         </div>
         <!--<div class="buttons">
           <paper-button id="fwd" on-click="frwd">Forward to Manager</paper-button>
         </div>-->
-        <div class="field" id="reads">
-          Status : Close
-          <div class="buttons">
-            <paper-checkbox id="read" on-change="changeHandler"></paper-checkbox>
-          </div>
-        </div>
         <div class="buttons" >
           <paper-button id="reply-button" on-click="answer">Reply</paper-button>
         </div>
@@ -125,6 +127,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
     ready:function(){
       //this.querySelector("#parent-message").close();
+      /*setInterval(function(){
+        alert("Hi");
+      }, 3000)*/
+      var message_time = new Date(this.datetime);
+      message_time.setHours(message_time.getHours() + 48);
+      var current_time = new Date();
+      if(current_time >= message_time){
+        alert('Hi');
+        this.$.qpostid.updatefrwd(this.queryid,this.date,this.time);
+      }
       var id=sessionStorage.getItem("user");
       var role=sessionStorage.getItem("role");
       if(id=='admin'){
@@ -132,6 +144,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       if(id=='parent'){
         this.$.details.hidden=true;
+        this.$.prio.hidden=true;
       }
       if(role=='manager'){
        this.$.fwd.hidden=true; 
@@ -166,6 +179,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     answer:function(){
       //alert("reply");
       document.querySelector("#adminmsg"+this.queryid).toggle();
+      document.querySelector("#read").checked=false;
     },
     changeHandler:function(e){
       if(e.target.checked==true){
