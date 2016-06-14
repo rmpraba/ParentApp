@@ -1,0 +1,77 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+<dom-module id="issue-summary-report">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .itemcard{
+        @apply(--layout-vertical);
+        width: 100%;
+      }
+      .innercard{
+        @apply(--layout-horizontal);
+        width: 100%;
+      }
+      .i2{
+        width: 20%;
+        margin-left: 5%;
+      }
+      .i1{
+        width: 40%;
+        margin-left: 2%;
+      }
+      .i3{
+         width: 20%;
+        margin-left: 10%;
+      }
+    </style>
+    <div class="card">
+        <div class="tabcard">
+        <paper-tabs>
+          <paper-tab >School Name</paper-tab>
+          <paper-tab >Issue Category</paper-tab>
+          <paper-tab >Issue Status</paper-tab>
+          <paper-tab>Total</paper-tab>          
+        </paper-tabs>
+        </div>
+        <div class="itemcard">
+        <template  is="dom-repeat" items="{{summaryarr}}" as="view">
+        <div class="innercard">
+        <paper-item class="i1">{{view.name}}</paper-item>
+        <paper-item class="i2">{{view.category}}</paper-item>
+        <paper-item class="i2">{{view.query_status}}</paper-item>
+        <paper-item class="i3">{{view.total}}</paper-item> 
+        </div>       
+        </template>
+        </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'issue-summary-report',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'issue-summary-report',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

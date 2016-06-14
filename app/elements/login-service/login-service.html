@@ -83,6 +83,7 @@
     },
     adminlogin:function(username,password){
       this.adminloginurl="http://localhost:8082/adminlogin";
+       sessionStorage.setItem("userid",username);
       var obj={"user":"","pass":""}
       obj.user=username;
       obj.pass=password;
@@ -119,7 +120,7 @@
 
         
        }
-       else if(id=="admin"){
+       else if(id=="admin"||role=="Academics"||role=="Administrator"){
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
        this.$.qpostid.getmsg(); 
@@ -135,10 +136,11 @@
         obj.id=id;
         obj.schol=sessionStorage.getItem("schoolx");
         this.getdetailsparam=obj;
-        alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.getdetailsajax.generateRequest();
     },
     getdetailsResponse:function(e){
+      document.querySelector('icon-card').Fnparent();
       //document.querySelector('app-card').setPage("transport");
       //document.querySelector('transport-app').setPage("iconpage");
        var id=sessionStorage.getItem("user");
@@ -166,7 +168,7 @@
         document.querySelector('transport-app').setPage("parent-inbox");
        this.$.qpostid.getmsg(); 
        }
-          alert(e.detail.response.returnval);
+         // alert(e.detail.response.returnval);
         var stud_id=e.detail.response.returnval[0].student_id;
         var parent_name=e.detail.response.returnval[0].parent_name;
         var email=e.detail.response.returnval[0].email;

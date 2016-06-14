@@ -33,16 +33,6 @@ app.post('/mobile',  urlencodedParser,function (req, res){
   });
 });
 
-function setvalue(){
-	console.log("calling setvalue.....");
-}
-var server = app.listen(8082, function () {
-var host = server.address().address
-var port = server.address().port
-console.log("Example app listening at http://%s:%s", host, port)
-});
-
-
 app.post('/query-post1',  urlencodedParser,function (req, res)
 {
   var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag,"subject":req.query.subject,"mobile":req.query.mob,"msg_status":req.query.msq_status,"priority":req.query.priority};
@@ -115,8 +105,11 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
   var status={"query_status":"open"};
+  var userid={"category":req.query.userid};
+
   console.log(school_id+   +status);
-       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ?',[school_id,status],
+       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ?',[school_id,status,userid],
+
         function(err, rows)
         {
     if(!err)
@@ -342,7 +335,7 @@ app.post('/openreport',  urlencodedParser,function (req, res)
         //console.log(rows);
         } else {
         console.log(err);
-        res.status(200).json({'returnval': 'invalid'});
+        res.status(200).json({'returnval': '0'});
       }
     }
     else
@@ -371,7 +364,7 @@ app.post('/closereport',  urlencodedParser,function (req, res)
         //console.log(rows);
         } else {
         console.log(err);
-        res.status(200).json({'returnval': 'invalid'});
+        res.status(200).json({'returnval': '0'});
       }
     }
     else
@@ -516,3 +509,32 @@ app.post('/uppri',  urlencodedParser,function (req, res)
   
 });
   });
+
+app.post('/fetchsummaryreport',  urlencodedParser,function (req, res)
+{
+  var queryy="SELECT count(*) total,category,query_status,(select name from md_school where id = school_id) name FROM query group by school_id,category,query_status order by name";
+    connection.query(queryy,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+});
+
+
+function setvalue(){
+  console.log("calling setvalue.....");
+}
+var server = app.listen(8082, function () {
+var host = server.address().address
+var port = server.address().port
+console.log("Example app listening at http://%s:%s", host, port)
+});

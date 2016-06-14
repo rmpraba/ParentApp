@@ -163,6 +163,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="uppriResponse"
     debounce-duration="300"
   ></iron-ajax>
+
+  <iron-ajax
+    method="post"
+    id="summaryreportid"
+    url="{{summaryreporturl}}"
+    params="{{summaryreportparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="summaryreportResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -181,6 +192,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var sub;
     var mobile;
     var stid;
+    var inboxlen;
+    var inboxcount;
+    var resarr;
+    var startcount;
     Polymer({
       is: 'query-post',
       ready:function(){
@@ -254,8 +269,9 @@ getmsg:function()
 {
 
   this.getmsgurl="http://localhost:8082/getmsg";
-  var obj={"schol":"","status":""}
+  var obj={"schol":"","status":"","userid":""}
   obj.schol=sessionStorage.getItem("schoolx");
+  obj.userid=sessionStorage.getItem("role");
   this.getmsgparam=obj;
   //alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
@@ -270,13 +286,18 @@ this.unopenmsgurl="http://localhost:8082/unopenmsg";
 
 },
 unopenmsgResponse:function(e){
-    var res=e.detail.response.returnval;
-    alert('unread msg for admin   '+JSON.stringify(res));
+    var resno=e.detail.response.returnval[0].total;
+  document.querySelector('icon-card').unread=resno;
 },
 getmsgResponse:function(e)
 {
-  var msgarr=e.detail.response.returnval;
-  document.querySelector('parent-inbox').msgarr=msgarr;
+resarr=e.detail.response.returnval;
+  inboxlen=e.detail.response.returnval.length;
+  var inbox=resarr.slice(0,5);
+  inboxcount=5;
+   document.querySelector('parent-inbox').msgarr=inbox;
+  //var msgarr=e.detail.response.returnval;
+  //document.querySelector('parent-inbox').msgarr=msgarr;
   //alert(JSON.stringify(msgarr));
 },
 postreply:function(queryid,reply,statusx,date,time){
@@ -320,13 +341,57 @@ this.unreadmsgurl="http://localhost:8082/unreadmsg";
   this.$.unreadmsgid.generateRequest();
 },
 parentinboxResponse:function(e){
-  //alert('2');
-  var resarr=e.detail.response.returnval;
-  //alert('hi');
+
+ resarr=e.detail.response.returnval;
+  inboxlen=e.detail.response.returnval.length;
+  var inbox=resarr.slice(0,5);
+  inboxcount=5;
   //alert(JSON.stringify(resarr));
-  document.querySelector('parentinbox-itemcard').msgarr=resarr;
-//alert('hi'+JSON.stringify(resarr));
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
 },
+Fnmoveforward:function()
+{
+  //alert(inboxcount+''+inboxlen);
+if(inboxlen>inboxcount)
+{
+  //alert('t');
+  var inbox=resarr.slice(inboxcount,inboxcount+5);
+  if(inboxcount+5<=inboxlen)
+  {
+    startcount=inboxcount;
+  
+  inboxcount+=5;
+}
+else
+{
+  startcount=inboxcount;
+  inboxcount=inboxlen;
+}
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+}
+},
+Fnmovebackward:function()
+{
+  alert(inboxcount);
+if(inboxcount>0)
+{
+  //alert('tt');
+  var inbox=resarr.slice(startcount-5,startcount);
+  if(startcount-5>0)
+  {
+  startcount-=5;
+  inboxcount-=5;
+  }
+  else
+  {
+  startcount=0;
+  inboxcount=0;
+ }
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+}
+
+},
+
 postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
     var d1=new Date();
   var datex=d1.getDate()+'/'+(d1.getMonth()+1)+'/'+d1.getFullYear();
@@ -456,8 +521,8 @@ closereportResponse:function(e){
 document.querySelector('reportstatus-card').noofcricclose=cc;
 document.querySelector('reportstatus-card').noofmodclose=mc;
 document.querySelector('reportstatus-card').nooflowclose=lc;
-  document.querySelector('reportstatus-card').closedarr=tex;
-   document.querySelector('reportstatus-card').noofclose=len;
+document.querySelector('reportstatus-card').closedarr=tex;
+document.querySelector('reportstatus-card').noofclose=len;
 }
 },
 upmsgstat:function(id,sid,time,date){
@@ -491,8 +556,8 @@ upmsgstatResponse:function(e){
 },
 unopenmsgResponse:function(e)
 {
-  var resno=e.detail.response.returnval;
-  alert('total unread msg for this id is'+JSON.stringify(resno));
+  var resno=e.detail.response.returnval[0].total;
+  document.querySelector('icon-card').unread=resno;
 },
 upmsgstatpr:function(id,sid,time,date){
     stid=sid;
@@ -527,8 +592,9 @@ upmsgstatprResponse:function(e){
   this.$.unreadmsgid.generateRequest();
 },
 unreadmsgResponse:function(e){
-  var resno=e.detail.response.returnval;
-  alert('total parent unread msg for this id is'+JSON.stringify(resno));
+  var resno=e.detail.response.returnval[0].total;
+   document.querySelector('icon-card').unread=resno;
+  //alert('total parent unread msg for this id is'+JSON.stringify(resno));
 },
 uppri:function(level,qid,date,time){
 this.uppriurl="http://localhost:8082/uppri";
@@ -546,9 +612,15 @@ uppriResponse:function(e){
   if(res=='success'){
     alert('Priority Changed');
   }
+},
+FnFetchSummaryReport:function(){
+this.summaryreporturl="http://localhost:8082/fetchsummaryreport";
+this.$.summaryreportid.generateRequest();
+},
+summaryreportResponse:function(e){
+// alert(JSON.stringify(e.detail.response));e.detail.response
+document.querySelector('issue-summary-report').summaryarr=e.detail.response.returnval;
 }
-     
-
     });
   })();
   </script>

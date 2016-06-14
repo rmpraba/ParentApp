@@ -22,6 +22,7 @@
   <link rel="import" href="../parentinbox-itemcard/parentinbox-itemcard.html">
     <link rel="import" href="../icon-card/icon-card.html">
     <link rel="import" href="../reportstatus-card/reportstatus-card.html">
+    <link rel="import" href="../issue-summary-report/issue-summary-report.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
   <dom-module id="transport-app">
   <template>
@@ -49,7 +50,9 @@
         </paper-toolbar>
         <div>
       <paper-menu class="content fit">
+      
        <icon-card></icon-card>
+       
       <!-- Dynamic menu creation for drawer panel -->
     <br/>
       </paper-menu>
@@ -67,20 +70,22 @@
         <section data-category="login">
           <login-form></login-form>
         </section>
-       <section data-category="iconpage">
-          <icon-card></icon-card>
-        </section>
          <section data-category="complaintpage">
           <complaint-form></complaint-form>
         </section>
+       <!--Admin login home  -->
        <section data-category="parent-inbox">
           <parent-inbox></parent-inbox>
         </section>
+       <!--Parent login home  -->
         <section data-category="parentinbox-itemcard">
           <parentinbox-itemcard></parentinbox-itemcard>
         </section>
         <section data-category="report">
           <reportstatus-card></reportstatus-card>
+        </section>
+        <section data-category="summaryreport">
+          <issue-summary-report></issue-summary-report>
         </section>
       </iron-pages>
       </paper-header-panel>
