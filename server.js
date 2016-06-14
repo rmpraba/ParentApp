@@ -18,6 +18,10 @@ app.get('/', function (req, res) {
 })
 
 app.post('/regemailsend', urlencodedParser,function (req, res) {
+  var username=req.query.reguser;
+  var mobilenumber=req.query.regmobnew;
+  var relation=req.query.regrel;
+  var verificationcode=req.query.regverify;
 
 var server  = email.server.connect({
    user:    "mlzssamsidh@yahoo.com",
@@ -35,7 +39,7 @@ server.send({
     attachment:
 
       [
-        {data:"Please <a href=\"http://localhost:8082/index.html\">http://www.example.com/login.aspx</a>", alternative:true}
+        {data:"<html><body style='width:60%; margin:0 20%; font-family: sans-serif;'><table style='border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;'><tr><table align='center' border='0' cellpadding='0' cellspacing='0' style='max-width:100%; min-width:100%;' width='100%' class='mcnTextContentContainer'><tbody><tr><td valign='top' class='mcnTextContent' style='padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;'><a href='http://samsidhmlzs.com/'><img style='width:100%;' src='logo.jpg'></a></td></tr></tbody></table></tr><tr><table align='left' border='0' cellpadding='0' cellspacing='0' style='max-width:100%; min-width:100%; text-align:center;' width='100%' class='mcnTextContentContainer'><tbody><tr><td valign='top' class='mcnTextContent' style='padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;'><h1>Another User is Signed Up for tracking your kid.</h1><div style='margin:20px 120px 20px 75px;width:100%;'><div style='display:flex;'><p>Username</p><p> :"+username+"</p></div><div style='display:flex;'><p>Mobile Number</p><p>: "+mobilenumber+"</p></div><div style='display:flex;'><p>Relation</p><p>: "+relation+"</p></div><div style='display:flex;'><p>Verification Code:</p><p>"+verificationcode+"</p></div></div><p style='text-align:center;'>Please share this verification key to the above person, if you want them to track your kid.</p><p style='text-align:center;'>Otherwise ignore this mail.</p></td></tr></tbody></table></tr></table></body></html> Please <a href=\"http://localhost:8082/index.html\">http://localhost:8082/index.html</a>", alternative:true}
 
    ]
 }, function(err, message) { console.log(err || message); });

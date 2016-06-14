@@ -198,8 +198,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   ></iron-ajax>
   <iron-ajax
     method="post"
-    id="regmailid"
+    id="regmailajax"
     url="{{regmailurl}}"
+    params="{{regmailparam}}"
     handle-as="json"
     content-type="application/json"
     on-response="regmailResponse"
@@ -227,6 +228,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var inboxcount;
     var resarr;
     var startcount;
+    var regnewno;
+    var regusername;
+    var regvericode;
+    var regrelation;
     Polymer({
       is: 'query-post',
       ready:function(){
@@ -708,6 +713,10 @@ verifymobResponse:function(e){
   }
 },
 regmob:function(regmob,username,relation,newmob,email){
+  regnewno=newmob;
+  regusername=username;
+  regrelation=relation;
+
 this.regmoburl="http://localhost:8082/regmob";
 var obj={"regmob":"","username":"","relation":"","newmob":"","email":"","verifykey":"","activate":""}
 obj.regmob=regmob;
@@ -719,6 +728,7 @@ obj.verifykey=Math.floor(100000 + Math.random() * 900000);
 obj.activate=0;
 this.regmobparam=obj;
 this.$.regmobid.generateRequest();
+regvericode=obj.verifykey;
 },
 regmobResponse:function(e){
   var res=e.detail.response.returnval;
@@ -727,7 +737,14 @@ regmobResponse:function(e){
     //alert('The new registration is done successfully');
     document.querySelector('registration-form').Fnclear();
     this.regmailurl="http://localhost:8082/regemailsend";
-    this.$.regmailid.generateRequest();
+    var obj={"regmobnew":"","reguser":"","regverify":"","regrel":""}
+    obj.regmobnew=regnewno;
+    obj.reguser=regusername;
+    obj.regverify=regvericode;
+    obj.regrel=regrelation;
+    this.regmailparam=obj;
+    //alert(this.regmailparam);
+    this.$.regmailajax.generateRequest();
     document.querySelector('app-card').setPage("login");
   }
 }
