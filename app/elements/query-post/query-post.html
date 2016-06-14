@@ -309,7 +309,7 @@ getmsg:function()
   obj.schol=sessionStorage.getItem("schoolx");
   obj.userid=sessionStorage.getItem("role");
   this.getmsgparam=obj;
-  alert(JSON.stringify(obj));
+  //alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
 
 this.unopenmsgurl="http://localhost:8082/unopenmsg";
@@ -409,7 +409,7 @@ else
 },
 Fnmovebackward:function()
 {
-  alert(inboxcount);
+ // alert(inboxcount);
 if(inboxcount>0)
 {
   //alert('tt');
@@ -534,7 +534,7 @@ for(var i=0;i<len;i++){
   }
   date2=new Date(tex[i].datetime);
   days=date.getDate() - date2.getDate();
-  alert(days);
+ // alert(days);
   var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":""}
   obj.query_id=tex[i].query_id;
   obj.priority=tex[i].priority;
@@ -578,7 +578,7 @@ closereportResponse:function(e){
   }
    date2=new Date(tex[i].datetime);
   days=date.getDate() - date2.getDate();
-  alert(days);
+  //alert(days);
   var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":""}
   obj.query_id=tex[i].query_id;
   obj.priority=tex[i].priority;
@@ -632,7 +632,7 @@ unopenmsgResponse:function(e)
 {
   var resno=e.detail.response.returnval[0].total;
   document.querySelector('icon-card').unread=resno;
-  alert(resno);
+  //alert(resno);
 },
 upmsgstatpr:function(id,sid,time,date){
     stid=sid;
@@ -646,7 +646,7 @@ obj.schol=sessionStorage.getItem("schoolx");
 
 
 this.upmsgstatprparam=obj;
-alert('parent reply  '+JSON.stringify(obj));
+//alert('parent reply  '+JSON.stringify(obj));
 this.$.upmsgstatprid.generateRequest();
 
 },

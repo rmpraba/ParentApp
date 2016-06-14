@@ -121,7 +121,7 @@
     student:function(e)
     {
       var id=e.target.selectedItem.value;
-      alert(e.target.selectedItem.value);
+      //alert(e.target.selectedItem.value);
         sessionStorage.setItem("studid",id);
       this.$.login.getdetails(id);
       
@@ -166,10 +166,8 @@
         this.$.login.activate(this.newregmob,this.verify);
     },
     fnacti:function(){
-      //alert('1');
       document.querySelector('#registered').close();  
         this.$.toast.open();
-        //alert('2');
     }
     });
   })();
