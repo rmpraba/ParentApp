@@ -16,8 +16,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .icon{
+        padding: 5%;
+        width: 50%;
+        margin-top: 5%;
+      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="icon">
+    <paper-icon-button class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
+    <paper-icon-button class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
+    </div>
   </template>
   <script>
   (function() {
@@ -26,12 +34,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'loginicon-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'loginicon-card',
-          notify: true
-        }
+      parents:function(){
+        //alert('1');
+        document.querySelector('app-card').setPage('login');
+        document.querySelector('login-form').Fnparent();
+        
+      },
+      admins:function(){
+        //alert('2');
+           document.querySelector('app-card').setPage('login');
+        document.querySelector('login-form').admin();
+        
       }
     });
   })();

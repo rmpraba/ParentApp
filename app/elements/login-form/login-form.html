@@ -62,9 +62,9 @@
             <div class="field">
               <paper-button id="sub" class="sub" on-click="login">LOGIN</paper-button>
             </div>
-            <div>
+            <!-- <div>
               <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
-            </div>
+            </div> -->
             <div id="id">
             <div class="or"><strong>OR</strong></div>
           <div class="field">
@@ -97,22 +97,10 @@
   <script>
   (function() {
     'use strict';
-      var butad;
-      var temp;
     Polymer({
       is: 'login-form',
     ready:function(){
-      temp=0;
-      butad="Go to Admin Login";
-      this.butname=butad;
-      sessionStorage.setItem("user","parent");
-
-      this.$.mob.hidden=false;
-      this.$.drop.hidden=false;
-      this.$.user.hidden=true;
-      this.$.pass.hidden=true;
-      this.$.sub.hidden=true;
-      this.$.id.hidden=false;
+ 
     },
     mobileno:function()
     {
@@ -126,31 +114,21 @@
       this.$.login.getdetails(id);
       
     },
-    butclick:function(){
-      if(temp==0){
-        butad="Go to Parent Login";
+    admin:function(){
+      //alert('admin');
         sessionStorage.setItem("user","admin");
-        this.butname=butad;
         this.$.mob.hidden=true;
       this.$.drop.hidden=true;
-      this.$.user.hidden=false;
-      this.$.pass.hidden=false;    
-      this.$.sub.hidden=false;
+      
       this.$.id.hidden=true;
-        temp=1;
-    }
-      else{
-        butad="Go to Admin Login";
+    },
+    Fnparent:function(){
+      //alert('parent');
         sessionStorage.setItem("user","parent");
-        this.butname=butad;
-        this.$.id.hidden=false;
-        this.$.mob.hidden=false;
-      this.$.drop.hidden=false;
+        
       this.$.user.hidden=true;
       this.$.pass.hidden=true;
       this.$.sub.hidden=true;
-        temp=0;
-      }
       
     },
     login:function(){
