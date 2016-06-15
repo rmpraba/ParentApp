@@ -93,17 +93,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="greeting">
               Hai Sir/Madam,
             </div>
-            <p class="message-content">{{message}}</p>
+            <p class="message-content">{{from}} : {{message}}</p>
+             <p class="message-content">Admin Comment : {{admincomment}}</p>
+              <p class="message-content">Principal Comment : {{principalcomment}}</p>
+               <p class="message-content">Management : {{managerreply}}</p>
+                <p class="message-content"> principal reply : {{principalreply}}</p>
+
           </div>
         <div id="details">
           <p class="mobile">Contact:{{mob}}</p>
           <!-- <p class="mail">{{mail}}</p> -->
         </div>
-        <!--<div class="buttons">
-          <paper-button id="fwd" on-click="frwd">Forward to Manager</paper-button>
-        </div>-->
+       
         <div class="buttons" >
           <paper-button id="reply-button" on-click="answer">Reply</paper-button>
+          <paper-button id="fwd" on-click="send">Forward</paper-button>
+        </div>
+      </iron-collapse>
+       <iron-collapse id="comments{{queryid}}" class="dialog">
+        <div class="field textarea">
+          <iron-autogrow-textarea value="{{comments}}" id="reply"  error-message="needs comments!" placeholder="Comments..." required ></iron-autogrow-textarea>
+        </div>
+        <div class="buttons">
+          <paper-button on-click="frwd">SUBMIT</paper-button>
         </div>
       </iron-collapse>
       <iron-collapse id="adminmsg{{queryid}}" class="dialog">
@@ -168,6 +180,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if(document.querySelector("#adminmsg"+this.queryid).opened = true){
         document.querySelector("#adminmsg"+this.queryid).opened = false;
       }
+      if(document.querySelector("#comments"+this.queryid).opened = true){
+        document.querySelector("#comments"+this.queryid).opened = false;
+      }
       var id=sessionStorage.getItem("user");
       if(id=='parent')
       {
@@ -180,6 +195,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //alert("reply");
       document.querySelector("#adminmsg"+this.queryid).toggle();
       document.querySelector("#read").checked=false;
+    },
+    send:function(){
+      document.querySelector("#comments"+this.queryid).toggle();
     },
     changeHandler:function(e){
       if(e.target.checked==true){
@@ -210,7 +228,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
     },
     frwd:function(){
-      this.$.qpostid.updatefrwd(this.queryid,this.date,this.time);
+      this.$.qpostid.updatefrwd(this.user,this.queryid,this.comments,this.date,this.time);
+      this.querySelector("#comments").close(); 
     },
     priority:function(e){
         var level=(e.target.selectedItem.textContent).trim();

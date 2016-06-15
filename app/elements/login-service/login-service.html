@@ -128,6 +128,7 @@ var res=e.detail.response.returnval;
     else
     {
       alert('Invalid Mobile number');
+      document.querySelector('login-form').Fnclear();
     } 
     },
     adminlogin:function(username,password){
@@ -153,7 +154,7 @@ var res=e.detail.response.returnval;
         var id=sessionStorage.getItem("user");
         var role=sessionStorage.getItem("role");
        //alert(id+'    '+role);
-       if((id=="admin")&&(role=='manager')){
+       if((id=="admin")&&((role=='manager')||(role=='principal'))){
         //alert('hello');
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
@@ -179,6 +180,7 @@ var res=e.detail.response.returnval;
       }
       else{
           alert('Wrong Username and Password');
+           document.querySelector('login-form').Fnclear();
       }
 
     },

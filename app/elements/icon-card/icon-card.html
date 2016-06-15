@@ -83,7 +83,7 @@ var role;
        id=sessionStorage.getItem("user");
        role=sessionStorage.getItem("role");
        //alert(id+'    '+role);
-       if((id=="admin")&&(role=='manager')){
+       if((id=="admin")&&((role=='manager')||(role=='principal'))){
         //alert('hello');
         document.querySelector('transport-app').setPage("parent-inbox");
 

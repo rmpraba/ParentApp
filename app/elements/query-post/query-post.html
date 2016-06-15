@@ -343,7 +343,7 @@ postreply:function(queryid,reply,statusx,date,time){
   var h =  d1.getHours(), m = d1.getMinutes();
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
   this.queryposturl="http://localhost:8082/querypost";
-  var obj={"id":"","msg":"","schol":"","msg_status":"","replydate":"","replytime":"","status":"","flag":"","date":"","time":""}
+  var obj={"id":"","msg":"","schol":"","msg_status":"","replydate":"","replytime":"","status":"","flag":"","date":"","time":"","roles":""}
   obj.id=queryid;
   obj.msg=reply;
   obj.replydate=datex;
@@ -353,6 +353,7 @@ postreply:function(queryid,reply,statusx,date,time){
   obj.time=time;
   obj.schol=sessionStorage.getItem("schoolx");
   obj.msg_status=1;
+  obj.roles=sessionStorage.getItem("role");
   this.querypostparam=obj;
   this.$.querypostid.generateRequest();
 },
@@ -456,13 +457,13 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
 
 },
 managerinbox:function(){
-        //alert('1');
+       // alert('1'+sessionStorage.getItem("role"));
 this.managerinboxurl="http://localhost:8082/managerinbox";
 var obj={"schol":"","frwd":""}
   obj.schol=sessionStorage.getItem("schoolx");
-  obj.frwd="manager";
+  obj.frwd=sessionStorage.getItem("role");
 this.managerinboxparam=obj;
-this.$.managerinboxid.generateRequest();
+//this.$.managerinboxid.generateRequest();
 },
 managerinboxResponse:function(e){
   //alert('2');
@@ -470,22 +471,33 @@ managerinboxResponse:function(e){
   document.querySelector('parent-inbox').msgarr=msgarr;
   //alert(JSON.stringify(msgarr));
 },
-updatefrwd:function(querid,date,time){
+updatefrwd:function(user,querid,msg,date,time){
+  var user,usern;
+  user=user;
+    if(user=="principal")
+    {
+      usern="manager";
+    }
+    else{
+      usern="Principal";
+    }
   this.updatefwdurl="http://localhost:8082/updatefwd";
-  var obj={"id":"","date":"","time":"","frwd":"","schol":""}
+  var obj={"id":"","date":"","time":"","comments":"","frwd":"","schol":"","roles":""}
   obj.id=querid;
   obj.date=date;
+  obj.comments=msg;
   obj.time=time;
-  obj.frwd="manager";
+  obj.frwd=usern;
+  obj.roles=sessionStorage.getItem("role");
   obj.schol=sessionStorage.getItem("schoolx");
   this.updatefwdparam=obj;
+  //alert(JSON.stringify(obj));
   this.$.updatefwdid.generateRequest();
-
 },
 updatefwdResponse:function(e){
   var res=e.detail.response.returnval;
   if(res=='success'){
-    alert('Forwarded to Manager');
+    alert('Message Forwarded');
   }
   else{
    alert('Not Forwarded'); 

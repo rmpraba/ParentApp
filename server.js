@@ -209,11 +209,23 @@ app.post('/querypost',  urlencodedParser,function (req, res)
     var id={"query_id":req.query.id};
     var date={"updated_date":req.query.date};
     var time={"time":req.query.time};
-    var msg={"query_reply":req.query.msg,"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
+    var msg={"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
     var school_id={"school_id":req.query.schol};
+var role=req.query.roles;
+
+
+if(role=='manager'){
+var reply={"manager_reply":req.query.msg};
+}
+else if (role=='principal'){
+var reply={"principal_reply":req.query.msg};
+}
+else{
+var reply={"query_reply":req.query.msg,"user":"parent"};
+}
 
   //console.log(school_id);
-       connection.query('update query set ? WHERE ? and ? and ? and ?',[msg,id,school_id,date,time],
+       connection.query('update query set ? and ? WHERE ? and ? and ? and ?',[msg,reply,id,school_id,date,time],
         function(err, rows)
         {
     if(!err)
@@ -263,8 +275,9 @@ app.post('/parentinbox',  urlencodedParser,function (req, res)
   var school_id={"school_id":req.query.schol};
   var stud={"student_id":req.query.id};
   var status={"query_status":req.query.status};
-  console.log(school_id+''+stud+''+status);
-       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ? and query_reply!=""',[school_id,stud,status],
+  var user={"user":"parent"};
+ // console.log(school_id+''+stud+''+status);
+       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ? and ? and query_reply!=""',[school_id,stud,status,user],
         function(err, rows)
         {
     if(!err)
@@ -318,8 +331,9 @@ app.post('/managerinbox',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
   var fwd = {"user":req.query.frwd};
+  var status={"query_status":"open"};
   
-  connection.query('select * from query where ? and ?',[fwd,school_id],
+  connection.query('select * from query where ? and ? and ?',[fwd,school_id,status],
   function(err, rows)
   {
     if(!err)
@@ -348,9 +362,18 @@ app.post('/updatefwd',  urlencodedParser,function (req, res)
     var time={"time":req.query.time};
     var fwd={"user":req.query.frwd};
     var school_id={"school_id":req.query.schol};
+    var role=req.query.roles;
+    if(role=='principal'){
+var msg={"principal_comment":req.query.comments};
+}
+else{
+var msg={"admin_comment":req.query.comments};
+}
+
+
 
   //console.log(school_id);
-       connection.query('update query set ? WHERE ? and ? and ? and ?',[fwd,id,school_id,date,time],
+       connection.query('update query set ? WHERE ? and ? and ? and ? and ?',[fwd,id,school_id,date,time,msg],
         function(err, rows)
         {
     if(!err)
