@@ -20,11 +20,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 5%;
         width: 50%;
         margin-top: 5%;
+        position: relative;
+      }
+      #one{
+        float: left;
+        position: absolute;
+        width:75%;
+        left: 0;
+      }
+      #two{
+        float: right; 
+        position: absolute;
+        right: 0;
+        width:75%;
+      }
+      @media screen and (max-width: 767px) {
+        #one { 
+          float: none;
+          margin-top: 70%;
+          width:100%;
+        }
+        #one paper-icon-button{
+          width: 50%;
+        }
+        #two{
+          float: none;
+          margin-bottom: 70%;
+          width:100%;
+        }
+        #two paper-icon-button{
+          width: 50%;
+          padding-top: 2%;
+          margin-top: 2%;
+        }
       }
     </style>
     <div class="icon">
-    <paper-icon-button class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
-    <paper-icon-button class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
+    <div id="one">
+      <paper-icon-button class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
+    </div>
+    <div id="two">
+      <paper-icon-button class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
+    </div>
     </div>
   </template>
   <script>
