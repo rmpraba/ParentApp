@@ -153,10 +153,10 @@ app.post('/upquery-sequence',  urlencodedParser,function (req, res)
 app.post('/getmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
-  var status={"query_status":"open"};
+    var status={"query_status":"open"};
   var userid={"category":req.query.userid};
 
-  console.log(school_id+   +status);
+  console.log(school_id+'  '+status+'  '+userid);
        connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ?',[school_id,status,userid],
 
         function(err, rows)
@@ -165,7 +165,7 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
     {
     if(rows.length>0){
         res.status(200).json({'returnval': rows});
-        //console.log(rows);
+        console.log(rows);
         } else {
         console.log(err);
         res.status(200).json({'returnval': 'invalid'});
@@ -209,23 +209,23 @@ app.post('/querypost',  urlencodedParser,function (req, res)
     var id={"query_id":req.query.id};
     var date={"updated_date":req.query.date};
     var time={"time":req.query.time};
-    var msg={"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
+    
     var school_id={"school_id":req.query.schol};
 var role=req.query.roles;
 
 
 if(role=='manager'){
-var reply={"manager_reply":req.query.msg};
+var reply={"manager_reply":req.query.msg,"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status,"user":"principal"};
 }
 else if (role=='principal'){
-var reply={"principal_reply":req.query.msg};
+var reply={"principal_reply":req.query.msg,"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
 }
 else{
-var reply={"query_reply":req.query.msg,"user":"parent"};
+var reply={"query_reply":req.query.msg,"user":"parent","query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
 }
 
   //console.log(school_id);
-       connection.query('update query set ? and ? WHERE ? and ? and ? and ?',[msg,reply,id,school_id,date,time],
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[reply,id,school_id,date,time],
         function(err, rows)
         {
     if(!err)
@@ -332,7 +332,7 @@ app.post('/managerinbox',  urlencodedParser,function (req, res)
   var school_id={"school_id":req.query.schol};
   var fwd = {"user":req.query.frwd};
   var status={"query_status":"open"};
-  
+  console.log(school_id+'  '+fwd+'  '+status);
   connection.query('select * from query where ? and ? and ?',[fwd,school_id,status],
   function(err, rows)
   {
@@ -340,7 +340,7 @@ app.post('/managerinbox',  urlencodedParser,function (req, res)
     {
     if(rows.length>0){
         res.status(200).json({'returnval': rows});
-        //console.log(rows);
+        console.log(rows);
         } else {
         console.log(err);
         res.status(200).json({'returnval': 'invalid'});
@@ -360,20 +360,22 @@ app.post('/updatefwd',  urlencodedParser,function (req, res)
     var id={"query_id":req.query.id};
     var date={"updated_date":req.query.date};
     var time={"time":req.query.time};
-    var fwd={"user":req.query.frwd};
+    
     var school_id={"school_id":req.query.schol};
     var role=req.query.roles;
     if(role=='principal'){
-var msg={"principal_comment":req.query.comments};
+var msg={"principal_comment":req.query.comments,"user":req.query.frwd};
+
 }
 else{
-var msg={"admin_comment":req.query.comments};
+var msg={"admin_comment":req.query.comments,"user":req.query.frwd};
+
 }
 
 
 
   //console.log(school_id);
-       connection.query('update query set ? WHERE ? and ? and ? and ? and ?',[fwd,id,school_id,date,time,msg],
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[msg,id,school_id,date,time],
         function(err, rows)
         {
     if(!err)

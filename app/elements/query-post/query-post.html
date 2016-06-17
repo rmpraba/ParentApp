@@ -309,7 +309,7 @@ getmsg:function()
   obj.schol=sessionStorage.getItem("schoolx");
   obj.userid=sessionStorage.getItem("role");
   this.getmsgparam=obj;
-  //alert(JSON.stringify(obj));
+  alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
 
 this.unopenmsgurl="http://localhost:8082/unopenmsg";
@@ -461,9 +461,11 @@ managerinbox:function(){
 this.managerinboxurl="http://localhost:8082/managerinbox";
 var obj={"schol":"","frwd":""}
   obj.schol=sessionStorage.getItem("schoolx");
+  
   obj.frwd=sessionStorage.getItem("role");
+  alert(JSON.stringify(obj));
 this.managerinboxparam=obj;
-//this.$.managerinboxid.generateRequest();
+this.$.managerinboxid.generateRequest();
 },
 managerinboxResponse:function(e){
   //alert('2');
@@ -471,15 +473,16 @@ managerinboxResponse:function(e){
   document.querySelector('parent-inbox').msgarr=msgarr;
   //alert(JSON.stringify(msgarr));
 },
-updatefrwd:function(user,querid,msg,date,time){
-  var user,usern;
+updatefrwd:function(querid,msg,date,time){
+  var user=sessionStorage.getItem("role");
+  
   user=user;
     if(user=="principal")
     {
-      usern="manager";
+      var usern="manager";
     }
     else{
-      usern="Principal";
+      var usern="principal";
     }
   this.updatefwdurl="http://localhost:8082/updatefwd";
   var obj={"id":"","date":"","time":"","comments":"","frwd":"","schol":"","roles":""}
@@ -491,7 +494,7 @@ updatefrwd:function(user,querid,msg,date,time){
   obj.roles=sessionStorage.getItem("role");
   obj.schol=sessionStorage.getItem("schoolx");
   this.updatefwdparam=obj;
-  //alert(JSON.stringify(obj));
+  alert(JSON.stringify(obj));
   this.$.updatefwdid.generateRequest();
 },
 updatefwdResponse:function(e){

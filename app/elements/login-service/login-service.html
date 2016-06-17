@@ -156,10 +156,11 @@ var res=e.detail.response.returnval;
        //alert(id+'    '+role);
        if((id=="admin")&&((role=='manager')||(role=='principal'))){
         //alert('hello');
+        this.$.qpostid.managerinbox();
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
 
-        this.$.qpostid.managerinbox();
+        
        }
        
        else if(id=="parent")
@@ -171,10 +172,10 @@ var res=e.detail.response.returnval;
         
        }
        else if(id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"){
-       
+        this.$.qpostid.getmsg(); 
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
-       this.$.qpostid.getmsg(); 
+       
        
        }
       }
