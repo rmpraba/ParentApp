@@ -32,7 +32,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         float: right; 
         position: absolute;
         right: 0;
-        width:75%;
+      }
+      #admin{
+        width: 62%;
       }
       @media screen and (max-width: 767px) {
         #one { 
@@ -60,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-icon-button class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
     </div>
     <div id="two">
-      <paper-icon-button class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
+      <paper-icon-button id="admin" class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
     </div>
     </div>
   </template>
