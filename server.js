@@ -108,7 +108,7 @@ app.post('/query-sequence',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.school_id};
 
-  console.log(school_id);
+ // console.log(school_id);
        connection.query('select sequenceno from sequence where ?',[school_id],
         function(err, rows)
         {
@@ -130,8 +130,8 @@ app.post('/upquery-sequence',  urlencodedParser,function (req, res)
   var school_id={"school_id":req.query.school_id};
   var seqno={"sequenceno":req.query.sequence};
 
-  console.log(school_id);
-  console.log(seqno);
+  //console.log(school_id);
+ // console.log(seqno);
        connection.query('update sequence set ? where ?',[seqno,school_id],
         function(err, rows)
         {
@@ -156,7 +156,7 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
     var status={"query_status":"open"};
   var userid={"category":req.query.userid};
 
-  console.log(school_id+'  '+status+'  '+userid);
+ //console.log(school_id+'  '+status+'  '+userid);
        connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ?',[school_id,status,userid],
 
         function(err, rows)
@@ -165,7 +165,7 @@ app.post('/getmsg',  urlencodedParser,function (req, res)
     {
     if(rows.length>0){
         res.status(200).json({'returnval': rows});
-        console.log(rows);
+        //console.log(rows);
         } else {
         console.log(err);
         res.status(200).json({'returnval': 'invalid'});
@@ -332,7 +332,7 @@ app.post('/managerinbox',  urlencodedParser,function (req, res)
   var school_id={"school_id":req.query.schol};
   var fwd = {"user":req.query.frwd};
   var status={"query_status":"open"};
-  console.log(school_id+'  '+fwd+'  '+status);
+ // console.log(school_id+'  '+fwd+'  '+status);
   connection.query('select * from query where ? and ? and ?',[fwd,school_id,status],
   function(err, rows)
   {
@@ -340,7 +340,7 @@ app.post('/managerinbox',  urlencodedParser,function (req, res)
     {
     if(rows.length>0){
         res.status(200).json({'returnval': rows});
-        console.log(rows);
+       // console.log(rows);
         } else {
         console.log(err);
         res.status(200).json({'returnval': 'invalid'});
