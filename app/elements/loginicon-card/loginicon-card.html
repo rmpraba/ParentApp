@@ -25,7 +25,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #one{
         float: left;
         position: absolute;
-        width:75%;
         left: 0;
       }
       #two{
@@ -33,8 +32,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         position: absolute;
         right: 0;
       }
-      #admin{
-        width: 62%;
+      #admin, #parent-icon{
+        width: 75%;
       }
       @media screen and (max-width: 767px) {
         #one { 
@@ -59,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div class="icon">
     <div id="one">
-      <paper-icon-button class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
+      <paper-icon-button id="parent-icon" class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
     </div>
     <div id="two">
       <paper-icon-button id="admin" class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
