@@ -142,6 +142,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /*setInterval(function(){
         alert("Hi");
       }, 3000)*/
+
+      if(this.admincomment==null){
+        this.$.a1.hidden=true;
+      }
+      if(this.principalcomment==null){
+        this.$.a2.hidden=true;  
+      }
+      if(this.managerreply==null){
+        this.$.a3.hidden=true;
+      }
+      if(this.principalreply==null){
+        this.$.a4.hidden=true;
+      }
+
+
+
       var message_time = new Date(this.datetime);
       message_time.setHours(message_time.getHours() + 48);
       var current_time = new Date();
@@ -200,9 +216,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //alert("reply");
       document.querySelector("#adminmsg"+this.queryid).toggle();
       document.querySelector("#read").checked=false;
+      document.querySelector("#comments"+this.queryid).opened = false;
     },
     send:function(){
       document.querySelector("#comments"+this.queryid).toggle();
+      document.querySelector("#adminmsg"+this.queryid).opened = false;
     },
     changeHandler:function(e){
       if(e.target.checked==true){
