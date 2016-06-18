@@ -35,29 +35,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  {
   cursor: pointer;
  }
+ ul{
+  list-style-type: none;
+  float: left;
+  text-align: left;
+  margin-top: 35%;
+ }
   </style>
    <body style="height: auto;">
-  
+    <ul>
+      <li>
+        <paper-icon-button class="iconbutton" src="../../images/inbox.png" on-click="inbox"></paper-icon-button><a class="cur" on-click="inbox">Inbox({{unread}})</a>
+      </li>
+      <li id="form">
+        <paper-icon-button  class="iconbutton" src="../../images/feedback.png"  on-click="insertfeedback"></paper-icon-button><a  class="cur" on-click="insertfeedback">Feedback</a>
+      </li>
+      <li id="report">
+        <paper-icon-button  class="iconbutton" src="../../images/report_icon.png" on-click="report"></paper-icon-button><a class="cur" on-click="report">Report</a>
+      </li>
+      <li id="report">
+        <paper-icon-button  class="iconbutton" src="../../images/summary_icon.png" on-click="summaryreport"></paper-icon-button><a class="cur" on-click="summaryreport">Summary Report</a>
+      </li>
+    </ul>
 
-    <div class="frontpage">
-    <div class="hori">
-      <paper-icon-button class="iconbutton" src="../../images/inbox.jpg" on-click="inbox"></paper-icon-button>
-       <a class="cur" on-click="inbox">Inbox({{unread}})</a>
-         </div>
-    <div class="hori" id="form">
-      <paper-icon-button  class="iconbutton" src="../../images/feedback.png"  on-click="insertfeedback"></paper-icon-button>
-      <a  class="cur" on-click="insertfeedback">Feedback</a>
-      </div>
-          
-          <div class="hori" id="report">
-
-       <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="report"></paper-icon-button>
-        <a class="cur" on-click="report">Report</a>
-   </div>
-    <div class="hori" id="report">
-        <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="summaryreport"></paper-icon-button>
-        <a class="cur" on-click="summaryreport">Summary Report</a>
-    </div>
   </body>
   <query-post id='qpostid'></query-post>
   </template>
