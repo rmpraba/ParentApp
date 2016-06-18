@@ -258,12 +258,12 @@ statusx="open";
         }
         
       this.$.qpostid.postreply(this.queryid,this.adminreply,statusx,this.date,this.time);
-      this.querySelector("#adminmsg").close(); 
+      document.querySelector("#adminmsg"+this.queryid).opened = false;
         }
     },
     frwd:function(){
       this.$.qpostid.updatefrwd(this.queryid,this.comment123,this.date,this.time);
-      this.querySelector("#comments").close(); 
+      document.querySelector("#comments"+this.queryid).opened = false;
     },
     priority:function(e){
         var level=(e.target.selectedItem.textContent).trim();
