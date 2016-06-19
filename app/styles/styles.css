@@ -313,4 +313,11 @@ paper-dialog{
     padding: 0;
     float: right;
 }
+.category_icon{
+    height: 50%;
+}
+.category_icon1{
+    height: 100%;
+}
+
 </style>
