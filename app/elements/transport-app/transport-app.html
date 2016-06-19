@@ -49,7 +49,7 @@
            <div><paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button></div>
         </paper-toolbar>
         <div>
-      <paper-menu class="content fit">
+      <paper-menu style="background-color: #4e688c !important; " class="content fit">
       
        <icon-card></icon-card>
        
@@ -60,11 +60,11 @@
       </paper-header-panel>
       
       <paper-header-panel main>
-      <paper-toolbar>
+      <paper-toolbar style="background-color: #4e688c !important; ">
             <div><paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button></div>
         <div><paper-item class="title">{{school_name}}</paper-item></div>
             <div class="flex"></div>
-          <paper-button class="in" on-click="signout">signout</paper-button>
+          <paper-button style="background-color: #ffffff; color: #4e688c;" class="in" on-click="signout">signout</paper-button>
           </paper-toolbar>
       <iron-pages selected="{{page}}" attr-for-selected="data-category">
         <section data-category="login">
