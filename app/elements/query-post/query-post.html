@@ -221,7 +221,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var semail;
     var scat;
     var scomplaint;
-    var sub;
+    var sub="";
     var mobile;
     var stid;
     var inboxlen;
@@ -237,14 +237,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready:function(){
 
       },
-      querypostFn:function(student_id,name,email,category,complaint,subject,mob){
+      querypostFn:function(student_id,name,email,category,complaint,mob){
         //alert('hai');
         stud_id=student_id;
         sname=name;
         semail=email;
         scat=category;
         scomplaint=complaint;
-        sub=subject;
+        //sub=subject;
         mobile=mob;
        var obj={"school_id":""};
        obj.school_id=sessionStorage.getItem("schoolx");

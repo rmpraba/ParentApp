@@ -82,7 +82,7 @@
         */
         td:nth-of-type(1):before { content: "Request ID"; }
         td:nth-of-type(2):before { content: "Name"; }
-        td:nth-of-type(3):before { content: "Subject"; }
+       /*td:nth-of-type(3):before { content: "Subject"; }*/
         td:nth-of-type(4):before { content: "Email ID"; }
         td:nth-of-type(5):before { content: "MObile"; }
         td:nth-of-type(5):before { content: "Days by Open"; }
@@ -98,7 +98,7 @@
             <tr>
               <th>Request ID</th>
               <th>Name</th>
-              <th>Subject</th>
+              <!--<th>Subject</th>-->
               <th>Email ID</th>
               <th>Mobile</th>
               <th>Days by Open</th>
@@ -107,7 +107,9 @@
           <tbody>
             <template  is="dom-repeat" items="{{pendingarr}}" as="view">
               <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
-              <tr><td>{{view.query_id}}</td><td>{{view.parent_name}}</td><td>{{view.subject}}</td><td>{{view.mobile}}</td><td>{{view.parent_email}}</td><td>{{view.days}}</td></tr>
+              <tr><td>{{view.query_id}}</td><td>{{view.parent_name}}</td>
+              <!--<td>{{view.subject}}</td>-->
+              <td>{{view.mobile}}</td><td>{{view.parent_email}}</td><td>{{view.days}}</td></tr>
             </template>
           </tbody>
         </table>
@@ -127,7 +129,7 @@
             <tr>
               <th>Request ID</th>
               <th>Name</th>
-              <th>Subject</th>
+              <!--<th>Subject</th>-->
               <th>Email ID</th>
               <th>Mobile</th>
               <th>Days after closen</th>
@@ -136,7 +138,9 @@
            <tbody>
             <template  is="dom-repeat" items="{{closedarr}}" as="view">
               <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
-              <tr><td>{{view.query_id}}</td><td>{{view.parent_name}}</td><td>{{view.subject}}</td><td>{{view.mobile}}</td><td>{{view.parent_email}}</td><td>{{view.days}}</td></tr>
+              <tr><td>{{view.query_id}}</td><td>{{view.parent_name}}</td>
+              <!--<td>{{view.subject}}</td>-->
+              <td>{{view.mobile}}</td><td>{{view.parent_email}}</td><td>{{view.days}}</td></tr>
             </template>
           </tbody>
         </table>
