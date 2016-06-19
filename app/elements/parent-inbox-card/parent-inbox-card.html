@@ -21,7 +21,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box-shadow: currentColor;
         height: auto;
       }
-
+      @media(max-width:767px){
+        .inbox-content{height: 40px;}
+      }
       .view_msg{
         margin-top: -25%;
       }
@@ -43,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="inbox-content">
       <div class="detail" on-click="toggle">
         <div class="inbox-top">
-          <div class="from"><p>{{from}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
+          <div class="from"><p>{{queryid}} - {{from}} -{{studentname}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
         </div>
         <div class="when">
           <div class="time">
