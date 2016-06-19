@@ -26,20 +26,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         float: left;
         position: absolute;
         left: 0;
-        margin-left: 15%;
+        margin-left: 19%;
       }
       #two{
         float: right; 
         position: absolute;
         right: 0;
         width: 230px;
-        margin-right: 28%;
+        margin-right: 31%;
       }
       #admin{
         width: 75%;
       }
       #parent-icon{
         width: 38%;
+      }
+      @media screen and (min-width: 767px) and (max-width: 1225px){
+        #one { 
+          float: left;
+          width:100%;
+          margin: 2.5% 0% 0% 5%;
+        }
+        #one paper-icon-button{
+          width: 20%;
+        }
+        #two{
+          float: right;
+          padding: 0;
+          width:100%;
+        }
+        #two paper-icon-button{
+          width: 20%;
+          padding-top: 2%;
+          margin-top: 2%;
+        }
       }
       @media screen and (max-width: 767px) {
         #one { 
