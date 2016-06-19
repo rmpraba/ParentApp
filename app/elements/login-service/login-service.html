@@ -116,19 +116,22 @@
        {
         this.$.qpostid.parentinbox();
          document.querySelector('app-card').setPage("transport");
-        document.querySelector('transport-app').setPage("parentinbox-itemcard");
+        document.querySelector('transport-app').setPage("complaintpage");
 
         
        }
-       else if(id=="admin"||role=="Academics"||role=="Administrator"){
+       else if(id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"){
+       
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
        this.$.qpostid.getmsg(); 
+       
        }
       }
       else{
           alert('Wrong Username and Password');
       }
+
     },
     getdetails:function(id){
         this.getdetailsurl="http://localhost:8082/getdetails";
@@ -159,7 +162,7 @@
         
          this.$.qpostid.parentinbox();
          document.querySelector('app-card').setPage("transport");
-        document.querySelector('transport-app').setPage("parentinbox-itemcard");
+        document.querySelector('transport-app').setPage("complaintpage");
        
        }
        else if(id=="admin"){

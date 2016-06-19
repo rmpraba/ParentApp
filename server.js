@@ -435,8 +435,9 @@ app.post('/unopenmsg',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
   var status = {"msg_status":req.query.status};
+  var userid={"category":req.query.userid};
   
-  connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ?',[status,school_id],
+  connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ? and ?',[status,school_id,userid],
   function(err, rows)
   {
     if(!err)
