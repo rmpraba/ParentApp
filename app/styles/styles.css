@@ -75,8 +75,6 @@
 }
 section{
     margin: 0 auto;
-    height: 680px;
-    overflow-y: auto;
     background-color: #ffffff !important;
 }
 @media only screen and (max-width: 320px) {
@@ -155,7 +153,7 @@ paper-button{
     font-family: 'Lato-Black';
 }
 body{
-    background-color: #d9d9d9 !important;
+    background-color: #ffffff !important;
     display: table-cell;
     vertical-align: middle;
     font-family: 'Lato-Light';
@@ -198,7 +196,7 @@ body{
     #details .mobile{float: none;}
     #details .mail{float: none;}
     .when .time p{font-size: 12px;}
-    section{height: 659px;}
+    .content-main{height: 517px;}
 }
 .login-card paper-dropdown-menu{
     width: 100%;

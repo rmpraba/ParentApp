@@ -37,12 +37,16 @@
     float:left;
     width: 4%;
   }
+  .content-main{
+    height: 635px !important;
+    overflow-y: auto;
+  }
   </style>
 
   <div class="head">
       <label>{{school_name}}</label>
     </div>
-    <div class="content">
+    <div class="content" >
     <paper-drawer-panel responsiveWith="300px">
       <paper-header-panel drawer>
         <paper-toolbar>
@@ -66,7 +70,7 @@
             <div class="flex"></div>
           <paper-button style="background-color: #ffffff; color: #4e688c;" class="in" on-click="signout">signout</paper-button>
           </paper-toolbar>
-      <iron-pages selected="{{page}}" attr-for-selected="data-category">
+      <iron-pages class=" content-main" selected="{{page}}" attr-for-selected="data-category">
         <section data-category="login">
           <login-form></login-form>
         </section>
