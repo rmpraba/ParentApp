@@ -64,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </li>
       </a>
       <a class="cur" on-click="summaryreport">
-        <li id="report">
+        <li id="summaryreport">
           <paper-icon-button  class="iconbutton" src="../../images/summary_icon.png" on-click="summaryreport"></paper-icon-button>Summary Report
         </li>
       </a>
@@ -106,7 +106,6 @@ var role;
        else if(id=="parent")
        {
         document.querySelector('transport-app').setPage("parentinbox-itemcard");
-
         this.$.qpostid.parentinbox();
        }
        else if(id=="admin")
@@ -118,6 +117,7 @@ var role;
      },
      Fnparent:function(){
       this.$.report.hidden=true;
+      this.$.summaryreport.hidden=true;
      },
      Fnadmin:function(){
         this.$.form.hidden=true;
