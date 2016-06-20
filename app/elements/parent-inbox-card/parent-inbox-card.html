@@ -43,6 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 </style>
     <div class="inbox-content">
+  
       <div class="detail" on-click="toggle">
         <div class="inbox-top">
           <div class="from"><p>{{queryid}} - {{from}} -{{studentname}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
@@ -142,6 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /*setInterval(function(){
         alert("Hi");
       }, 3000)*/
+      
 
       if(this.admincomment==null){
         this.$.a1.hidden=true;
@@ -270,7 +272,8 @@ statusx="open";
     priority:function(e){
         var level=(e.target.selectedItem.textContent).trim();
         this.$.qpostid.uppri(level,this.queryid,this.date,this.time);
-    }
+    },
+    
     });
   })();
   </script>

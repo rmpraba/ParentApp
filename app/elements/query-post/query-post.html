@@ -327,6 +327,11 @@ getmsgResponse:function(e)
 {
 resarr=e.detail.response.returnval;
   inboxlen=e.detail.response.returnval.length;
+  //alert(inboxlen);
+  if(resarr=="invalid")
+  {
+    document.querySelector('parent-inbox').showNomsg();
+  }
   var inbox=resarr.slice(0,5);
   inboxcount=5;
    document.querySelector('parent-inbox').msgarr=inbox;
@@ -382,6 +387,11 @@ parentinboxResponse:function(e){
 
  resarr=e.detail.response.returnval;
   inboxlen=e.detail.response.returnval.length;
+  if(resarr=="invalid")
+  {
+    document.querySelector('parentinbox-itemcard').showNomsg();
+  }
+  //alert(resarr);
   var inbox=resarr.slice(0,5);
   inboxcount=5;
   //alert(JSON.stringify(resarr));
