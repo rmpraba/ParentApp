@@ -289,11 +289,16 @@ sequenceResponse:function(e){
 
 },
 querypostResponse:function(e)
-{
+{ var usern=sessionStorage.getItem("user");
   var s=e.detail.response.returnval;
   if(s=='success'){
-  alert("Feedback submited successfuly"); 
+    if(usern=='parent'){
+  alert("Message is forwarded to "+scat+" Admin successfully"); 
   document.querySelector('complaint-form').refresh(); 
+}
+else if(usern=='admin'){
+  alert("Reply sent");
+}
   }
   else{
     alert("Feedback not submited");
@@ -491,6 +496,9 @@ updatefrwd:function(querid,msg,date,time){
     {
       var usern="manager";
     }
+    else if(user=="Transport"){
+      var usern="manager";
+    }
     else{
       var usern="principal";
     }
@@ -509,9 +517,18 @@ updatefrwd:function(querid,msg,date,time){
 },
 updatefwdResponse:function(e){
   var res=e.detail.response.returnval;
+  var user=sessionStorage.getItem("role");
   if(res=='success'){
-    alert('Message Forwarded');
-  }
+      if(user=='principal'){
+          alert('Escalated to Management');
+      }
+      else if(user=='Transport'){
+          alert('Escalated to Management');
+      }
+      else{
+          alert('Escalated to Principal');
+      }
+    }
   else{
    alert('Not Forwarded'); 
   }
