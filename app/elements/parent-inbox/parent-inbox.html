@@ -28,7 +28,9 @@
         <div class="row">
          
           <div class="container inbox">
-           <div id="nonewmsg"><h1>No New Messsage to Show</h1></div>
+            <div id="nonewmsg">
+              <h1>No New Messsage to Show</h1>
+            </div>
             <template is="dom-repeat" items ="{{msgarr}}" as="view">
               <parent-inbox-card queryid={{view.query_id}} from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" flag="{{view.flag}}" category="{{view.category}}" status="{{view.query_status}}" mail="{{view.parent_email}}" mob="{{view.mobile}}" stid="{{view.student_id}}" studentname="{{view.name}}" datetime="{{view.datetime}}" admincomment="{{view.admin_comment}}" principalcomment="{{view.principal_comment}}" managerreply="{{view.manager_reply}}" principalreply="{{view.principal_reply}}"></parent-inbox-card>
             </template>
@@ -58,7 +60,7 @@ this.$.queryservice.Fnmoveforward();
         },
         showNomsg:function()
         {
-          alert('come');
+          //alert('come');
           this.$.nonewmsg.hidden=false;
         }
     });
