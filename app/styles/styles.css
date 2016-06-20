@@ -379,7 +379,7 @@ paper-dialog{
 paper-button{
     background-color: #4e688c;
 }
-#nonewmsg{
+.no-data{
     background-image: url("../images/no_data.png");
     background-position: center center;
     background-repeat: no-repeat;
@@ -389,5 +389,7 @@ paper-button{
 #nonewmsg h1{
     font-family: 'Lato-Light' !important;
     font-weight: normal !important;
+    margin: 0 auto;
+    text-align: center;
 }
 </style>
