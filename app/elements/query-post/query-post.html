@@ -275,7 +275,7 @@ sequenceResponse:function(e){
         obj.subject=sub;
         obj.mob=mobile;
         obj.msq_status=1;
-        obj.priority="Critical";
+        obj.priority="Moderate";
         this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
@@ -449,7 +449,7 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
         obj.category=category;
         obj.mob=mobile;
         obj.msq_status=1;
-        obj.priority="Critical";
+        obj.priority="Moderate";
     this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
@@ -564,7 +564,7 @@ zxarr.push(obj);
 }
 //alert(JSON.stringify(zxarr));
 document.querySelector('reportstatus-card').pendingarr=zxarr;
-document.querySelector('reportstatus-card').noofcricpend=cp;
+//document.querySelector('reportstatus-card').noofcricpend=cp;
 document.querySelector('reportstatus-card').noofmodpend=mp;
 document.querySelector('reportstatus-card').nooflowpend=lp;
 document.querySelector('reportstatus-card').noofpend=len;
@@ -606,7 +606,7 @@ closereportResponse:function(e){
 //alert(JSON.stringify(obj));  
 zxarr.push(obj);
 }
-document.querySelector('reportstatus-card').noofcricclose=cc;
+//document.querySelector('reportstatus-card').noofcricclose=cc;
 document.querySelector('reportstatus-card').noofmodclose=mc;
 document.querySelector('reportstatus-card').nooflowclose=lc;
 document.querySelector('reportstatus-card').closedarr=zxarr;

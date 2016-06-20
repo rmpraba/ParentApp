@@ -32,10 +32,16 @@
         font-size: 12px;
         cursor: pointer;
       }
+      .backicon{
+        width:36%;
+      }
     </style>
     <body>
         <div class="row">
           <div class="container login-card">
+          <div class="backicon">
+              <paper-icon-button class="iconbutton" on-click="back" src="../../images/back.png"></paper-icon-button>
+          </div>
             <div class="icon">
               <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
             </div>
@@ -148,7 +154,10 @@
       this.mobile="";
       this.username="";
       this.password="";
-    }
+    },
+     back:function(){
+        document.querySelector('app-card').setPage('loginicon');
+      }
     });
   })();
   </script>

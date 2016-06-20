@@ -81,9 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
               </div>
               <div class="field" id="prio">
-                <paper-dropdown-menu  label="Priority">
+                <paper-dropdown-menu id="prio1" label="Priority">
                   <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
-                    <paper-item >Critical</paper-item>
                     <paper-item >Moderate</paper-item>
                     <paper-item >Low</paper-item>
                   </paper-menu>
@@ -108,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="buttons">
           <paper-button id="reply-button" on-click="answer">Reply</paper-button>
-          <paper-button id="fwd" on-click="send">Forward</paper-button>
+          <paper-button id="fwd" on-click="send">Escalate</paper-button>
         </div>
       </iron-collapse>
        <iron-collapse id="comments{{queryid}}" class="dialog">
@@ -157,7 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.a4.hidden=true;
       }
 
-
+this.$.prio1.hidden=true;
 
       var message_time = new Date(this.datetime);
       message_time.setHours(message_time.getHours() + 48);
@@ -170,6 +169,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var role=sessionStorage.getItem("role");
       if(id=='admin'){
         this.$.reads.hidden=true;
+        
       }
       if(id=='parent'){
         this.$.details.hidden=true;
@@ -220,6 +220,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector("#comments"+this.queryid).opened = false;
     },
     send:function(){
+      this.$.prio1.hidden=false;
       document.querySelector("#comments"+this.queryid).toggle();
       document.querySelector("#adminmsg"+this.queryid).opened = false;
     },
