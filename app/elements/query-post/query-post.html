@@ -206,6 +206,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="regmailResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+  
+        id="roleajax"
+        url="{{roleurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="roleResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     <style>
       :host {
         display: block;
@@ -326,8 +336,31 @@ this.unopenmsgurl="http://localhost:8082/unopenmsg";
   //alert(JSON.stringify(obj));
   this.$.unopenmsgid.generateRequest();
 
-},
+ var id=sessionStorage.getItem("user");
+        var role=sessionStorage.getItem("role");
+        
+        if(id=='admin'){
+          alert(role);
+          this.roleurl="../../configfile/roles.json";
 
+          this.$.roleajax.generateRequest();
+        }
+
+},
+ roleResponse:function(e){
+      var role=sessionStorage.getItem("role");
+        //alert(e.detail.response);
+        var xx=e.detail.response;
+        for(var i=0;i<xx.length;i++){
+          alert(i+'   '+JSON.stringify(xx[i].user)+'     '+role);
+          if(xx[i].user==role){
+            alert('role '+i);
+            fwd=e.detail.response[i].frwd;
+            rep=e.detail.response[i].reply;
+          }
+        }
+        alert(xx+' '+fwd+'     '+rep);
+    },
 getmsgResponse:function(e)
 {
 resarr=e.detail.response.returnval;
