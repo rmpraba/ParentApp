@@ -128,6 +128,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </iron-collapse>
     </div>
+     <paper-toast id="toast" text="Priority level Changed.."></paper-toast>
     <query-post id='qpostid'></query-post>
   </template> 
   <script>
@@ -274,6 +275,9 @@ statusx="open";
         var level=(e.target.selectedItem.textContent).trim();
         this.$.qpostid.uppri(level,this.queryid,this.date,this.time);
     },
+    prioreply:function(){
+           this.$.toast.open();
+    }
     
     });
   })();
