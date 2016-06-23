@@ -113,7 +113,7 @@
     {
       var id=e.target.selectedItem.value;
       //alert(e.target.selectedItem.value);
-        sessionStorage.setItem("studid",id);
+      sessionStorage.setItem("studid",id);
       this.$.login.getdetails(id);
       
     },
@@ -123,6 +123,13 @@
         this.$.mob.hidden=true;
       this.$.drop.hidden=true;
       
+      this.$.id.hidden=true;
+    },
+    teacher:function(){
+      //alert('admin');
+      sessionStorage.setItem("user","teacher");
+      this.$.mob.hidden=true;
+      this.$.drop.hidden=true;
       this.$.id.hidden=true;
     },
     Fnparent:function(){

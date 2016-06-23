@@ -206,6 +206,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="regmailResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="teacherinboxid"
+    url="{{teacherinboxurl}}"
+    params="{{teacherinboxparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="teacherinboxResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="unreadmsgteacherid"
+    url="{{unreadmsgteacherurl}}"
+    params="{{unreadmsgteacherparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="unreadmsgteacherResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -244,7 +264,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         semail=email;
         scat=category;
         scomplaint=complaint;
-        //sub=subject;
         mobile=mob;
        var obj={"school_id":""};
        obj.school_id=sessionStorage.getItem("schoolx");
@@ -278,7 +297,6 @@ sequenceResponse:function(e){
         obj.priority="Moderate";
         this.queryposturl="http://localhost:8082/query-post1";
         this.querypostparam=obj;
-       // alert(JSON.stringify(obj));
        this.$.querypostid.generateRequest()
        var obj1={"school_id":"","sequence":""}
        obj1.school_id=sessionStorage.getItem("schoolx");
@@ -370,10 +388,9 @@ var obj={"id":"","schol":"","status":""}
 obj.id=sessionStorage.getItem("studid");
 obj.schol=sessionStorage.getItem("schoolx");
 obj.status="closed";
-//alert(JSON.stringify(obj));
+alert(JSON.stringify(obj));
 this.parentinboxparam=obj;
 this.$.parentinboxid.generateRequest();
-
 
 this.unreadmsgurl="http://localhost:8082/unreadmsg";
   var obj={"sid":"","schol":"","status":""}
@@ -396,6 +413,45 @@ parentinboxResponse:function(e){
   inboxcount=5;
   //alert(JSON.stringify(resarr));
   document.querySelector('parentinbox-itemcard').msgarr=inbox;
+},
+teacherinbox:function(){
+
+this.teacherinboxurl="http://localhost:8082/teacherinbox";
+var obj={"id":"","schol":"","status":""}
+obj.id=sessionStorage.getItem("userid");
+obj.schol=sessionStorage.getItem("schoolx");
+obj.status="closed";
+//alert(JSON.stringify(obj));
+this.teacherinboxparam=obj;
+this.$.teacherinboxid.generateRequest();
+
+this.unreadmsgteacherurl="http://localhost:8082/unreadmsgteacher";
+  var obj={"sid":"","schol":"","status":""}
+  obj.sid=sessionStorage.getItem("userid");
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.status=1;
+  this.unreadmsgteacherparam=obj;
+  this.$.unreadmsgteacherid.generateRequest();
+},
+teacherinboxResponse:function(e){
+
+  resarr=e.detail.response.returnval;
+  //alert(JSON.stringify(resarr));
+  inboxlen=e.detail.response.returnval.length;
+  if(resarr=="invalid")
+  {
+    document.querySelector('parentinbox-itemcard').showNomsg();
+  }
+  //alert(resarr);
+  var inbox=resarr.slice(0,5);
+  inboxcount=5;
+  //alert(JSON.stringify(resarr));
+  document.querySelector('parentinbox-itemcard').msgarr=inbox;
+},
+unreadmsgteacherResponse:function(e){
+  var resno=e.detail.response.returnval[0].total;
+  document.querySelector('icon-card').unread=resno;
+  alert('total parent unread msg for this id is'+JSON.stringify(resno));
 },
 Fnmoveforward:function()
 {

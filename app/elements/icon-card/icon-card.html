@@ -112,6 +112,11 @@ var role;
         document.querySelector('transport-app').setPage("parentinbox-itemcard");
         this.$.qpostid.parentinbox();
        }
+       else if(id == "teacher"){
+        this.$.qpostid.teacherinbox();
+        document.querySelector('app-card').setPage("transport");
+        document.querySelector('transport-app').setPage("parentinbox-itemcard");
+       }
        else if(id=="admin")
        {
         document.querySelector('app-card').setPage("transport");
@@ -125,6 +130,11 @@ var role;
      },
      Fnadmin:function(){
         this.$.form.hidden=true;
+     },
+     Fnteacher:function(){
+      this.$.report.hidden=true;
+      this.$.form.hidden=false;
+      this.$.summaryreport.hidden=true;
      },
      report:function(){
         document.querySelector('transport-app').setPage("report");

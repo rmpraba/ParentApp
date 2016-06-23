@@ -299,6 +299,33 @@ app.post('/parentinbox',  urlencodedParser,function (req, res)
 });
   });
 
+app.post('/teacherinbox',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var stud={"student_id":req.query.id};
+  var status={"query_status":req.query.status};
+  var user={"user":"parent"};
+       connection.query('select *,(select employee_name from employee_details where employee_id = student_id and school_id = school_id) as name from query where ? and ? and ? and ? and query_reply!=""',[school_id,stud,status,user],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
 
 app.post('/studetails',  urlencodedParser,function (req, res)
 {
@@ -327,6 +354,32 @@ app.post('/studetails',  urlencodedParser,function (req, res)
 });
   });
 
+app.post('/teacherdetails',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.school};
+  var teacher_id = {"employee_id":req.query.id};
+  
+  connection.query('select * from employee_details where ? and ?',[teacher_id,school_id],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
 app.post('/managerinbox',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
@@ -504,6 +557,33 @@ app.post('/unreadmsg',  urlencodedParser,function (req, res)
 });
   });
 
+app.post('/unreadmsgtecher',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var status = {"admin_read":req.query.status};
+  var id={"student_id":req.query.sid};
+  
+  connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ? AND ?',[status,school_id,id],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
 
 app.post('/unopenmsg',  urlencodedParser,function (req, res)
 {
