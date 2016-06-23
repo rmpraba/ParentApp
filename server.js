@@ -214,13 +214,16 @@ app.post('/querypost',  urlencodedParser,function (req, res)
 var role=req.query.roles;
 
 
-if(role=='manager'){
+if(role=='manager')
+{
 var reply={"manager_reply":req.query.msg,"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status,"user":"principal"};
 }
-else if (role=='principal'){
+else if (role=='principal')
+{
 var reply={"principal_reply":req.query.msg,"query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
 }
-else{
+else
+{
 var reply={"query_reply":req.query.msg,"user":"parent","query_status":req.query.status,"reply_date":req.query.replydate,"reply_time":req.query.replytime,"admin_read":req.query.msg_status};
 }
 

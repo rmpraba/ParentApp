@@ -83,6 +83,7 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   
    <query-post id='qpostid'></query-post>
   </template>
   <script>
@@ -90,6 +91,8 @@
     'use strict';
     var mob;
     var teacher_id;
+    var fwd;
+    var rep;
     Polymer({
       is: 'login-service',
 
@@ -158,13 +161,16 @@ var res=e.detail.response.returnval;
       if(res!=0){
       var role=e.detail.response.returnval[0].role;
       teacher_id = e.detail.response.returnval[0].id;
+      var role1=e.detail.response.returnval[0].role;
       var schoolx=e.detail.response.returnval[0].school_id;
       sessionStorage.setItem("schoolx",schoolx);
-      sessionStorage.setItem("role",role);
-      //alert(schoolx);
+      sessionStorage.setItem("role",role1);
         var id=sessionStorage.getItem("user");
         var role=sessionStorage.getItem("role");
-       //alert(id+'    '+role);
+
+        
+
+       alert(id+'    '+role+'   '+role1);
        if((id=="admin")&&((role=='manager')||(role=='principal'))){
         document.querySelector('icon-card').Fnadmin();
         //alert('hello');
@@ -204,6 +210,8 @@ var res=e.detail.response.returnval;
           alert('Wrong Username and Password');
            document.querySelector('login-form').Fnclear();
       }
+
+
 
     },
     teacherdetailsResponse:function(e){

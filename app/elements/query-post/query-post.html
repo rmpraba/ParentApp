@@ -226,6 +226,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="unreadmsgteacherResponse"
     debounce-duration="300"
   ></iron-ajax>
+    <iron-ajax  
+        id="roleajax"
+        url="{{roleurl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="roleResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     <style>
       :host {
         display: block;
@@ -252,6 +261,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var regusername;
     var regvericode;
     var regrelation;
+    var fwd;
+    var rep;
     Polymer({
       is: 'query-post',
       ready:function(){
@@ -307,11 +318,16 @@ sequenceResponse:function(e){
 
 },
 querypostResponse:function(e)
-{
+{ var usern=sessionStorage.getItem("user");
   var s=e.detail.response.returnval;
   if(s=='success'){
-  alert("Feedback submited successfuly"); 
+    if(usern=='parent'){
+  alert("Message is forwarded to "+scat+" Admin successfully"); 
   document.querySelector('complaint-form').refresh(); 
+}
+else if(usern=='admin'){
+  alert("Reply sent");
+}
   }
   else{
     alert("Feedback not submited");
@@ -339,8 +355,31 @@ this.unopenmsgurl="http://localhost:8082/unopenmsg";
   //alert(JSON.stringify(obj));
   this.$.unopenmsgid.generateRequest();
 
-},
+ var id=sessionStorage.getItem("user");
+        var role=sessionStorage.getItem("role");
+        
+      
+          this.roleurl="../../configfile/roles.json";
+          this.$.roleajax.generateRequest();
 
+},
+ roleResponse:function(e){
+      var role=sessionStorage.getItem("role");
+        //alert(e.detail.response);
+        var xx=e.detail.response;
+        for(var i=0;i<xx.length;i++){
+          //alert(i);
+          var us=JSON.stringify(xx[i].user);
+          //alert(i+'      '+us+'     '+role);
+          if(xx[i].user==role){
+            //alert('role '+i);
+            fwd=e.detail.response[i].frwd;
+            rep=e.detail.response[i].reply;
+          }
+        }
+       sessionStorage.setItem("frwd",fwd);
+       sessionStorage.setItem("reply",rep);
+    },
 getmsgResponse:function(e)
 {
 resarr=e.detail.response.returnval;
@@ -532,6 +571,9 @@ var obj={"schol":"","frwd":""}
   //alert(JSON.stringify(obj));
 this.managerinboxparam=obj;
 this.$.managerinboxid.generateRequest();
+
+this.roleurl="../../configfile/roles.json";
+          this.$.roleajax.generateRequest();
 },
 managerinboxResponse:function(e){
   //alert('2');
@@ -540,23 +582,13 @@ managerinboxResponse:function(e){
   //alert(JSON.stringify(msgarr));
 },
 updatefrwd:function(querid,msg,date,time){
-  var user=sessionStorage.getItem("role");
-  
-  user=user;
-    if(user=="principal")
-    {
-      var usern="manager";
-    }
-    else{
-      var usern="principal";
-    }
   this.updatefwdurl="http://localhost:8082/updatefwd";
   var obj={"id":"","date":"","time":"","comments":"","frwd":"","schol":"","roles":""}
   obj.id=querid;
   obj.date=date;
   obj.comments=msg;
   obj.time=time;
-  obj.frwd=usern;
+  obj.frwd=sessionStorage.getItem("frwd");
   obj.roles=sessionStorage.getItem("role");
   obj.schol=sessionStorage.getItem("schoolx");
   this.updatefwdparam=obj;
@@ -565,9 +597,18 @@ updatefrwd:function(querid,msg,date,time){
 },
 updatefwdResponse:function(e){
   var res=e.detail.response.returnval;
+  var user=sessionStorage.getItem("role");
   if(res=='success'){
-    alert('Message Forwarded');
-  }
+      if(user=='principal'){
+          alert('Escalated to Management');
+      }
+      else if(user=='Transport'){
+          alert('Escalated to Management');
+      }
+      else{
+          alert('Escalated to Principal');
+      }
+    }
   else{
    alert('Not Forwarded'); 
   }
@@ -766,7 +807,7 @@ this.$.uppriid.generateRequest();
 uppriResponse:function(e){
   var res=e.detail.response.returnval;
   if(res=='success'){
-    alert('Priority Changed');
+     document.querySelector('parent-inbox-card').prioreply();
   }
 },
 FnFetchSummaryReport:function(){

@@ -1,0 +1,33 @@
+[
+{
+	"type":"role1",
+	"user":"Academics",
+	"frwd":"principal",
+	"reply":"parent"
+},{
+	"type":"role2",
+	"user":"Administration",
+	"frwd":"principal",
+	"reply":"parent"
+},{
+	"type":"role3",
+	"user":"Infrastructure",
+	"frwd":"principal",
+	"reply":"parent"
+},{
+	"type":"role4",
+	"user":"Transport",
+	"frwd":"manager",
+	"reply":"parent"
+},{
+	"type":"role5",
+	"user":"principal",
+	"frwd":"manager",
+	"reply":""
+},{
+	"type":"role4",
+	"user":"manager",
+	"frwd":"",
+	"reply":"principal"
+	}
+]
