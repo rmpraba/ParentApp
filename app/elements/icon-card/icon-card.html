@@ -91,7 +91,12 @@ var role;
      insertfeedback:function()
      {
        //document.querySelector('transport-app').setPage('iconlist');
-       document.querySelector('transport-app').setPage("complaintpage");
+       id=sessionStorage.getItem("user");
+       if(id=="parent"){
+        document.querySelector('transport-app').setPage("complaintpage");
+       } else {
+        document.querySelector('transport-app').setPage("complaintteacher");
+       }
      },
      inbox:function()
      {

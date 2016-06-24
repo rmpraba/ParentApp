@@ -72,7 +72,7 @@
   <script>
   (function() {
     'use strict';
-
+    var category;
     Polymer({
       is: 'complaint-teacher',
 
@@ -80,13 +80,11 @@
 
       },
       categoryteacher:function(e){
-      var category=(e.target.selectedItem.textContent).trim();
-      alert(category);
+        category=(e.target.selectedItem.textContent).trim();
       },
       click:function()
       { 
-        //alert(this.teacher_id+ '  '+this.teacher_name+'   '+category+'  'this.complaint);
-        this.$.qpostid.querypostFn(this.teachers_id,this.teacher_name,this.teacher_email,category,this.complaint,this.mobile);
+        this.$.qpostid.querypostFn(this.teachers_id,this.teacher_name,this.teacher_email,category,this.complaint,this.teacher_mobile);
       },
       refresh:function()
       {

@@ -318,22 +318,21 @@ sequenceResponse:function(e){
 
 },
 querypostResponse:function(e)
-{ var usern=sessionStorage.getItem("user");
+{ 
+  var usern=sessionStorage.getItem("user");
   var s=e.detail.response.returnval;
   if(s=='success'){
     if(usern=='parent'){
-  alert("Message is forwarded to "+scat+" Admin successfully"); 
-  document.querySelector('complaint-form').refresh(); 
-}
-else if(usern=='admin'){
-  alert("Reply sent");
-}
-  }
-  else{
+      alert("Message is forwarded to "+scat+" Admin successfully"); 
+      document.querySelector('complaint-form').refresh(); 
+    } else if(usern=='admin') {
+      alert("Reply sent");
+    } else{
+      alert("Feedback Submited");
+    }
+  } else {
     alert("Feedback not submited");
   }
-  
-
 },
 getmsg:function()
 {
