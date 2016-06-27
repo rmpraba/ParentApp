@@ -760,7 +760,23 @@ app.post('/schoolwisereport',  urlencodedParser,function (req, res)
     if(!err)
     {
       res.status(200).json({'returnval': rows});
-      console.log(rows);
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+});
+  });
+app.post('/classwisereport',  urlencodedParser,function (req, res)
+{
+    var school_id={"school_id":req.query.schol};
+       connection.query('SELECT COUNT(*)as total_queries ,`category` FROM query GROUP BY school_id ,`category`',[school_id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      res.status(200).json({'returnval': rows});
     }
     else
     {

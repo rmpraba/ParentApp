@@ -245,6 +245,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+    method="post"
+    id="classwisereport"
+    url="{{classwisereporturl}}"
+    params="{{classwisereportparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="classwisereportResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -887,8 +897,17 @@ regmobResponse:function(e){
   },
   schoolwisereportResponse:function(e){
     document.querySelector('schoolwise-report').schoolreportarr=e.detail.response.returnval;
-    alert('hi');
-
+  },
+  FnFetchClassReport:function(e){
+    this.classwisereporturl="http://localhost:8082/classwisereport";
+    var obj={"school_id":""};
+    obj.school_id=sessionStorage.getItem("schoolx");
+    this.classwisereportparam=obj;
+    this.$.classwisereport.generateRequest();
+    
+  },
+  classwisereportResponse:function(e){
+    document.querySelector('classwise-report').classreportarr=e.detail.response.returnval;
   }
     });
   })();
