@@ -1,0 +1,138 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+
+<dom-module id="schoolwise-report">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .itemcard{
+        @apply(--layout-vertical);
+        width: 100%;
+      }
+      .innercard{
+        @apply(--layout-horizontal);
+        width: 100%;
+      }
+      .i2{
+        width: 20%;
+        margin-left: 5%;
+      }
+      .i1{
+        width: 40%;
+        margin-left: 2%;
+      }
+      .i3{
+         width: 20%;
+        margin-left: 10%;
+      }
+      table { 
+        width: 100%; 
+        border-collapse: collapse;
+        margin: 2% 10%;
+      }
+      /* Zebra striping */
+      tr:nth-of-type(odd) { 
+        background: #eee; 
+      }
+      th { 
+        background: #333; 
+        color: white; 
+        font-weight: bold; 
+      }
+      td, th { 
+        padding: 6px; 
+        border: 1px solid #ccc; 
+        text-align: left; 
+      }
+      @media 
+      only screen and (max-width: 760px),
+      (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr { 
+          display: block; 
+        }
+        
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr { 
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+        
+        tr { border: 1px solid #ccc; }
+        
+        td { 
+          /* Behave  like a "row" */
+          border: none;
+          border-bottom: 1px solid #eee; 
+          position: relative;
+          padding-left: 50%; 
+        }
+        
+        td:before { 
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 45%; 
+          padding-right: 10px; 
+          white-space: nowrap;
+        }
+        
+        /*
+        Label the data
+        */
+        td:nth-of-type(1):before { content: "Total"; }
+        td:nth-of-type(2):before { content: "School"; }
+        td:nth-of-type(3):before { content: "Category"; }
+      }
+    </style>
+    <div class="card">
+          <div class="page-heading summary">
+            <h1>School Wise Report</h1>
+          </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Total</th>
+            <th>School</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template  is="dom-repeat" items="{{schoolreportarr}}" as="view">
+            <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
+            <tr><td>{{view.total_queries}}</td><td>{{view.school_id}}</td><td>{{view.category}}</td></tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'schoolwise-report',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'schoolwise-report',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

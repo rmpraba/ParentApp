@@ -72,10 +72,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button  class="iconbutton" src="../../images/summary_icon.png" on-click="summaryreport"></paper-icon-button>Summary Report
         </li>
       </a>
+      <a class="cur" on-click="schoolreport">
+        <li id="schoolreport">
+          <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="schoolreport"></paper-icon-button>School Wise Report
+        </li>
+      </a>
+      <a class="cur" on-click="classreport">
+        <li id="classreport">
+          <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="classreport"></paper-icon-button>Class Wise Report
+        </li>
+      </a>
     </ul>
 
   </body>
-  <query-post id='qpostid'></query-post>
+  <query-post id='qupostid'></query-post>
   </template>
   <script>
   (function() {
@@ -109,16 +119,16 @@ var role;
         //alert('hello');
         document.querySelector('transport-app').setPage("parent-inbox");
 
-        this.$.qpostid.managerinbox();
+        this.$.qupostid.managerinbox();
        }
        
        else if(id=="parent")
        {
         document.querySelector('transport-app').setPage("parentinbox-itemcard");
-        this.$.qpostid.parentinbox();
+        this.$.qupostid.parentinbox();
        }
        else if(id == "teacher"){
-        this.$.qpostid.teacherinbox();
+        this.$.qupostid.teacherinbox();
         document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parentinbox-itemcard");
        }
@@ -126,7 +136,7 @@ var role;
        {
         document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
-       this.$.qpostid.getmsg(); 
+       this.$.qupostid.getmsg(); 
        }
      },
      Fnparent:function(){
@@ -143,12 +153,21 @@ var role;
      },
      report:function(){
         document.querySelector('transport-app').setPage("report");
-        this.$.qpostid.getreport();
+        this.$.qupostid.getreport();
      },
      summaryreport:function(){
         document.querySelector('transport-app').setPage("summaryreport");
-        this.$.qpostid.FnFetchSummaryReport();
+        this.$.qupostid.FnFetchSummaryReport();
+     },
+     schoolreport:function(){
+        document.querySelector('transport-app').setPage("schoolreport");
+        this.$.qupostid.FnFetchSchoolReport();
+     },
+     classreport:function(){
+        document.querySelector('transport-app').setPage("classreport");
+        //this.$.qupostid.FnFetchClassReport();
      }
+
     });
   })();
   </script>

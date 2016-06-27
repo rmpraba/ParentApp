@@ -86,14 +86,12 @@ app.post('/query-post1',  urlencodedParser,function (req, res)
 {
   var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag,"subject":req.query.subject,"mobile":req.query.mob,"msg_status":req.query.msq_status,"priority":req.query.priority};
 
-      console.log(dv);
        connection.query('insert into query set ?',[dv],
         function(err, rows)
         {
     if(!err)
     {
       res.status(200).json({'returnval': 'success'});
-      console.log(rows);
     }
     else
     {
@@ -754,7 +752,23 @@ app.post('/activate',  urlencodedParser,function (req, res)
     }
 });
   });
-
+app.post('/schoolwisereport',  urlencodedParser,function (req, res)
+{
+  connection.query('SELECT COUNT(*)as total_queries ,school_id,`category` FROM query GROUP BY school_id ,`category`',
+        function(err, rows)
+        {
+    if(!err)
+    {
+      res.status(200).json({'returnval': rows});
+      console.log(rows);
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");

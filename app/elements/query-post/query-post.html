@@ -235,6 +235,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+    <iron-ajax  
+        method="post"
+        id="schoolwisereport"
+        url="{{schoolwisereporturl}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="schoolwisereportResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     <style>
       :host {
         display: block;
@@ -868,7 +878,18 @@ regmobResponse:function(e){
     this.$.regmailajax.generateRequest();
     document.querySelector('app-card').setPage("login");
   }
-}
+},
+
+  FnFetchSchoolReport:function(e){
+    this.schoolwisereporturl="http://localhost:8082/schoolwisereport";
+    this.$.schoolwisereport.generateRequest();
+    
+  },
+  schoolwisereportResponse:function(e){
+    document.querySelector('schoolwise-report').schoolreportarr=e.detail.response.returnval;
+    alert('hi');
+
+  }
     });
   })();
   </script>
