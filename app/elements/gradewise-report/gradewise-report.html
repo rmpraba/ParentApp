@@ -104,15 +104,16 @@
       <table>
         <thead>
           <tr>
-            <th>Total</th>
             <th>School</th>
+            <th>Class</th>
             <th>Category</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
           <template  is="dom-repeat" items="{{classreportarr}}" as="view">
             <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
-            <tr><td>{{view.total_queries}}</td><td>{{view.school_id}}</td><td>{{view.category}}</td></tr>
+            <tr><td>{{view.school_id}}</td><td>{{view.classname}} </td><td>{{view.category}}</td><td>{{view.total_queries}}</td></tr>
           </template>
         </tbody>
       </table>

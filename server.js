@@ -771,7 +771,7 @@ app.post('/schoolwisereport',  urlencodedParser,function (req, res)
 app.post('/classwisereport',  urlencodedParser,function (req, res)
 {
     var school_id={"school_id":req.query.schol};
-       connection.query('SELECT COUNT(*)as total_queries ,`category` FROM query GROUP BY school_id ,`category`',[school_id],
+       connection.query('SELECT count(*) as total_queries,school_id,category,(select class from class_details where id=(select class_id from student_details where id=student_id)) as classname FROM `query`  group by category,school_id',
         function(err, rows)
         {
     if(!err)
