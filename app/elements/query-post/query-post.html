@@ -446,7 +446,6 @@ var obj={"id":"","schol":"","status":""}
 obj.id=sessionStorage.getItem("studid");
 obj.schol=sessionStorage.getItem("schoolx");
 obj.status="closed";
-alert(JSON.stringify(obj));
 this.parentinboxparam=obj;
 this.$.parentinboxid.generateRequest();
 
@@ -740,17 +739,16 @@ document.querySelector('reportstatus-card').noofclose=len;
 }
 },
 upmsgstat:function(id,sid,time,date){
-this.upmsgstaturl="http://localhost:8082/upmsgstat";
-var obj={"sid":"","time":"","date":"","msg_status":"","schol":""}
-obj.sid=id;
-obj.time=time;
-obj.date=date;
-obj.schol=sessionStorage.getItem("schoolx");
-obj.msg_status=2;
-
-this.upmsgstatparam=obj;
-//alert(JSON.stringify(obj));
-this.$.upmsgstatid.generateRequest();
+  this.upmsgstaturl="http://localhost:8082/upmsgstat";
+  var obj={"sid":"","time":"","date":"","msg_status":"","schol":""}
+  obj.sid=id;
+  obj.time=time;
+  obj.date=date;
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.msg_status=2;
+  this.upmsgstatparam=obj;
+  //alert(JSON.stringify(obj));
+  this.$.upmsgstatid.generateRequest();
 },
 upmsgstatResponse:function(e){
   var res=e.detail.response.returnval;
@@ -900,14 +898,14 @@ regmobResponse:function(e){
   },
   FnFetchClassReport:function(e){
     this.classwisereporturl="http://localhost:8082/classwisereport";
-    var obj={"school_id":""};
-    obj.school_id=sessionStorage.getItem("schoolx");
+    var obj={"schol":""};
+    obj.schol=sessionStorage.getItem("schoolx");
     this.classwisereportparam=obj;
     this.$.classwisereport.generateRequest();
     
   },
   classwisereportResponse:function(e){
-    document.querySelector('classwise-report').classreportarr=e.detail.response.returnval;
+    document.querySelector('gradewise-report').classreportarr=e.detail.response.returnval;
   }
     });
   })();

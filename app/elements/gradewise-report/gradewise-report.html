@@ -106,13 +106,14 @@
           <tr>
             <th>Total</th>
             <th>School</th>
+            <th>Status</th>
             <th>Category</th>
           </tr>
         </thead>
         <tbody>
           <template  is="dom-repeat" items="{{classreportarr}}" as="view">
             <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
-            <tr><td>{{view.total_queries}}</td><td>{{view.school_id}}</td><td>{{view.category}}</td></tr>
+            <tr><td>{{view.total_queries}}</td><td>{{view.class}}</td><td>{{view.query_status}}</td><td>{{view.category}}</td></tr>
           </template>
         </tbody>
       </table>

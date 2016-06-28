@@ -71,12 +71,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <li id="summaryreport">
           <paper-icon-button  class="iconbutton" src="../../images/summary_icon.png" on-click="summaryreport"></paper-icon-button>Summary Report
         </li>
-      </a>
+      </a><!-- 
       <a class="cur" on-click="schoolreport">
         <li id="schoolreport">
           <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="schoolreport"></paper-icon-button>School Wise Report
         </li>
-      </a>
+      </a> -->
       <a class="cur" on-click="classreport">
         <li id="classreport">
           <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="classreport"></paper-icon-button>Class Wise Report
@@ -158,11 +158,11 @@ var role;
      summaryreport:function(){
         document.querySelector('transport-app').setPage("summaryreport");
         this.$.qupostid.FnFetchSummaryReport();
-     },
+     },/*
      schoolreport:function(){
         document.querySelector('transport-app').setPage("schoolreport");
         this.$.qupostid.FnFetchSchoolReport();
-     },
+     },*/
      classreport:function(){
         document.querySelector('transport-app').setPage("classreport");
         this.$.qupostid.FnFetchClassReport();
