@@ -255,6 +255,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="classwisereportResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="timeofadminreadid"
+    url="{{timeofadminreadurl}}"
+    params="{{timeofadminreadparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="timeofadminreadResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -283,6 +293,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var regrelation;
     var fwd;
     var rep;
+    var queryy_id;
     Polymer({
       is: 'query-post',
       ready:function(){
@@ -716,10 +727,17 @@ closereportResponse:function(e){
   else if(tex[0].priority=='Low'){
     lc++;
   }
-   date2=new Date(tex[i].datetime);
+  var read = tex[i].time_of_admin_read;
+  var close = tex[i].reply_date;
+  var from = read.split("/");
+  var to = close.split("/");
+  var readdate = new Date(from[2], from[1] - 1, from[0]);
+  var closeddate = new Date(to[2], to[1] - 1, to[0]);
+  var diffDays = closeddate.getDate() - readdate.getDate();
+  date2=new Date(tex[i].datetime);
   days=date.getDate() - date2.getDate();
   //alert(days);
-  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":""}
+  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":"", "timetaken": ""}
   obj.query_id=tex[i].query_id;
   obj.priority=tex[i].priority;
   obj.datetime=tex[i].datetime;
@@ -728,6 +746,7 @@ closereportResponse:function(e){
   obj.mobile=tex[i].mobile;
   obj.subject=tex[i].subject;
   obj.days=days;
+  obj.timetaken = diffDays;
 //alert(JSON.stringify(obj));  
 zxarr.push(obj);
 }
@@ -739,12 +758,35 @@ document.querySelector('reportstatus-card').noofclose=len;
 }
 },
 upmsgstat:function(id,sid,time,date){
+  queryy_id = id;
+
+    var todaydate=new Date();
+    var dd = todaydate.getDate();
+    var mon = todaydate.getMonth();
+    var year = todaydate.getFullYear();
+    var chdate = dd+"/"+mon+"/"+year;
+    this.timeofadminreadurl="http://localhost:8082/timeofadminread";
+    var obj={"sid":"","msg_status":"","schol":"", "admin_reads_message":"" }
+    obj.sid=queryy_id;
+    obj.schol=sessionStorage.getItem("schoolx");
+    obj.admin_reads_message= chdate;
+    obj.msg_status=1;
+    this.timeofadminreadparam=obj;
+    //alert(JSON.stringify(obj));
+    this.$.timeofadminreadid.generateRequest();
+    
+  var todaydate=new Date();
+  var dd = todaydate.getDate();
+  var mon = todaydate.getMonth();
+  var year = todaydate.getFullYear();
+  var chdate = dd+"/"+mon+"/"+year;
   this.upmsgstaturl="http://localhost:8082/upmsgstat";
-  var obj={"sid":"","time":"","date":"","msg_status":"","schol":""}
-  obj.sid=id;
+  var obj={"sid":"","time":"","date":"","msg_status":"","schol":"", "admin_reads_message":"" }
+  obj.sid=queryy_id;
   obj.time=time;
   obj.date=date;
   obj.schol=sessionStorage.getItem("schoolx");
+  obj.admin_reads_message= chdate;
   obj.msg_status=2;
   this.upmsgstatparam=obj;
   //alert(JSON.stringify(obj));
@@ -766,7 +808,15 @@ upmsgstatResponse:function(e){
   //alert(JSON.stringify(obj));
   this.$.unopenmsgid.generateRequest();
 
+
+
 },
+  timeofadminreadResponse:function(e){
+    var res = e.detail.response.returnval;
+    if(res == 'success'){
+      alert('time changed');
+    }
+  },
 unopenmsgResponse:function(e)
 {
   var resno=e.detail.response.returnval[0].total;
@@ -907,7 +957,7 @@ regmobResponse:function(e){
   classwisereportResponse:function(e){
     document.querySelector('gradewise-report').classreportarr=e.detail.response.returnval;
   }
-    });
+  });
   })();
   </script>
 </dom-module>

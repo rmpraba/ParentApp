@@ -482,7 +482,7 @@ app.post('/closereport',  urlencodedParser,function (req, res)
   var status = {"query_status":req.query.status};
   var flag={"flag":req.query.flag};
   
-  connection.query('select query_id,priority,datetime,parent_email,mobile,subject,parent_name from query where ? and ? and ?',[status,school_id,flag],
+  connection.query('select query_id,priority,datetime,parent_email,mobile,subject,parent_name, reply_date,time_of_admin_read from query where ? and ? and ?',[status,school_id,flag],
   function(err, rows)
   {
     if(!err)
@@ -511,8 +511,6 @@ app.post('/upmsgstat',  urlencodedParser,function (req, res)
     var time={"time":req.query.time};
     var status={"msg_status":req.query.msg_status};
     var school_id={"school_id":req.query.schol};
-
-  //console.log('update  '+);
        connection.query('update query set ? WHERE ? and ? and ? and ?',[status,id,school_id,date,time],
         function(err, rows)
         {
@@ -786,6 +784,26 @@ app.post('/classwisereport',  urlencodedParser,function (req, res)
 });
   });
 
+app.post('/timeofadminread',  urlencodedParser,function (req, res)
+{
+    var id={"query_id":req.query.sid};
+    var status={"msg_status":req.query.msg_status};
+    var school_id={"school_id":req.query.schol};
+    var time_of_admin_read={"time_of_admin_read":req.query.admin_reads_message};       
+    connection.query('update query set ? WHERE ? and ? and ?',[time_of_admin_read,school_id,status, id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
 function setvalue(){
   console.log("calling setvalue.....");
 }
