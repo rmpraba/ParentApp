@@ -199,6 +199,7 @@ var res=e.detail.response.returnval;
         document.querySelector('transport-app').setPage("complaintpage");
        }
        else if(id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"){
+         document.querySelector('icon-card').Fnadmin();
         this.$.qpostid.getmsg(); 
         document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("parent-inbox");
