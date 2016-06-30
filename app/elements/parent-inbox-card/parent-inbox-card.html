@@ -184,6 +184,10 @@ this.$.prio1.hidden=true;
         this.$.fwd.hidden=true;
 
       }
+      if(id=='teacher'){
+        this.$.fwd.hidden=true;
+       this.$.details.hidden=true;
+      }
       if(role=='manager'){
        this.$.fwd.hidden=true; 
       }
@@ -212,6 +216,8 @@ this.$.prio1.hidden=true;
       var id=sessionStorage.getItem("user");
       if(id=='parent')
       {
+        this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
+      }else if(id=='teacher'){
         this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
       }else{
       this.$.qpostid.upmsgstat(this.queryid,this.stid,this.time,this.date);
