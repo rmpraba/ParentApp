@@ -83,6 +83,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="loginroleajax"
+        url="{{loginroleurl}}"
+        params="{{loginroleparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="loginroleResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
    
    <query-post id='qpostid'></query-post>
   </template>
@@ -138,9 +149,7 @@ var res=e.detail.response.returnval;
         
       var parent=e.detail.response.returnval;
       document.querySelector('login-form').parent=parent;
-      }
-    else
-    {
+      }else {
       alert('Invalid Mobile number');
       document.querySelector('login-form').Fnclear();
     } 
@@ -312,8 +321,18 @@ var res=e.detail.response.returnval;
         document.querySelector('login-form').fnacti();  
         //alert('Activated!!');
       }
-    }
-
+    },
+    loginrole:function(id){
+      this.loginroleurl="http://localhost:8082/loginrole";
+      var obj={"id":""}
+      obj.id=id;
+      this.loginroleparam=obj;
+      this.$.loginroleajax.generateRequest();
+    },
+    loginroleResponse:function(e){
+      var result = e.detail.response.returnval[0].role;
+      document.querySelector('loginicon-card').role=result;
+    },
     });
   })();
   </script>

@@ -1,11 +1,11 @@
 var express    = require("express");
- var mysql      = require('mysql');
- var email   = require("emailjs/email");
- var connection = mysql.createConnection({
-   host     : 'localhost',
-   user     : 'root',
-   password : 'admin',
-   database : 'helpdesk'
+var mysql      = require('mysql');
+var email   = require("emailjs/email");
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'admin',
+  database : 'helpdesk'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -804,6 +804,31 @@ app.post('/timeofadminread',  urlencodedParser,function (req, res)
     }
 });
   });
+
+app.post('/loginrole',  urlencodedParser,function (req, res)
+{
+    var id={"id":req.query.id};
+    connection.query('SELECT role from employee where ? ',[id],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': '0'});
+        //console.log('empty');
+      }
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

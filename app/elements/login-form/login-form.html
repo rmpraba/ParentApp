@@ -58,7 +58,7 @@
               </paper-dropdown-menu>
             </div>
             <div class="field">
-              <paper-input label="Username" value="{{username}}" id="user"></paper-input>
+              <paper-input label="Username" value="{{username}}" id="user" on-change="loginid"></paper-input>
             </div>
             <div class="field">
               <paper-input type="password" label="Password" value="{{password}}" id="pass"></paper-input>
@@ -103,7 +103,11 @@
     Polymer({
       is: 'login-form',
     ready:function(){
- 
+    },
+    loginid:function(){
+      var smuserid = this.username;
+      var userid = smuserid.toUpperCase();
+      this.$.login.loginrole(userid);
     },
     mobileno:function()
     {
@@ -119,12 +123,10 @@
     },
     admin:function(){
       //alert('admin');
-        sessionStorage.setItem("user","admin");
-        this.$.mob.hidden=true;
+      sessionStorage.setItem("user","admin");
+      this.$.mob.hidden=true;
       this.$.drop.hidden=true;
-      
       this.$.id.hidden=true;
-
       this.$.user.hidden=false;
       this.$.pass.hidden=false;
       this.$.sub.hidden=false;
@@ -138,17 +140,13 @@
     },
     Fnparent:function(){
       //alert('parent');
-        sessionStorage.setItem("user","parent");
-        
+      sessionStorage.setItem("user","parent");
       this.$.user.hidden=true;
       this.$.pass.hidden=true;
       this.$.sub.hidden=true;
-
-       this.$.mob.hidden=false;
+      this.$.mob.hidden=false;
       this.$.drop.hidden=false;
-      
       this.$.id.hidden=false;
-      
     },
     login:function(){
       this.$.login.adminlogin(this.username,this.password);
@@ -157,10 +155,10 @@
       document.querySelector('app-card').setPage('registration');
     },
     link2:function(){
-        document.querySelector('#registered').open();
+      document.querySelector('#registered').open();
     },
     activate:function(){
-        this.$.login.activate(this.newregmob,this.verify);
+      this.$.login.activate(this.newregmob,this.verify);
     },
     fnacti:function(){
       document.querySelector('#registered').close();  
