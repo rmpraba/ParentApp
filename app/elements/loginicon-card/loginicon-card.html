@@ -112,7 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-icon-button id="admin" class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
     </div>
     <div id="three">
-      <paper-icon-button id="teacher" class="iconbutton" on-click="teachers" src="../../images/teacher.png"></paper-icon-button>
+      <paper-icon-button id="teacher" class="iconbutton" on-click="loginform" src="../../images/teacher.png"></paper-icon-button>
     </div>
     </div>
   </template>
@@ -131,15 +131,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       admins:function(){
         //alert('2');
-           document.querySelector('app-card').setPage('login');
-        document.querySelector('login-form').admin();
-        
-      },
-      teachers:function(){
-        //alert('2');
         document.querySelector('app-card').setPage('login');
-        document.querySelector('login-form').teacher();
         document.querySelector('login-form').admin();
+      },
+      loginform:function(){
+        document.querySelector('app-card').setPage('login');
+        document.querySelector('login-form').hideParentLogin();
       }
     });
   })();

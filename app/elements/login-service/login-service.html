@@ -318,8 +318,7 @@ var res=e.detail.response.returnval;
     activateResponse:function(e){
       var res=e.detail.response.returnval;
       if(res=='success'){
-        document.querySelector('login-form').fnacti();  
-        //alert('Activated!!');
+        document.querySelector('login-form').fnacti();
       }
     },
     loginrole:function(id){
@@ -331,8 +330,8 @@ var res=e.detail.response.returnval;
     },
     loginroleResponse:function(e){
       var result = e.detail.response.returnval[0].role;
-      document.querySelector('loginicon-card').role=result;
-    },
+      document.querySelector('login-form').getrole(result);
+    }
     });
   })();
   </script>

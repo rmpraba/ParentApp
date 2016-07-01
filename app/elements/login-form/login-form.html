@@ -38,6 +38,7 @@
     </style>
     <body>
         <div class="row">
+          <input type="hidden" name="role" value="{{role}}">
           <div class="container login-card">
           <div class="backicon">
               <paper-icon-button class="iconbutton" on-click="back" src="../../images/back.png"></paper-icon-button>
@@ -120,6 +121,19 @@
       sessionStorage.setItem("studid",id);
       this.$.login.getdetails(id);
       
+    },
+    getrole:function(role){
+      var role = role;
+      if(role == "Teacher"){
+        this.teacher();
+      } else {
+        this.admin();
+      }
+    },
+    hideParentLogin:function(){
+      this.$.mob.hidden=true;
+      this.$.drop.hidden=true;
+      this.$.id.hidden=true;
     },
     admin:function(){
       //alert('admin');
