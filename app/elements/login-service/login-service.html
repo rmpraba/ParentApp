@@ -83,6 +83,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="loginroleajax"
+        url="{{loginroleurl}}"
+        params="{{loginroleparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="loginroleResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
    
    <query-post id='qpostid'></query-post>
   </template>
@@ -96,8 +107,7 @@
     Polymer({
       is: 'login-service',
 
-    mobile:function(mobile)
-    {
+    mobile:function(mobile){
       mob=mobile;
       this.mobileurl="http://localhost:8082/mobile";
       var obj={"mobile":""};
@@ -129,12 +139,12 @@ var res=e.detail.response.returnval;
                   //alert(JSON.stringify(obj));
                   this.$.loginalterajax.generateRequest();
               }
+
     },
     loginalterResponse:function(e){
       //alert('2'+e.detail.response.returnval);
       var res=e.detail.response.returnval;
-     if(res!='no')
-      {
+      if(res!='no'){
         var school=e.detail.response.returnval[0].school_id;
         sessionStorage.setItem("schoolx",school);
                           var stuid=e.detail.response.returnval[0].student_id;
@@ -148,6 +158,7 @@ var res=e.detail.response.returnval;
       alert('Invalid Mobile number');
       document.querySelector('login-form').Fnclear();
     } 
+
     },
     adminlogin:function(username,password){
       this.adminloginurl="http://localhost:8082/adminlogin";
@@ -160,64 +171,47 @@ var res=e.detail.response.returnval;
       this.$.adminloginajax.generateRequest();
     },
     adminloginResponse:function(e){
-      
       var res=e.detail.response.returnval;
       if(res!=0){
-      var role=e.detail.response.returnval[0].role;
-      teacher_id = e.detail.response.returnval[0].id;
-      var role1=e.detail.response.returnval[0].role;
-      var schoolx=e.detail.response.returnval[0].school_id;
-      sessionStorage.setItem("schoolx",schoolx);
-      sessionStorage.setItem("role",role1);
+        var role=e.detail.response.returnval[0].role;
+        teacher_id = e.detail.response.returnval[0].id;
+        var role1=e.detail.response.returnval[0].role;
+        var schoolx=e.detail.response.returnval[0].school_id;
+        sessionStorage.setItem("schoolx",schoolx);
+        sessionStorage.setItem("role",role1);
         var id=sessionStorage.getItem("user");
         var role=sessionStorage.getItem("role");
-
-        
-
-       //alert(id+'    '+role+'   '+role1);
-       if((id=="admin")&&((role=='manager')||(role=='principal'))){
-        document.querySelector('icon-card').Fnadmin();
-        //alert('hello');
-        this.$.qpostid.managerinbox();
-         document.querySelector('app-card').setPage("transport");
-        document.querySelector('transport-app').setPage("parent-inbox");
-
-        
-       }
-       else if(id == "teacher"){
-        this.$.qpostid.teacherinbox();
-        document.querySelector('icon-card').Fnteacher();
-        document.querySelector('app-card').setPage("transport");
-        this.teacherdetailsurl="http://localhost:8082/teacherdetails";
-        var obj={"id":"","school":""}
-        obj.id= teacher_id;
-        obj.school=sessionStorage.getItem("schoolx");
-        this.teacherdetailsparam=obj;
-        this.$.teacherdetailsajax.generateRequest();
-
-       }
-       else if(id=="parent")
-       {
-        this.$.qpostid.parentinbox();
-        document.querySelector('app-card').setPage("transport");
-        document.querySelector('transport-app').setPage("complaintpage");
-       }
-       else if(id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"){
-         document.querySelector('icon-card').Fnadmin();
-        this.$.qpostid.getmsg(); 
-        document.querySelector('app-card').setPage("transport");
-        document.querySelector('transport-app').setPage("parent-inbox");
-       
-       
-       }
+        //alert(id+'    '+role+'   '+role1);
+        if((id=="admin")&&((role=='manager')||(role=='principal'))){
+          document.querySelector('icon-card').Fnadmin();
+          //alert('hello');
+          this.$.qpostid.managerinbox();
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox");
+        } else if (id == "teacher" || id=="admin"){
+          this.$.qpostid.teacherinbox();
+          if (id == "teacher") {document.querySelector('icon-card').Fnteacher();}
+          document.querySelector('app-card').setPage("transport");
+          this.teacherdetailsurl="http://localhost:8082/teacherdetails";
+          var obj={"id":"","school":""}
+          obj.id= teacher_id;
+          obj.school=sessionStorage.getItem("schoolx");
+          this.teacherdetailsparam=obj;
+          this.$.teacherdetailsajax.generateRequest();
+        } else if(id=="parent") {
+          this.$.qpostid.parentinbox();
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("complaintpage");
+        } else if (id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities") {
+          document.querySelector('icon-card').Fnadmin();
+          this.$.qpostid.getmsg(); 
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox");       
+        }
+      } else {
+        alert('Wrong Username and Password');
+        document.querySelector('login-form').Fnclear();
       }
-      else{
-          alert('Wrong Username and Password');
-           document.querySelector('login-form').Fnclear();
-      }
-
-
-
     },
     teacherdetailsResponse:function(e){
       var teachers_id=e.detail.response.returnval[0].employee_id;
@@ -313,11 +307,20 @@ var res=e.detail.response.returnval;
     activateResponse:function(e){
       var res=e.detail.response.returnval;
       if(res=='success'){
-        document.querySelector('login-form').fnacti();  
-        //alert('Activated!!');
+        document.querySelector('login-form').fnacti();
       }
+    },
+    loginrole:function(id){
+      this.loginroleurl="http://localhost:8082/loginrole";
+      var obj={"id":""}
+      obj.id=id;
+      this.loginroleparam=obj;
+      this.$.loginroleajax.generateRequest();
+    },
+    loginroleResponse:function(e){
+      var result = e.detail.response.returnval[0].role;
+      document.querySelector('login-form').getrole(result);
     }
-
     });
   })();
   </script>
