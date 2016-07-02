@@ -1,0 +1,76 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="sentbox-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .top{
+        @apply(--layout-horizontal);
+      }
+      .inbox-message{
+        @apply(--layout-horizontal);
+      }
+       .iconbutton
+      {
+         width: 8%;
+         height: 8%;
+      }
+      .inbox-content:nth-child(even) {background: #CCC}
+      .inbox-content:nth-child(odd) {background: #FFF}
+    </style>
+    <body>
+        <div class="row">
+         
+          <div class="container inbox">
+            <div id="nonewmsg">
+              <div class="no-data"></div>
+              <h1>No New Messsage to Show</h1>
+            </div>
+            <template is="dom-repeat" items ="{{msgarr}}" as="view">
+              <sentbox-itemcard queryid={{view.query_id}} from={{view.parent_name}} message="{{view.query_message}}" time="{{view.time}}" date="{{view.updated_date}}" flag="{{view.flag}}" category="{{view.category}}" status="{{view.query_status}}" mail="{{view.parent_email}}" mob="{{view.mobile}}" stid="{{view.student_id}}" studentname="{{view.name}}" datetime="{{view.datetime}}" complaint="{{view.query_message}}"></sentbox-itemcard>
+            </template>
+              <div>
+          <paper-icon-button  class="iconbutton" src="../../images/backward.png"  on-click="backward"></paper-icon-button>
+          <paper-icon-button  class="iconbutton" src="../../images/forward.png"  on-click="forward"></paper-icon-button>
+        </div>
+          </div>
+        </div>
+    </body>
+    <query-post id="queryservice"></query-post>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'sentbox-card',
+
+      ready:function(){
+        this.$.nonewmsg.hidden=true;
+      },
+      backward:function(){
+        this.$.queryservice.Fnmovebackward();
+      },
+      forward:function(){
+        this.$.queryservice.Fnmoveforward();
+      },
+      showNomsg:function(){
+        //alert('come');
+        this.$.nonewmsg.hidden=false;
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -114,6 +114,8 @@ var res=e.detail.response.returnval;
               {
                   //alert('1');
                   var school=e.detail.response.returnval[0].school_id;
+                  var stuid=e.detail.response.returnval[0].student_id;
+                  sessionStorage.setItem("studentid",stuid);
                   sessionStorage.setItem("schoolx",school);
                   var parent=e.detail.response.returnval;
                   document.querySelector('login-form').parent=parent;
@@ -135,6 +137,8 @@ var res=e.detail.response.returnval;
       {
         var school=e.detail.response.returnval[0].school_id;
         sessionStorage.setItem("schoolx",school);
+                          var stuid=e.detail.response.returnval[0].student_id;
+                  sessionStorage.setItem("studentid",stuid);
         
       var parent=e.detail.response.returnval;
       document.querySelector('login-form').parent=parent;

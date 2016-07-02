@@ -265,6 +265,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="timeofadminreadResponse"
     debounce-duration="300"
   ></iron-ajax>
+<iron-ajax
+    method="post"
+    id="sentmsgid"
+    url="{{sentmsgurl}}"
+    params="{{sentmsgparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="sentmsgResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+
     <style>
       :host {
         display: block;
@@ -956,6 +967,18 @@ regmobResponse:function(e){
   },
   classwisereportResponse:function(e){
     document.querySelector('gradewise-report').classreportarr=e.detail.response.returnval;
+  }
+  sentmsg:function(sid){
+    this.sentmsgurl="http://localhost:8082/sentmsg";
+    var obj={"schol":"","studid":""}
+    obj.schol=sessionStorage.getItem("schoolx");
+    obj.studid=sid;
+    this.sentmsgparam=obj;
+    this.$.sentmsgid.generateRequest();
+  },
+  sentmsgResponse:function(e){
+var res=e.detail.response.returnval;
+alert(JSON.stringify(res));
   }
   });
   })();

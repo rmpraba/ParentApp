@@ -1,0 +1,159 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="sentbox-itemcard">
+ <template>
+  <style>
+  
+      .inbox-content{
+        background: #CCC;
+        box-shadow: currentColor;
+        height: auto;
+      }
+      @media(max-width:767px){
+        .inbox-content{height: 40px;}
+      }
+      .view_msg{
+        margin-top: -25%;
+      }
+      .dialog{
+        width:100%;
+      }
+      .when .time{
+        margin-left: -80%;
+        margin-top: -10%;
+      }
+      .when .time p{
+        font-size: 14px;
+      }
+      .inbox-top .from{
+        @apply(--layout-horizontal);
+        width:150%;
+      }
+</style>
+    <div class="inbox-content">
+  
+      <div class="detail" on-click="toggle">
+        <div class="inbox-top">
+          <div class="from"><p>{{queryid}} - {{from}} -{{studentname}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
+        </div>
+        <div class="when">
+          <div class="time">
+            <div>
+              <p>{{time}}</p>
+            </div>
+            <p>{{date}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="message">
+      </paper-dialog>
+      <iron-collapse id="{{queryid}}" class="parent-message">
+        <!-- <h2 class="heading-messsage">Message</h2> -->
+          <div class="top">
+            <div class="request-id">
+              {{queryid}}
+            </div>
+            <div>
+              {{studentname}} - {{stid}}
+            </div>
+            <div class="when">
+              <!-- <div class="date">
+                <div class="time1">
+                  {{time}}
+                </div>
+                  {{date}}
+              </div> -->
+              <div class="field" id="reads">
+                <div class="buttons">
+                  Status : Close <paper-checkbox id="read" on-change="changeHandler" checked></paper-checkbox>
+                </div>
+              </div>
+              <div class="field" id="prio">
+                <paper-dropdown-menu id="prio1" label="Priority">
+                  <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
+                    <paper-item >Moderate</paper-item>
+                    <paper-item >Low</paper-item>
+                  </paper-menu>
+                </paper-dropdown-menu>
+              </div>
+            </div>
+          </div>
+          <div class="feedback">
+            <div class="greeting">
+              Hai Sir/Madam,
+            </div>
+            <p class="message-content">{{from}} : {{message}}</p>
+             <p id="a1" class="message-content">Me : {{complaint}}</p>
+          </div>
+        <div id="details" style="display:flex;">
+          <p class="mobile">Contact:{{mob}}</p>
+          <!-- <p class="mail">{{mail}}</p> -->
+        </div>
+        <div class="buttons">
+          <paper-button id="reply-button" on-click="answer">Reply</paper-button>
+          <paper-button id="fwd" on-click="send">Escalate</paper-button>
+        </div>
+      </iron-collapse>
+       <iron-collapse id="comments{{queryid}}" class="dialog">
+        <div class="field textarea">
+          <iron-autogrow-textarea value="{{comment123}}" id="reply"  error-message="needs comments!" placeholder="Comments..." required ></iron-autogrow-textarea>
+        </div>
+        <div class="buttons">
+          <paper-button on-click="frwd">SUBMIT</paper-button>
+        </div>
+      </iron-collapse>
+      <iron-collapse id="adminmsg{{queryid}}" class="dialog">
+        <div class="field textarea">
+          <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
+        </div>
+        <div class="buttons">
+          <paper-button on-click="submit">SUBMIT</paper-button>
+        </div>
+      </iron-collapse>
+    </div>
+     <paper-toast id="toast" text="Priority level Changed.."></paper-toast>
+    <query-post id='qpostid'></query-post>
+  </template> 
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'sentbox-itemcard',
+
+       ready:function(){
+        var student=sessionStorage.getItem("studentid");
+        var stuid=sessionStorage.getItem("studentid");
+        this.$.qpostid.sentmsg(stuid);
+  },  toggle: function() {
+      document.querySelector("#"+this.queryid).toggle();
+      if(document.querySelector("#adminmsg"+this.queryid).opened = true){
+        document.querySelector("#adminmsg"+this.queryid).opened = false;
+      }
+      if(document.querySelector("#comments"+this.queryid).opened = true){
+        document.querySelector("#comments"+this.queryid).opened = false;
+      }
+      var id=sessionStorage.getItem("user");
+      if(id=='parent')
+      {
+        this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
+      }else{
+      this.$.qpostid.upmsgstat(this.queryid,this.stid,this.time,this.date);
+      }
+    }
+  
+    });
+  })();
+  </script>
+</dom-module>

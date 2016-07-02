@@ -82,6 +82,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="classreport"></paper-icon-button>Class Wise Report
         </li>
       </a>
+
+       <a class="cur" on-click="sentbox">
+        <li id="classreport">
+          <paper-icon-button  class="iconbutton" src="../../images/sentbox.png" on-click="sentbox"></paper-icon-button>Class Wise Report
+        </li>
+      </a>
+
     </ul>
 
   </body>
@@ -168,6 +175,9 @@ var role;
      classreport:function(){
         document.querySelector('transport-app').setPage("classreport");
         this.$.qupostid.FnFetchClassReport();
+     },
+     sentbox:function(){
+       document.querySelector('transport-app').setPage("sentbox");
      }
 
     });
