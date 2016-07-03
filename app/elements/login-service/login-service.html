@@ -4,6 +4,16 @@
 <link rel="import" href="../transport-app/transport-app.html">
 <dom-module id="login-service">
   <template>
+  <iron-ajax
+        auto
+        id="addressajax"
+        url="../../configfile/address.json"
+        handle-as="json"
+        content-type="application/json"
+        on-response="addressResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     <iron-ajax
         method="post"
         id="mobileajax"
@@ -95,7 +105,7 @@
         >
   </iron-ajax>
    
-   <query-post id='qpostid'></query-post>
+   <query-post id="qpostid"></query-post>
   </template>
   <script>
   (function() {
@@ -106,10 +116,17 @@
     var rep;
     Polymer({
       is: 'login-service',
+       HaddressResponse:function(e)
+      {
+        var addr=e.detail.response.address;
+        sessionStorage.setItem("haddrinfo",addr);
+        //alert(JSON.stringify(e.detail.response.address));
+      },
+
 
     mobile:function(mobile){
       mob=mobile;
-      this.mobileurl="http://localhost:8082/mobile";
+      this.mobileurl=sessionStorage.getItem("haddrinfo")+"/mobile";
       var obj={"mobile":""};
       obj.mobile=mobile;
       this.mobileparam=obj;
@@ -132,7 +149,7 @@ var res=e.detail.response.returnval;
               }
               else
               {
-                  this.loginalterurl="http://localhost:8082/loginalter";
+                  this.loginalterurl=sessionStorage.getItem("haddrinfo")+"/loginalter";
                   var obj={"mobile":""}
                   obj.mobile=mob;
                   this.loginalterparam=obj;
@@ -161,7 +178,7 @@ var res=e.detail.response.returnval;
 
     },
     adminlogin:function(username,password){
-      this.adminloginurl="http://localhost:8082/adminlogin";
+      this.adminloginurl=sessionStorage.getItem("haddrinfo")+"/adminlogin";
       sessionStorage.setItem("userid",username);
       var obj={"user":"","pass":""}
       obj.user=username;
@@ -192,7 +209,7 @@ var res=e.detail.response.returnval;
           this.$.qpostid.teacherinbox();
           if (id == "teacher") {document.querySelector('icon-card').Fnteacher();}
           document.querySelector('app-card').setPage("transport");
-          this.teacherdetailsurl="http://localhost:8082/teacherdetails";
+          this.teacherdetailsurl=sessionStorage.getItem("haddrinfo")+"/teacherdetails";
           var obj={"id":"","school":""}
           obj.id= teacher_id;
           obj.school=sessionStorage.getItem("schoolx");
@@ -225,7 +242,7 @@ var res=e.detail.response.returnval;
       document.querySelector('complaint-teacher').teacher_email=teacher_email;
     },
     getdetails:function(id){
-        this.getdetailsurl="http://localhost:8082/getdetails";
+        this.getdetailsurl=sessionStorage.getItem("haddrinfo")+"/getdetails";
         var obj={"id":"","schol":""}
         obj.id=id;
         obj.schol=sessionStorage.getItem("schoolx");
@@ -277,7 +294,7 @@ var res=e.detail.response.returnval;
         sessionStorage.setItem("mail",email);
         sessionStorage.setItem("mob",mob);
 //alert('1'+stud_id);
-        this.studetailsurl="http://localhost:8082/studetails";
+        this.studetailsurl=sessionStorage.getItem("haddrinfo")+"/studetails";
         var obj={"schol":"","studid":""}
         obj.studid=stud_id;
         obj.schol=sessionStorage.getItem("schoolx");
@@ -296,7 +313,7 @@ var res=e.detail.response.returnval;
         document.querySelector('complaint-form').classes=classs;
     },
     activate:function(regno,veri){
-      this.activateurl="http://localhost:8082/activate";
+      this.activateurl=sessionStorage.getItem("haddrinfo")+"/activate";
       var obj={"reg":"","key":"","acti":""}
       obj.reg=regno;
       obj.key=veri;
@@ -311,7 +328,7 @@ var res=e.detail.response.returnval;
       }
     },
     loginrole:function(id){
-      this.loginroleurl="http://localhost:8082/loginrole";
+      this.loginroleurl=sessionStorage.getItem("haddrinfo")+"/loginrole";
       var obj={"id":""}
       obj.id=id;
       this.loginroleparam=obj;
