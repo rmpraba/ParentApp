@@ -1,11 +1,12 @@
 var express    = require("express");
-var mysql      = require('mysql');
-var email   = require("emailjs/email");
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'admin',
-  database : 'helpdesk'
+ var mysql      = require('mysql');
+ var email   = require("emailjs/email");
+ var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
+ var connection = mysql.createConnection({
+   host     : '127.8.87.130',
+   user     : 'adminmKKdGAZ',
+   password : '4NEXKdBbyTyu',
+   database : 'helpdesk'
  });
 var bodyParser = require('body-parser');
  var app = express();
@@ -34,8 +35,8 @@ var server  = email.server.connect({
 server.send({
    text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
    from:    "mlzssamsidh@yahoo.com",
-   to:      "ntamilselvimca@gmail.com",
-   subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
+   to:      "rmpraba@gmail.com",
+   subject: "Verification Info",
     attachment:
 
       [
@@ -860,11 +861,11 @@ app.post('/loginrole',  urlencodedParser,function (req, res)
   });
 
 
-function setvalue(){
-  console.log("calling setvalue.....");
-}
-var server = app.listen(8082, function () {
-var host = server.address().address
-var port = server.address().port
-console.log("Example app listening at http://%s:%s", host, port)
-});
+//Node server running port number
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8081
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+
+app.listen(server_port, server_ip_address, function () {
+  console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
+
+})
