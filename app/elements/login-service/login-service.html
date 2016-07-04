@@ -10,7 +10,7 @@
         url="../../configfile/address.json"
         handle-as="json"
         content-type="application/json"
-        on-response="addressResponse"
+        on-response="HaddressResponse"
         debounce-duration="300"
         >
   </iron-ajax>
@@ -121,10 +121,22 @@
         var addr=e.detail.response.address;
         sessionStorage.setItem("haddrinfo",addr);
         //alert(JSON.stringify(e.detail.response.address));
+        //alert(sessionStorage.getItem("user"));
+        //alert(sessionStorage.getItem("role"));
+        if(sessionStorage.getItem("user")=="parent")
+        {
+          //alert('c');
+          var m=sessionStorage.getItem("mob");
+          //alert(m);
+
+          document.querySelector('login-service').mobile(m);
+          document.querySelector('app-card').setPage('transport');
+        }
       },
 
 
     mobile:function(mobile){
+      sessionStorage.setItem("mob",mobile);
       mob=mobile;
       this.mobileurl=sessionStorage.getItem("haddrinfo")+"/mobile";
       var obj={"mobile":""};
