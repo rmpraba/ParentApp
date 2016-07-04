@@ -119,6 +119,8 @@
        HaddressResponse:function(e)
       {
         var addr=e.detail.response.address;
+        var id=sessionStorage.getItem("user");
+        var role=sessionStorage.getItem("role");
         sessionStorage.setItem("haddrinfo",addr);
         //alert(JSON.stringify(e.detail.response.address));
         //alert(sessionStorage.getItem("user"));
@@ -128,9 +130,29 @@
           //alert('c');
           var m=sessionStorage.getItem("mob");
           //alert(m);
-
+           this.$.qpostid.parentinbox();
+           var id=sessionStorage.getItem("studid");
+           this.getdetails(id);
           document.querySelector('login-service').mobile(m);
           document.querySelector('app-card').setPage('transport');
+          document.querySelector('transport-app').setPage("complaintpage");
+        }
+        else if (id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities") {
+          document.querySelector('icon-card').Fnadmin();
+          this.$.qpostid.getmsg(); 
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox");       
+        }
+        else if (id == "teacher"){
+          this.$.qpostid.teacherinbox();
+          if (id == "teacher") {document.querySelector('icon-card').Fnteacher();}
+          document.querySelector('app-card').setPage("transport");
+          this.teacherdetailsurl=sessionStorage.getItem("haddrinfo")+"/teacherdetails";
+          var obj={"id":"","school":""}
+          obj.id= teacher_id;
+          obj.school=sessionStorage.getItem("schoolx");
+          this.teacherdetailsparam=obj;
+          this.$.teacherdetailsajax.generateRequest();
         }
       },
 
@@ -157,6 +179,7 @@ var res=e.detail.response.returnval;
                   sessionStorage.setItem("studentid",stuid);
                   sessionStorage.setItem("schoolx",school);
                   var parent=e.detail.response.returnval;
+                  //alert(JSON.stringify(parent));
                   document.querySelector('login-form').parent=parent;
               }
               else
@@ -176,10 +199,11 @@ var res=e.detail.response.returnval;
       if(res!='no'){
         var school=e.detail.response.returnval[0].school_id;
         sessionStorage.setItem("schoolx",school);
-                          var stuid=e.detail.response.returnval[0].student_id;
-                  sessionStorage.setItem("studentid",stuid);
+        var stuid=e.detail.response.returnval[0].student_id;
+        sessionStorage.setItem("studentid",stuid);
         
       var parent=e.detail.response.returnval;
+      //alert(JSON.stringify(parent));
       document.querySelector('login-form').parent=parent;
       }
     else
@@ -217,7 +241,7 @@ var res=e.detail.response.returnval;
           this.$.qpostid.managerinbox();
           document.querySelector('app-card').setPage("transport");
           document.querySelector('transport-app').setPage("parent-inbox");
-        } else if (id == "teacher" || id=="admin"){
+        } else if (id == "teacher"){
           this.$.qpostid.teacherinbox();
           if (id == "teacher") {document.querySelector('icon-card').Fnteacher();}
           document.querySelector('app-card').setPage("transport");
