@@ -305,6 +305,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="checkstatusResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="ratingajax"
+    url="{{ratingurl}}"
+    params="{{ratingparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="ratingResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -1062,9 +1072,7 @@ upsupmsgstatResponse:function(e){
   if(res=='success'){
     //alert('message is opened');
   }
-
-
-this.supstatcounturl=sessionStorage.getItem("haddrinfo")+"/supstatcount";
+  this.supstatcounturl=sessionStorage.getItem("haddrinfo")+"/supstatcount";
     var obj={"schol":"","role":""}
     obj.schol=sessionStorage.getItem("schoolx");
     obj.role=sessionStorage.getItem("role");
@@ -1076,7 +1084,20 @@ supstatcountResponse:function(e){
 var res=e.detail.response.returnval[0].total;
 if(res!='0')
 document.querySelector('icon-card').unread=res;
-}
+},
+rating:function(queryid, rating){
+  this.ratingurl=sessionStorage.getItem("haddrinfo")+"/rating";
+  var obj={"schol":"","queryid":"", "rating":""};
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.queryid=queryid;
+  obj.rating=rating;
+  this.ratingparam=obj;
+  this.$.ratingajax.generateRequest();
+},
+ratingResponse:function(e){
+  var res=e.detail.response.returnval;
+  alert(res);
+},
   });
   })();
   </script>
