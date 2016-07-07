@@ -73,7 +73,7 @@ label.star:before {
   
       <div class="detail" on-click="toggle">
         <div class="inbox-top">
-          <div class="from"><p>{{queryid}}</p><p> - {{from}}</p><p id = "studentname"> -{{studentname}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
+          <div class="from"><p>{{queryid}}</p><!-- <p> - {{from}}</p> --><p id = "studentname">&nbsp&nbsp&nbsp-&nbsp&nbsp&nbsp{{studentname}}<!-- : {{flag}}  -   ({{category}}) - [{{status}}]--></p></div>
         </div>
         <div class="when">
           <div class="time">
@@ -90,11 +90,11 @@ label.star:before {
       <iron-collapse id="{{queryid}}" class="parent-message">
         <!-- <h2 class="heading-messsage">Message</h2> -->
           <div class="top">
-            <div class="request-id">
+            <div class="request-id" style="font-size:15px; margin:0 auto;">
               {{queryid}}
             </div>
             <div style="display:inline;">
-              <p style="display:inline;" id="studentname">{{studentname}} - </p><p style="display:inline;">{{stid}}</p>
+              <p style="display:inline;" id="studentname">{{studentname}} - </p><p style="display:inline; font-size:15px;">{{stid}}</p>
             </div>
             <div class="when">
               <!-- <div class="date">
@@ -125,13 +125,13 @@ label.star:before {
           </div>
           <div class="feedback">
             <div class="greeting">
-              Hai Sir/Madam,
+              <p style="font-size: 16px;"> Hai Sir/Madam, </p>
             </div>
-            <p class="message-content">{{from}} : {{message}}</p>
-            <p id="a1" class="message-content">Admin Comment : {{admincomment}}</p>
-            <p id="a2" class="message-content">Principal Comment : {{principalcomment}}</p>
-            <p id="a3" class="message-content">Management : {{managerreply}}</p>
-            <p id="a4" class="message-content"> principal reply : {{principalreply}}</p>
+            <p class="message-content" style="font-size:16px;">{{from}} : {{message}}</p>
+            <p id="a1" class="message-content" style="font-size:16px;">Admin Comment : {{admincomment}}</p>
+            <p id="a2" class="message-content" style="font-size:16px;">Principal Comment : {{principalcomment}}</p>
+            <p id="a3" class="message-content" style="font-size:16px;">Management : {{managerreply}}</p>
+            <p id="a4" class="message-content" style="font-size:16px;"> principal reply : {{principalreply}}</p>
           </div>
         <div id="details" style="display:flex;">
           <p class="mobile">Contact:{{mob}}</p>
