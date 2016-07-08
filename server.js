@@ -921,11 +921,11 @@ app.post('/checkstatus',  urlencodedParser,function (req, res)
     var id={"id":req.query.stid};
     var school={"school_id":req.query.schol};
     var status={"query_status":"open"};
-    connection.query('SELECT count (*) as total from query where ? and ? and ?',[id,school,status],
+    var feedback_rating={"feedback_rating":0};
+    connection.query('SELECT count (*) as total from query where ? and ? and ? and ?',[id,school,status, feedback_rating],
   function(err, rows)
   {
-    if(!err)
-    {
+    if(!err){
     if(rows.length>0){
         res.status(200).json({'returnval': rows});
         //console.log(rows);

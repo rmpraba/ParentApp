@@ -368,17 +368,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       checkstatusResponse:function(e){
         var res=e.detail.response.returnval[0].total;
         if(res==0){
-       var obj={"school_id":""};
-       obj.school_id=sessionStorage.getItem("schoolx");
-       this.sequenceurl=sessionStorage.getItem("haddrinfo")+"/query-sequence";
-       this.sequenceparam=obj;
-       this.$.sequenceid.generateRequest();
-     }
-     else{
-      alert('Your have Open Ticket');
-     }
-  },
-
+          var obj={"school_id":""};
+        obj.school_id=sessionStorage.getItem("schoolx");
+        this.sequenceurl=sessionStorage.getItem("haddrinfo")+"/query-sequence";
+        this.sequenceparam=obj;
+        this.$.sequenceid.generateRequest();
+        } else {
+          alert('Your have Open Ticket');
+        }
+      },
 sequenceResponse:function(e){
   var d1=new Date();
   var datex=d1.getDate()+'/'+(d1.getMonth()+1)+'/'+d1.getFullYear();
@@ -411,7 +409,6 @@ sequenceResponse:function(e){
        this.upsequrl=sessionStorage.getItem("haddrinfo")+"/upquery-sequence";
        this.upseqparam=obj1;
        this.$.upseqid.generateRequest();
-
 },
 querypostResponse:function(e)
 { 
@@ -421,18 +418,16 @@ querypostResponse:function(e)
     if(usern=='parent'){
       document.querySelector('complaint-form').refresh(); 
       document.querySelector('transport-app').setPage('feedbacksubmited'); 
-    } else if(usern=='admin') {
+    } else if (usern=='admin') {
       alert("Reply sent");
-    } else{
+    } else {
       alert("Feedback Submited");
     }
   } else {
     alert("Feedback not submited");
   }
 },
-getmsg:function()
-{
-
+getmsg:function(){
   this.getmsgurl=sessionStorage.getItem("haddrinfo")+"/getmsg";
   var obj={"schol":"","status":"","userid":""}
   obj.schol=sessionStorage.getItem("schoolx");
@@ -440,8 +435,7 @@ getmsg:function()
   this.getmsgparam=obj;
   //alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
-
-this.unopenmsgurl=sessionStorage.getItem("haddrinfo")+"/unopenmsg";
+  this.unopenmsgurl=sessionStorage.getItem("haddrinfo")+"/unopenmsg";
   var obj={"schol":"","status":"","userid":""}
   obj.schol=sessionStorage.getItem("schoolx");
   obj.userid=sessionStorage.getItem("role");
@@ -449,14 +443,10 @@ this.unopenmsgurl=sessionStorage.getItem("haddrinfo")+"/unopenmsg";
   this.unopenmsgparam=obj;
   //alert(JSON.stringify(obj));
   this.$.unopenmsgid.generateRequest();
-
- var id=sessionStorage.getItem("user");
-        var role=sessionStorage.getItem("role");
-        
-      
-          this.roleurl="../../configfile/roles.json";
-          this.$.roleajax.generateRequest();
-
+  var id=sessionStorage.getItem("user");
+  var role=sessionStorage.getItem("role");
+  this.roleurl="../../configfile/roles.json";
+  this.$.roleajax.generateRequest();
 },
  roleResponse:function(e){
       var role=sessionStorage.getItem("role");
@@ -475,9 +465,8 @@ this.unopenmsgurl=sessionStorage.getItem("haddrinfo")+"/unopenmsg";
        sessionStorage.setItem("frwd",fwd);
        sessionStorage.setItem("reply",rep);
     },
-getmsgResponse:function(e)
-{
-resarr=e.detail.response.returnval;
+getmsgResponse:function(e){
+  resarr=e.detail.response.returnval;
   inboxlen=e.detail.response.returnval.length;
   //alert(inboxlen);
   if(resarr=="invalid")
@@ -486,13 +475,10 @@ resarr=e.detail.response.returnval;
   }
   var inbox=resarr.slice(0,5);
   inboxcount=5;
-   document.querySelector('parent-inbox').msgarr=inbox;
+  document.querySelector('parent-inbox').msgarr=inbox;
   //var msgarr=e.detail.response.returnval;
   //document.querySelector('parent-inbox').msgarr=msgarr;
   //alert(JSON.stringify(msgarr));
-
-        
-
 },
 postreply:function(queryid,reply,statusx,date,time){
    var d1=new Date();
@@ -547,17 +533,16 @@ parentinboxResponse:function(e){
   document.querySelector('parentinbox-itemcard').msgarr=inbox;
 },
 teacherinbox:function(){
+  this.teacherinboxurl=sessionStorage.getItem("haddrinfo")+"/teacherinbox";
+  var obj={"id":"","schol":"","status":""}
+  obj.id=sessionStorage.getItem("userid");
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.status="closed";
+  //alert(JSON.stringify(obj));
+  this.teacherinboxparam=obj;
+  this.$.teacherinboxid.generateRequest();
 
-this.teacherinboxurl=sessionStorage.getItem("haddrinfo")+"/teacherinbox";
-var obj={"id":"","schol":"","status":""}
-obj.id=sessionStorage.getItem("userid");
-obj.schol=sessionStorage.getItem("schoolx");
-obj.status="closed";
-//alert(JSON.stringify(obj));
-this.teacherinboxparam=obj;
-this.$.teacherinboxid.generateRequest();
-
-this.unreadmsgteacherurl=sessionStorage.getItem("haddrinfo")+"/unreadmsgteacher";
+  this.unreadmsgteacherurl=sessionStorage.getItem("haddrinfo")+"/unreadmsgteacher";
   var obj={"sid":"","schol":"","status":""}
   obj.sid=sessionStorage.getItem("userid");
   obj.schol=sessionStorage.getItem("schoolx");
@@ -566,7 +551,6 @@ this.unreadmsgteacherurl=sessionStorage.getItem("haddrinfo")+"/unreadmsgteacher"
   this.$.unreadmsgteacherid.generateRequest();
 },
 teacherinboxResponse:function(e){
-
   resarr=e.detail.response.returnval;
   //alert(JSON.stringify(resarr));
   inboxlen=e.detail.response.returnval.length;
@@ -642,17 +626,16 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
     obj.status=status;
     obj.flag=flag;
     obj.student_id=id;
-        obj.name=par;
-        obj.email=mail;
-        obj.category=category;
-        obj.mob=mobile;
-        obj.msq_status=1;
-        obj.priority="Moderate";
+    obj.name=par;
+    obj.email=mail;
+    obj.category=category;
+    obj.mob=mobile;
+    obj.msq_status=1;
+    obj.priority="Moderate";
     this.queryposturl=sessionStorage.getItem("haddrinfo")+"/query-post1";
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
-       this.$.querypostid.generateRequest()
-
+       this.$.querypostid.generateRequest();
 },
 managerinbox:function(){
        // alert('1'+sessionStorage.getItem("role"));
