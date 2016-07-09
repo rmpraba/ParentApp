@@ -810,11 +810,9 @@ app.post('/timeofadminread',  urlencodedParser,function (req, res)
 
 app.post('/sentmsg',  urlencodedParser,function (req, res)
 {
-  var stid={"student_id":req.query.studid};
-  var schid={"school_id":req.query.schol};
-  var statuscv={"query_status":"open"};
-  connection.query('select * from query where ? and ? and ?',[stid,schid,statuscv],
-      function(err, rows)
+  
+  connection.query('select * from query where school_id="'+req.query.schol+'" and student_id="'+req.query.studid+'" and query_status="open"',
+  function(err, rows)
   {
     if(!err)
     {

@@ -60,8 +60,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'iconflow-card',
 
       ready:function(){
-       
+         if((this.parentmsg!=null)&&(this.adminreply==null))
+         {
+            this.$.a1.hidden=true;
+            this.$.a2.hidden=false;
+         }
+         else if((this.admincmt!=null)&&(this.adminreply==null)){
+            this.$.a1.hidden=true;
+            this.$.a2.hidden=false;
+            this.$.s1.hidden=true;
+            this.$.s2.hidden=false;
+         }
+         else if((this.princicmt!=null)&&(this.managermsg==null)&&(this.adminreply==null)){
+            this.$.a1.hidden=true;
+            this.$.a2.hidden=false;
+            this.$.s1.hidden=true;
+            this.$.s2.hidden=false;
+            this.$.d1.hidden=true;
+            this.$.d2.hidden=false;
+              
+         }
       }
+
     });
   })();
   </script>

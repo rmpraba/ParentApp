@@ -60,6 +60,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog>
       <iron-collapse id="{{queryid}}" class="parent-message">
         <!-- <h2 class="heading-messsage">Message</h2> -->
+  
+<template is="dom-repeat" items ="{{msgarr}}" as="view">
+              <iconflow-card parentmsg={{view.query_message}} admincmt={{view.admin_comment}} princicmt="{{view.principal_comment}}" managermsg="{{view.manager_reply}}" princireply="{{view.principal_reply}}" adminreply="{{view.query_reply}}"></iconflow-card>
+            </template>
           <div class="top">
             <div class="request-id">
               {{queryid}}
@@ -67,62 +71,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div>
               {{studentname}} - {{stid}}
             </div>
-            <div class="when">
-              <!-- <div class="date">
-                <div class="time1">
-                  {{time}}
-                </div>
-                  {{date}}
-              </div> -->
-              <div class="field" id="reads">
-                <div class="buttons">
-                  Status : Close <paper-checkbox id="read" on-change="changeHandler" checked></paper-checkbox>
-                </div>
-              </div>
-              <div class="field" id="prio">
-                <paper-dropdown-menu id="prio1" label="Priority">
-                  <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
-                    <paper-item >Moderate</paper-item>
-                    <paper-item >Low</paper-item>
-                  </paper-menu>
-                </paper-dropdown-menu>
-              </div>
-            </div>
+           
           </div>
           <div class="feedback">
-            <div class="greeting">
-              Hai Sir/Madam,
-            </div>
-            <p class="message-content">{{from}} : {{message}}</p>
              <p id="a1" class="message-content">Me : {{complaint}}</p>
           </div>
-        <div id="details" style="display:flex;">
-          <p class="mobile">Contact:{{mob}}</p>
-          <!-- <p class="mail">{{mail}}</p> -->
-        </div>
-        <div class="buttons">
-          <paper-button id="reply-button" on-click="answer">Reply</paper-button>
-          <paper-button id="fwd" on-click="send">Escalate</paper-button>
-        </div>
+       
       </iron-collapse>
-       <iron-collapse id="comments{{queryid}}" class="dialog">
-        <div class="field textarea">
-          <iron-autogrow-textarea value="{{comment123}}" id="reply"  error-message="needs comments!" placeholder="Comments..." required ></iron-autogrow-textarea>
-        </div>
-        <div class="buttons">
-          <paper-button on-click="frwd">SUBMIT</paper-button>
-        </div>
-      </iron-collapse>
-      <iron-collapse id="adminmsg{{queryid}}" class="dialog">
-        <div class="field textarea">
-          <iron-autogrow-textarea value="{{adminreply}}" id="reply"  error-message="needs Reply!" placeholder="Reply..." required ></iron-autogrow-textarea>
-        </div>
-        <div class="buttons">
-          <paper-button on-click="submit">SUBMIT</paper-button>
-        </div>
-      </iron-collapse>
+       
     </div>
-     <paper-toast id="toast" text="Priority level Changed.."></paper-toast>
+     
     <query-post id='qpostid'></query-post>
   </template> 
   <script>
@@ -133,17 +91,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'sentbox-itemcard',
 
        ready:function(){
-        var student=sessionStorage.getItem("studentid");
-        var stuid=sessionStorage.getItem("studentid");
-        this.$.qpostid.sentmsg(stuid);
+        
   },  toggle: function() {
       document.querySelector("#"+this.queryid).toggle();
-      if(document.querySelector("#adminmsg"+this.queryid).opened = true){
-        document.querySelector("#adminmsg"+this.queryid).opened = false;
-      }
-      if(document.querySelector("#comments"+this.queryid).opened = true){
-        document.querySelector("#comments"+this.queryid).opened = false;
-      }
+      
+     
       var id=sessionStorage.getItem("user");
       if(id=='parent')
       {

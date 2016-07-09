@@ -967,18 +967,21 @@ regmobResponse:function(e){
   },
   classwisereportResponse:function(e){
     document.querySelector('gradewise-report').classreportarr=e.detail.response.returnval;
-  }
+  },
   sentmsg:function(sid){
     this.sentmsgurl="http://localhost:8082/sentmsg";
     var obj={"schol":"","studid":""}
     obj.schol=sessionStorage.getItem("schoolx");
     obj.studid=sid;
     this.sentmsgparam=obj;
+    //alert(JSON.stringify(obj));
     this.$.sentmsgid.generateRequest();
   },
   sentmsgResponse:function(e){
 var res=e.detail.response.returnval;
-alert(JSON.stringify(res));
+//alert(JSON.stringify(res));
+document.querySelector('sentbox-card').msgarr=res;
+//document.querySelector('sentbox-itemcard').msgarr=res;
   }
   });
   })();
