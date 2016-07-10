@@ -152,13 +152,18 @@ var role;
       this.$.summaryreport.hidden=true;
      },
      Fnadmin:function(){
-        this.$.form.hidden=false;
+        this.$.form.hidden=true;
+        this.$.summaryreport.hidden=true;
+        this.$.sentbox.hidden=true;
      },
      Fnteacher:function(){
       this.$.classreport.hidden=true;
       this.$.report.hidden=true;
-      this.$.form.hidden=false;
       this.$.summaryreport.hidden=true;
+     },
+     FnSupreme:function(){
+      this.$.form.hidden=true;
+        this.$.sentbox.hidden=true;
      },
      report:function(){
         document.querySelector('transport-app').setPage("report");
@@ -178,7 +183,7 @@ var role;
      },
      sentbox:function(){
         var stuid=sessionStorage.getItem("id");
-        alert(stuid);
+        //alert(stuid);
         this.$.qupostid.sentmsg(stuid);
        document.querySelector('transport-app').setPage("sentbox");
      }

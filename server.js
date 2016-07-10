@@ -414,20 +414,14 @@ app.post('/updatefwd',  urlencodedParser,function (req, res)
     var id={"query_id":req.query.id};
     var date={"updated_date":req.query.date};
     var time={"time":req.query.time};
-    
     var school_id={"school_id":req.query.schol};
     var role=req.query.roles;
     if(role=='principal'){
-var msg={"principal_comment":req.query.comments,"user":req.query.frwd};
-
-}
-else{
-var msg={"admin_comment":req.query.comments,"user":req.query.frwd};
-
-}
-
-
-
+      var msg={"principal_comment":req.query.comments,"user":req.query.frwd,"manager_read":1};
+    }
+    else{
+      var msg={"admin_comment":req.query.comments,"user":req.query.frwd,"princi_read":1};
+    }
   //console.log(school_id);
        connection.query('update query set ? WHERE ? and ? and ? and ?',[msg,id,school_id,date,time],
         function(err, rows)
@@ -856,6 +850,74 @@ app.post('/loginrole',  urlencodedParser,function (req, res)
     }
 });
   });
+
+
+app.post('/upsupmsgstat',  urlencodedParser,function (req, res)
+{
+    var id={"query_id":req.query.sid};
+    var date={"updated_date":req.query.date};
+    var time={"time":req.query.time};
+        var school_id={"school_id":req.query.schol};
+         var role=req.query.role;
+    if(role=='manager'){
+      var status={"manager_read":req.query.msg_status,"manager_read_time":req.query.read_date};
+    }
+    else if(role=='principal'){
+      var status={"princi_read":req.query.msg_status,"princi_read_time":req.query.read_date};
+    }
+    
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[status,id,school_id,date,time],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+
+
+app.post('/supstatcount',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var role = req.query.role;
+  if(role=='manager'){
+      var userid={"manager_read":1};
+  }
+  else if(role=='principal'){
+      var userid={"princi_read":1};
+  }
+  connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ?',[school_id,userid],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': '0'});
+    }
+  
+});
+  });
+
+
 
 
 function setvalue(){

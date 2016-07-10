@@ -125,6 +125,23 @@
         //alert(JSON.stringify(e.detail.response.address));
         //alert(sessionStorage.getItem("user"));
         //alert(sessionStorage.getItem("role"));
+        if(role=='manager'){
+          
+          this.$.qpostid.supstatcount();
+          this.$.qpostid.managerinbox();
+          document.querySelector('icon-card').FnSupreme();
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox");
+        }
+        if(role=='principal'){
+          //alert('akhsjduf');
+          this.$.qpostid.supstatcount();
+          this.$.qpostid.managerinbox();
+          document.querySelector('icon-card').Fnadmin();
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox"); 
+        }
+
         if(sessionStorage.getItem("user")=="parent")
         {
           //alert('c');
@@ -137,7 +154,7 @@
           document.querySelector('app-card').setPage('transport');
           document.querySelector('transport-app').setPage("complaintpage");
         }
-        else if (id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities") {
+        else if (role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities") {
           document.querySelector('icon-card').Fnadmin();
           this.$.qpostid.getmsg(); 
           document.querySelector('app-card').setPage("transport");
@@ -154,6 +171,7 @@
           this.teacherdetailsparam=obj;
           this.$.teacherdetailsajax.generateRequest();
         }
+        
       },
 
 
@@ -235,8 +253,14 @@ var res=e.detail.response.returnval;
         var role=sessionStorage.getItem("role");
         //alert(id+'    '+role+'   '+role1);
         if((id=="admin")&&((role=='manager')||(role=='principal'))){
+          this.$.qpostid.supstatcount();
+          if(role=='principal'){
           document.querySelector('icon-card').Fnadmin();
+        }
           //alert('hello');
+          if(role=='manager'){
+          document.querySelector('icon-card').FnSupreme();
+        }
           this.$.qpostid.managerinbox();
           document.querySelector('app-card').setPage("transport");
           document.querySelector('transport-app').setPage("parent-inbox");

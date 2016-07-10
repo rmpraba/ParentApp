@@ -275,7 +275,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="sentmsgResponse"
     debounce-duration="300"
   ></iron-ajax>
-
+<iron-ajax
+    method="post"
+    id="upsupmsgstatid"
+    url="{{upsupmsgstaturl}}"
+    params="{{upsupmsgstatparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="upsupmsgstatResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+<iron-ajax
+    method="post"
+    id="supstatcountid"
+    url="{{supstatcounturl}}"
+    params="{{supstatcountparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="supstatcountResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -365,8 +384,8 @@ querypostResponse:function(e)
   var s=e.detail.response.returnval;
   if(s=='success'){
     if(usern=='parent'){
-      alert("Message is forwarded to "+scat+" Admin successfully"); 
       document.querySelector('complaint-form').refresh(); 
+      document.querySelector('transport-app').setPage('feedbacksubmited'); 
     } else if(usern=='admin') {
       alert("Reply sent");
     } else{
@@ -982,7 +1001,58 @@ var res=e.detail.response.returnval;
 //alert(JSON.stringify(res));
 document.querySelector('sentbox-card').msgarr=res;
 //document.querySelector('sentbox-itemcard').msgarr=res;
+  },
+  upsupmsgstat:function(id,sid,time,date){
+  queryy_id = id;
+
+    
+  var todaydate=new Date();
+  var dd = todaydate.getDate();
+  var mon = todaydate.getMonth();
+  var year = todaydate.getFullYear();
+  var chdate = dd+"/"+mon+"/"+year;
+  this.upsupmsgstaturl=sessionStorage.getItem("haddrinfo")+"/upsupmsgstat";
+  var obj={"sid":"","time":"","date":"","msg_status":"","schol":"","role":"","admin_reads_message":"" }
+  obj.sid=queryy_id;
+  obj.time=time;
+  obj.date=date;
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.role=sessionStorage.getItem("role");
+  obj.read_date= chdate;
+  obj.msg_status=2;
+  this.upsupmsgstatparam=obj;
+  //alert(JSON.stringify(obj));
+  this.$.upsupmsgstatid.generateRequest();
+},
+supstatcount:function(){
+this.supstatcounturl=sessionStorage.getItem("haddrinfo")+"/supstatcount";
+    var obj={"schol":"","role":""}
+    obj.schol=sessionStorage.getItem("schoolx");
+    obj.role=sessionStorage.getItem("role");
+    this.supstatcountparam=obj;
+    //alert(JSON.stringify(obj));
+    this.$.supstatcountid.generateRequest();
+},
+upsupmsgstatResponse:function(e){
+  var res=e.detail.response.returnval;
+  if(res=='success'){
+    //alert('message is opened');
   }
+
+
+this.supstatcounturl=sessionStorage.getItem("haddrinfo")+"/supstatcount";
+    var obj={"schol":"","role":""}
+    obj.schol=sessionStorage.getItem("schoolx");
+    obj.role=sessionStorage.getItem("role");
+    this.supstatcountparam=obj;
+    //alert(JSON.stringify(obj));
+    this.$.supstatcountid.generateRequest();
+},
+supstatcountResponse:function(e){
+var res=e.detail.response.returnval[0].total;
+if(res!='0')
+document.querySelector('icon-card').unread=res;
+}
   });
   })();
   </script>

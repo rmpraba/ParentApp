@@ -207,14 +207,19 @@ this.$.prio1.hidden=true;
         document.querySelector("#comments"+this.queryid).opened = false;
       }
       var id=sessionStorage.getItem("user");
+      var role=sessionStorage.getItem("role");
       if(id=='parent')
       {
         this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
       }else if(id=='teacher'){
         this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
-      }else{
+      }else if((role=='manager')||(role=='principal')){
+        this.$.qpostid.upsupmsgstat(this.queryid,this.stid,this.time,this.date);
+      }
+      else{
       this.$.qpostid.upmsgstat(this.queryid,this.stid,this.time,this.date);
       }
+
     },
     answer:function(){
       //alert("reply");
