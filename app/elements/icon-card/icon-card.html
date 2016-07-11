@@ -80,15 +80,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="classreport"></paper-icon-button>Class Wise Report
         </li>
       </a>
+      <a class="cur" on-click="pendingreport">
+        <li id="pendingreport">
+          <paper-icon-button  class="iconbutton" src="../../images/report.png" on-click="pendingreport"></paper-icon-button>Pending Report
+        </li>
+      </a>
       <a class="cur" on-click="report">
         <li id="report">
           <paper-icon-button  class="iconbutton" src="../../images/report_icon.png" on-click="report"></paper-icon-button>Report
             <iron-collapse id="report_catogory">
               <ol>
-                <li><paper-icon-button  class="iconbutton" src="../../images/book_icon.png" on-click="report"></paper-icon-button>Academics</li>
-                <li><paper-icon-button  class="iconbutton" src="../../images/administration_icon.png" on-click="report"></paper-icon-button>Adminstration</li>
-                <li><paper-icon-button  class="iconbutton" src="../../images/schoolbus_icon.png" on-click="report"></paper-icon-button>Transport</li>
-                <li><paper-icon-button  class="iconbutton" src="../../images/fecilities_icon.png" on-click="report"></paper-icon-button>Facilities</li>
+                <li><paper-icon-button  class="cur" src="../../images/book_icon.png" on-click="academicsreport"></paper-icon-button>Academics</li>
+                <li><paper-icon-button  class="cur" src="../../images/administration_icon.png" on-click="administrationreport"></paper-icon-button>Adminstration</li>
+                <li><paper-icon-button  class="cur" src="../../images/schoolbus_icon.png" on-click="transportreport"></paper-icon-button>Transport</li>
+                <li><paper-icon-button  class="cur" src="../../images/fecilities_icon.png" on-click="facilitiesreport"></paper-icon-button>Facilities</li>
               </ol>
             </iron-collapse>
         </li>
@@ -109,6 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 var id;
 var role;
+var category;
     Polymer({
       is: 'icon-card',
 
@@ -164,6 +170,7 @@ var role;
         this.$.form.hidden=true;
         this.$.summaryreport.hidden=true;
         this.$.sentbox.hidden=true;
+        this.$.report.hidden=true;
      },
      Fnteacher:function(){
       this.$.classreport.hidden=true;
@@ -175,9 +182,12 @@ var role;
         this.$.sentbox.hidden=true;
      },
      report:function(){
-        document.querySelector('transport-app').setPage("report");
-        this.$.qupostid.getreport();
+        
         document.querySelector("#report_catogory").toggle();
+     },
+     pendingreport:function(){
+      document.querySelector('transport-app').setPage("report");
+        this.$.qupostid.getreport();
      },
      summaryreport:function(){
         document.querySelector('transport-app').setPage("summaryreport");
@@ -196,6 +206,30 @@ var role;
         //alert(stuid);
         this.$.qupostid.sentmsg(stuid);
        document.querySelector('transport-app').setPage("sentbox");
+     },
+     academicsreport:function(){
+        category='Academics';
+        alert(category);
+        document.querySelector('transport-app').setPage("catereport");
+        this.$.qupostid.catereport(category);
+     },
+     administrationreport:function(){
+       category='Adminstration'; 
+       alert(category);
+       document.querySelector('transport-app').setPage("catereport");
+       this.$.qupostid.catereport(category);
+     },
+     transportreport:function(){
+        category='Transport';
+        alert(category);
+        document.querySelector('transport-app').setPage("catereport");
+        this.$.qupostid.catereport(category);
+     },
+     facilitiesreport:function(){
+        category='Facilities';
+        alert(category);
+        document.querySelector('transport-app').setPage("catereport");
+        this.$.qupostid.catereport(category);
      }
 
     });

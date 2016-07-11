@@ -445,8 +445,62 @@ app.post('/openreport',  urlencodedParser,function (req, res)
   var school_id={"school_id":req.query.schol};
   var status = {"query_status":req.query.status};
   var flag={"flag":req.query.flag};
-  
-  connection.query('select query_id,priority,datetime,parent_email,subject,mobile,parent_name from query where ? and ? and ?',[status,school_id,flag],
+  var role=req.query.role;
+  if((role=='Academics')||(role=='Transport')||(role=='Facilities')||(role=='Administration')){
+  connection.query('select query_id,priority,datetime,parent_email,subject,mobile,parent_name from query where ? and ? and ? and category="'+req.query.role+'"',[status,school_id,flag],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': '0'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+}
+else{
+    connection.query('select query_id,priority,datetime,parent_email,subject,mobile,parent_name from query where ? and ? and ?',[status,school_id,flag],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': '0'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+}
+
+  });
+
+
+app.post('/closereport',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var status = {"query_status":req.query.status};
+  var flag={"flag":req.query.flag};
+  var role=req.query.role;
+  if((role=='Academics')||(role=='Transport')||(role=='Facilities')||(role=='Administration')){
+  connection.query('select query_id,priority,datetime,parent_email,mobile,subject,parent_name, reply_date,time_of_admin_read from query where ? and ? and ? and category="'+req.query.role+'"',[status,school_id,flag],
   function(err, rows)
   {
     if(!err)
@@ -466,15 +520,8 @@ app.post('/openreport',  urlencodedParser,function (req, res)
     }
   
 });
-  });
-
-
-app.post('/closereport',  urlencodedParser,function (req, res)
-{
-  var school_id={"school_id":req.query.schol};
-  var status = {"query_status":req.query.status};
-  var flag={"flag":req.query.flag};
-  
+}
+else{
   connection.query('select query_id,priority,datetime,parent_email,mobile,subject,parent_name, reply_date,time_of_admin_read from query where ? and ? and ?',[status,school_id,flag],
   function(err, rows)
   {
@@ -495,6 +542,7 @@ app.post('/closereport',  urlencodedParser,function (req, res)
     }
   
 });
+}
   });
 
 app.post('/upmsgstat',  urlencodedParser,function (req, res)
@@ -962,6 +1010,34 @@ app.post('/rating',  urlencodedParser,function (req, res)
   
 });
   });
+
+app.post('/catereport',  urlencodedParser,function (req, res)
+{
+    var id={"category":req.query.cate};
+    var school={"school_id":req.query.schol};
+    console.log('In Server..');
+    connection.query('SELECT *,(select student_name from student_details where id=student_id and school_id="'+req.query.schol+'")as student_name from query where ? and ?',[id,school],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': '0'});
+        //console.log('empty');
+      }
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
+
+
 
 function setvalue(){
   console.log("calling setvalue.....");

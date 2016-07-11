@@ -315,6 +315,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="ratingResponse"
     debounce-duration="300"
   ></iron-ajax>
+    <iron-ajax
+    method="post"
+    id="catereportajax"
+    url="{{catereporturl}}"
+    params="{{catereportparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="catereportResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -691,8 +701,9 @@ updatefwdResponse:function(e){
 },
 getreport:function(){
 this.openreporturl=sessionStorage.getItem("haddrinfo")+"/openreport";
-var obj={"schol":"","status":""}
+var obj={"schol":"","status":"","role":""}
 obj.schol=sessionStorage.getItem("schoolx");
+obj.role=sessionStorage.getItem("role");
 obj.status="open";
 obj.flag=1;
 this.openreportparam=obj;
@@ -701,6 +712,7 @@ this.$.openreportid.generateRequest();
 this.closereporturl=sessionStorage.getItem("haddrinfo")+"/closereport";
 var obj1={"schol":"","status":""}
 obj1.schol=sessionStorage.getItem("schoolx");
+obj.role=sessionStorage.getItem("role");
 obj1.status="closed";
 obj1.flag=1;
 this.closereportparam=obj1;
@@ -1080,6 +1092,20 @@ rating:function(queryid, rating){
 ratingResponse:function(e){
   var res=e.detail.response.returnval;
 },
+catereport:function(categ){
+    this.catereporturl=sessionStorage.getItem("haddrinfo")+"/catereport";
+    var obj={"schol":"","cate":""}
+    obj.schol=sessionStorage.getItem("schoolx");
+    obj.cate=categ;
+    this.catereportparam=obj;
+    alert(JSON.stringify(obj));
+    this.$.catereportajax.generateRequest();
+},
+catereportResponse:function(e){
+var res=e.detail.response.returnval;
+alert(JSON.stringify(res));
+document.querySelector('category-report-card').msgarr=res;
+}
   });
   })();
   </script>
