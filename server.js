@@ -916,7 +916,31 @@ app.post('/supstatcount',  urlencodedParser,function (req, res)
 });
   });
 
-
+app.post('/checkstatus',  urlencodedParser,function (req, res)
+{
+    var id={"id":req.query.stid};
+    var school={"school_id":req.query.schol};
+    var status={"query_status":"open"};
+    connection.query('SELECT count (*) as total from query where ? and ? and ?',[id,school,status],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': '0'});
+        //console.log('empty');
+      }
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
 
 
 function setvalue(){

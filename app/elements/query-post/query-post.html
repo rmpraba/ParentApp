@@ -295,6 +295,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="supstatcountResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="checkstatusid"
+    url="{{checkstatusurl}}"
+    params="{{checkstatusparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="checkstatusResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -337,12 +347,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         scat=category;
         scomplaint=complaint;
         mobile=mob;
+
+        this.checkstatusurl=sessionStorage.getItem("haddrinfo")+"/checkstatus";
+        var obj={"stid":"","schol":""}
+        obj.stid=student_id;
+        obj.schol=sessionStorage.getItem("schoolx");
+        this.checkstatusparam=obj;
+        this.$.checkstatusid.generateRequest();
+      },
+      checkstatusResponse:function(e){
+        var res=e.detail.response.returnval[0].total;
+        if(res==0){
        var obj={"school_id":""};
        obj.school_id=sessionStorage.getItem("schoolx");
        this.sequenceurl=sessionStorage.getItem("haddrinfo")+"/query-sequence";
        this.sequenceparam=obj;
        this.$.sequenceid.generateRequest();
-            },
+     }
+     else{
+      alert('Your have Open Ticket');
+     }
+  },
 
 sequenceResponse:function(e){
   var d1=new Date();
