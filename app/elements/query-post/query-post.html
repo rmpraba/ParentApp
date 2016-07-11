@@ -483,10 +483,9 @@ postreply:function(queryid,reply,statusx,date,time){
 parentinbox:function(){
        // alert('1');
 this.parentinboxurl=sessionStorage.getItem("haddrinfo")+"/parentinbox";
-var obj={"id":"","schol":"","status":""}
+var obj={"id":"","schol":""}
 obj.id=sessionStorage.getItem("studid");
 obj.schol=sessionStorage.getItem("schoolx");
-obj.status="closed";
 this.parentinboxparam=obj;
 this.$.parentinboxid.generateRequest();
 

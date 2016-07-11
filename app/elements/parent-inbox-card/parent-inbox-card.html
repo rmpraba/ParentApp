@@ -71,6 +71,11 @@
                   Status : Close <paper-checkbox id="read" on-change="changeHandler" checked></paper-checkbox>
                 </div>
               </div>
+               <div class="field" id="readson">
+                <div class="buttons">
+                  Status : {{status}}
+                </div>
+              </div>
               <div class="field" id="prio">
                 <paper-dropdown-menu id="prio1" label="Priority">
                   <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
@@ -164,7 +169,7 @@ this.$.prio1.hidden=true;
       var id=sessionStorage.getItem("user");
       var role=sessionStorage.getItem("role");
       if(id=='admin'){
-        this.$.reads.hidden=true;
+        this.$.readson.hidden=true;
         
       }
       if(id=='parent'){
@@ -175,6 +180,7 @@ this.$.prio1.hidden=true;
         this.$.a3.hidden=true;
         this.$.a4.hidden=true;
         this.$.fwd.hidden=true;
+        this.$.reads.hidden=true;
 
       }
       if(id=='teacher'){
@@ -241,7 +247,7 @@ this.$.prio1.hidden=true;
       }
       //alert(statusx);
     },
-    submit:function(){
+    submit:function(e){
       //alert(this.queryid+   +this.adminreply);
       var role=sessionStorage.getItem("role");
       var id=sessionStorage.getItem("user");
@@ -264,7 +270,12 @@ this.$.prio1.hidden=true;
           statusx="open";
         }
         else{
-          statusx="closed";  
+                if(e.target.checked==true){
+                  statusx="closed";
+                }
+                else{
+                  statusx="open"; 
+                }  
         }
         
       this.$.qpostid.postreply(this.queryid,this.adminreply,statusx,this.date,this.time);

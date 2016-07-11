@@ -275,10 +275,9 @@ app.post('/parentinbox',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
   var stud={"student_id":req.query.id};
-  var status={"query_status":req.query.status};
   var user={"user":"parent"};
  // console.log(school_id+''+stud+''+status);
-       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ? and ? and query_reply!=""',[school_id,stud,status,user],
+       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ? and query_reply!=""',[school_id,stud,user],
         function(err, rows)
         {
     if(!err)
