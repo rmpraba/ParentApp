@@ -325,6 +325,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="catereportResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="feedcheckajax"
+    url="{{feedcheckurl}}"
+    params="{{feedcheckparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="feedcheckResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -356,11 +366,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var queryy_id;
     Polymer({
       is: 'query-post',
-      ready:function(){
-
+      
+      checkstatus:function(){
+        alert('hai......sdgfva');
+          this.checkstatusurl=sessionStorage.getItem("haddrinfo")+"/checkstatus";
+        var obj={"stid":"","schol":""}
+        obj.stid=sessionStorage.getItem("studid");
+        obj.schol=sessionStorage.getItem("schoolx");
+        this.checkstatusparam=obj;
+        this.$.checkstatusid.generateRequest();
+      },
+      checkstatusResponse:function(e){
+        alert('fnjjv...  '+JSON.stringify(e.detail.response.returnval));
+        var res=e.detail.response.returnval[0].total;
+        document.querySelector('complaint-form').values=res;
+      },
+      feedcheck:function(){
+        var boj={"schol":"","studid":"","status":"","feedback":""}
+        boj.schol=sessionStorage.getItem("schoolx");
+        boj.studid=sessionStorage.getItem("studid");
+        boj.status="closed";
+        boj.feedback=0;
+        this.feedcheckparam=boj;
+        this.feedcheckurl=sessionStorage.getItem("haddrinfo")+"/feedcheck";
+        this.$.feedcheckajax.generateRequest();
+      },
+      feedcheckResponse:function(e){
+          var res=e.detail.response.returnval;
+          var tak="take";
+          if(res==0){
+              document.querySelector('complaint-form').statfeed=tak;    
+          }
+          else{
+            var ans=e.detail.response.returnval[0].query_id;
+             document.querySelector('complaint-form').statfeed=ans;     
+          }
       },
       querypostFn:function(student_id,name,email,category,complaint,mob){
-        //alert('hai');
+        alert('hai');
         stud_id=student_id;
         sname=name;
         semail=email;
@@ -368,25 +411,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         scomplaint=complaint;
         mobile=mob;
 
-        this.checkstatusurl=sessionStorage.getItem("haddrinfo")+"/checkstatus";
-        var obj={"stid":"","schol":""}
-        obj.stid=student_id;
-        obj.schol=sessionStorage.getItem("schoolx");
-        this.checkstatusparam=obj;
-        this.$.checkstatusid.generateRequest();
-      },
-      checkstatusResponse:function(e){
-        var res=e.detail.response.returnval[0].total;
-        if(res==0){
-          var obj={"school_id":""};
+
+        var obj={"school_id":""};
         obj.school_id=sessionStorage.getItem("schoolx");
         this.sequenceurl=sessionStorage.getItem("haddrinfo")+"/query-sequence";
         this.sequenceparam=obj;
         this.$.sequenceid.generateRequest();
-        } else {
-          alert('Your have Open Ticket');
-        }
+        
       },
+      
 sequenceResponse:function(e){
   var d1=new Date();
   var datex=d1.getDate()+'/'+(d1.getMonth()+1)+'/'+d1.getFullYear();
@@ -664,7 +697,12 @@ this.roleurl="../../configfile/roles.json";
 managerinboxResponse:function(e){
   //alert('2');
    var msgarr=e.detail.response.returnval;
+   if(msgarr.length!=0){
   document.querySelector('parent-inbox').msgarr=msgarr;
+   }
+   else{
+    document.querySelector('parent-inbox').nomsg();
+}
   //alert(JSON.stringify(msgarr));
 },
 updatefrwd:function(querid,msg,date,time){
@@ -1091,6 +1129,8 @@ rating:function(queryid, rating){
 },
 ratingResponse:function(e){
   var res=e.detail.response.returnval;
+  if(res=='success'){
+  document.querySelector('parent-inbox-card').ratingres();}
 },
 catereport:function(categ){
     this.catereporturl=sessionStorage.getItem("haddrinfo")+"/catereport";
@@ -1098,12 +1138,12 @@ catereport:function(categ){
     obj.schol=sessionStorage.getItem("schoolx");
     obj.cate=categ;
     this.catereportparam=obj;
-    alert(JSON.stringify(obj));
+    //alert(JSON.stringify(obj));
     this.$.catereportajax.generateRequest();
 },
 catereportResponse:function(e){
 var res=e.detail.response.returnval;
-alert(JSON.stringify(res));
+//alert(JSON.stringify(res));
 document.querySelector('category-report-card').msgarr=res;
 }
   });

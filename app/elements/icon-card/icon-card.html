@@ -89,11 +89,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <li id="report">
           <paper-icon-button  class="iconbutton" src="../../images/report_icon.png" on-click="report"></paper-icon-button>Report
             <iron-collapse id="report_catogory">
-              <ol>
+              <ol style="margin-left:20%;list-style-type:none">
                 <li><paper-icon-button  class="cur" src="../../images/book_icon.png" on-click="academicsreport"></paper-icon-button>Academics</li>
                 <li><paper-icon-button  class="cur" src="../../images/administration_icon.png" on-click="administrationreport"></paper-icon-button>Adminstration</li>
                 <li><paper-icon-button  class="cur" src="../../images/schoolbus_icon.png" on-click="transportreport"></paper-icon-button>Transport</li>
-                <li><paper-icon-button  class="cur" src="../../images/fecilities_icon.png" on-click="facilitiesreport"></paper-icon-button>Facilities</li>
+                <li><paper-icon-button  class="cur" src="../../images/facilities_icon.png" on-click="facilitiesreport"></paper-icon-button>Facilities</li>
               </ol>
             </iron-collapse>
         </li>
@@ -165,17 +165,20 @@ var category;
       this.$.classreport.hidden=true;
       this.$.report.hidden=true;
       this.$.summaryreport.hidden=true;
+      this.$.pendingreport.hidden=true;
      },
      Fnadmin:function(){
         this.$.form.hidden=true;
         this.$.summaryreport.hidden=true;
         this.$.sentbox.hidden=true;
         this.$.report.hidden=true;
+        this.$.pendingreport.hidden=true;
      },
      Fnteacher:function(){
       this.$.classreport.hidden=true;
       this.$.report.hidden=true;
       this.$.summaryreport.hidden=true;
+      this.$.pendingreport.hidden=true;
      },
      FnSupreme:function(){
       this.$.form.hidden=true;
@@ -209,25 +212,25 @@ var category;
      },
      academicsreport:function(){
         category='Academics';
-        alert(category);
+        //alert(category);
         document.querySelector('transport-app').setPage("catereport");
         this.$.qupostid.catereport(category);
      },
      administrationreport:function(){
        category='Adminstration'; 
-       alert(category);
+       //alert(category);
        document.querySelector('transport-app').setPage("catereport");
        this.$.qupostid.catereport(category);
      },
      transportreport:function(){
         category='Transport';
-        alert(category);
+        //alert(category);
         document.querySelector('transport-app').setPage("catereport");
         this.$.qupostid.catereport(category);
      },
      facilitiesreport:function(){
         category='Facilities';
-        alert(category);
+        //alert(category);
         document.querySelector('transport-app').setPage("catereport");
         this.$.qupostid.catereport(category);
      }

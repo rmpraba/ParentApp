@@ -97,11 +97,13 @@ label.star:before {
       <iron-collapse id="{{queryid}}" class="parent-message">
         
           <div class="feedback">
-            <p class="message-content">{{from}} : {{message}}</p>
-            <p>Message Closed Date : {{closedate}}</p>
-            <p id="a1" class="message-content">No of days Opened : {{opendays}}</p>
-            <p id="a2" class="message-content">No of days Closed : {{closendays}}</p>
-            
+            <div class="message-content">{{from}} : {{message}}</div>
+            <div>Message Closed Date : {{closedate}}</div>
+            <div id="a1" class="message-content">No of days Opened : {{opendays}}</div>
+            <div id="a2" class="message-content">No of days Closed : {{closendays}}</div>
+            <div id="fr" class="message-content">
+              Given Rating : {{feedrate}}
+            </div>
           </div>
         <div id="details" style="display:flex;">
           <p class="mobile">Contact:{{mob}}</p>
@@ -125,6 +127,10 @@ label.star:before {
         var d1=new Date();
         var datex=d1.getDate()+'/'+(d1.getMonth()+1)+'/'+d1.getFullYear();
         var date3=new Date(datex);
+
+        if(this.feedrate==0){
+          this.$.fr.hidden=true;
+        }
         if(this.status=='open'){
           var daysopen=date3-date2;  
           this.$.a2.hidden=true;

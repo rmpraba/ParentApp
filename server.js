@@ -357,9 +357,9 @@ app.post('/studetails',  urlencodedParser,function (req, res)
 app.post('/teacherdetails',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.school};
-  var teacher_id = {"employee_id":req.query.id};
+  var id = {"teacher_id":req.query.id};
   
-  connection.query('select * from employee_details where ? and ?',[teacher_id,school_id],
+  connection.query('select * from teacher_details where ? and ?',[id,school_id],
   function(err, rows)
   {
     if(!err)
@@ -966,20 +966,18 @@ app.post('/supstatcount',  urlencodedParser,function (req, res)
 
 app.post('/checkstatus',  urlencodedParser,function (req, res)
 {
-    var id={"id":req.query.stid};
+    var id={"student_id":req.query.stid};
     var school={"school_id":req.query.schol};
-    var status={"query_status":"open"};
-    var feedback_rating={"feedback_rating":0};
-    connection.query('SELECT count (*) as total from query where ? and ? and ? and ?',[id,school,status, feedback_rating],
-  function(err, rows)
-  {
+    var status={"query_status":'open'};
+    connection.query('SELECT count(*) as total from query where ? and ? and ?',[id,school,status],
+    function(err, rows)
+    {
     if(!err){
     if(rows.length>0){
         res.status(200).json({'returnval': rows});
-        //console.log(rows);
         } else {
         console.log(err);
-        res.status(200).json({'returnval': '0'});
+        res.status(200).json({'returnval': 0});
         //console.log('empty');
       }
     }
@@ -989,6 +987,32 @@ app.post('/checkstatus',  urlencodedParser,function (req, res)
     }
 });
   });
+
+app.post('/feedcheck',  urlencodedParser,function (req, res)
+{
+    var id={"student_id":req.query.studid};
+    var school={"school_id":req.query.schol};
+    var status={"query_status":req.query.status};
+    var feedback={"feedback_rating":req.query.feedback};
+    connection.query('SELECT distinct query_id from query where ? and ? and ? and ?',[id,school,status,feedback],
+    function(err, rows)
+    {
+    if(!err){
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 0});
+        //console.log('empty');
+      }
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
+
 
 app.post('/rating',  urlencodedParser,function (req, res)
 {

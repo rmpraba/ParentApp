@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div id="nomsg"><h1>No Messsage to Show</h1></div>
             <template is="dom-repeat" items ="{{msgarr}}" as="view">
-              <parent-inbox-card queryid={{view.query_id}} from="Administrator" message="{{view.query_reply}}" time="{{view.reply_time}}" date="{{view.reply_date}}" flag="{{view.flag}}" category="{{view.category}}" status="{{view.query_status}}" stid="{{view.student_id}}" studentname="{{view.name}}" datetime="{{view.datetime}}"></parent-inbox-card>
+              <parent-inbox-card queryid={{view.query_id}} from="Administrator" message="{{view.query_reply}}" time="{{view.reply_time}}" date="{{view.reply_date}}" flag="{{view.flag}}" category="{{view.category}}" status="{{view.query_status}}" stid="{{view.student_id}}" studentname="{{view.name}}" datetime="{{view.datetime}}" feedback="{{view.feedback_rating}}"></parent-inbox-card>
             </template>
             <div>
           <paper-icon-button  class="iconbutton" src="../../images/backward.png"  on-click="backward"></paper-icon-button>
