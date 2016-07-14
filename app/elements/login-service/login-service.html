@@ -114,6 +114,7 @@
     var teacher_id;
     var fwd;
     var rep;
+    var reply;
     Polymer({
       is: 'login-service',
        HaddressResponse:function(e)
@@ -127,7 +128,7 @@
         //alert(sessionStorage.getItem("user"));
         //alert(sessionStorage.getItem("role"));
         if((role=='manager')&&(icon=="manager")){
-          alert(icon);
+          //alert(icon);
           this.$.qpostid.supstatcount();
           this.$.qpostid.managerinbox();
           document.querySelector('icon-card').FnSupreme();
@@ -226,7 +227,8 @@ var res=e.detail.response.returnval;
       }
     else
     {
-      alert('Invalid Mobile number');
+      reply='Invalid Mobile number';
+      document.querySelector('login-form').zxcvdialog(reply);
       document.querySelector('login-form').Fnclear();
     } 
 
@@ -290,11 +292,14 @@ var res=e.detail.response.returnval;
           document.querySelector('transport-app').setPage("parent-inbox");       
         }
         else{
-          alert('Login in Your Proper Gateway');
+          reply='Login in Your Proper Gateway';
+
           document.querySelector('app-card').setPage("loginicon");
+          document.querySelector('loginicon-card').zxcvdialog(reply);
         }
       } else {
-        alert('Wrong Username and Password');
+        reply='Wrong Username and Password';
+        document.querySelector('login-form').zxcvdialog(reply);
         document.querySelector('login-form').Fnclear();
       }
     },

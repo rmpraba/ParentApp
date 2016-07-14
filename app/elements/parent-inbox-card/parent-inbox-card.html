@@ -173,6 +173,15 @@ label.star:before {
       </iron-collapse>
     </div>
      <paper-toast id="toast" text="Priority level Changed.."></paper-toast>
+     <paper-dialog id="showdial" modal>
+           <div class="content">
+<h3><center>{{replydialog}}</center></h3>
+  
+<div>
+  <paper-button on-click="exit1">Ok</paper-button>
+</div>
+</div>
+ </paper-dialog>
     <query-post id='qpostid'></query-post>
   </template> 
   <script>
@@ -188,7 +197,7 @@ label.star:before {
       /*setInterval(function(){
         alert("Hi");
       }, 3000)*/
-      alert(this.feedback);
+      //alert(this.feedback);
       this.$.studentname.hidden = true;
       this.$.feedback_rating.hidden = true;
       this.$.stat.hidden=true;
@@ -369,6 +378,17 @@ this.$.prio1.hidden=true;
     },
     prioreply:function(){
            this.$.toast.open();
+    },
+    showdialog:function(reply){
+          this.replydialog=reply;
+          var id = 'showdial';
+        var dialog = document.getElementById(id);
+        dialog.open();
+    },
+    exit1:function(){
+      var id = 'showdial';
+        var dialog = document.getElementById(id);
+        dialog.close();
     }
     
     });

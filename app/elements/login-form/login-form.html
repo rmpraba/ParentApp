@@ -93,6 +93,13 @@
             <paper-button on-click="activate" >Activate</paper-button>
           </div>
         </paper-dialog></div>
+        <paper-dialog id="dialoghere">
+          <h2>{{replyhere}}</h2>
+          
+          <div class="buttons">
+            <paper-button on-click="exit">Ok</paper-button>
+          </div>
+        </paper-dialog>
         </div>
         <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
     </body>
@@ -185,6 +192,17 @@
     },
      back:function(){
         document.querySelector('app-card').setPage('loginicon');
+      },
+      zxcvdialog:function(reply){
+        this.replyhere=reply;
+        var id = 'dialoghere';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      exit:function(){
+        var id = 'dialoghere';
+        var dialog = document.getElementById(id);
+        dialog.close();
       }
     });
   })();

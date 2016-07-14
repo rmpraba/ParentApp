@@ -364,11 +364,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var fwd;
     var rep;
     var queryy_id;
+    var reply;
     Polymer({
       is: 'query-post',
       
       checkstatus:function(){
-        alert('hai......sdgfva');
+        //alert('hai......sdgfva');
           this.checkstatusurl=sessionStorage.getItem("haddrinfo")+"/checkstatus";
         var obj={"stid":"","schol":""}
         obj.stid=sessionStorage.getItem("studid");
@@ -377,7 +378,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.checkstatusid.generateRequest();
       },
       checkstatusResponse:function(e){
-        alert('fnjjv...  '+JSON.stringify(e.detail.response.returnval));
+        //alert('fnjjv...  '+JSON.stringify(e.detail.response.returnval));
         var res=e.detail.response.returnval[0].total;
         document.querySelector('complaint-form').values=res;
       },
@@ -393,7 +394,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       feedcheckResponse:function(e){
           var res=e.detail.response.returnval;
-          var tak="take";
+          var tak='take';
           if(res==0){
               document.querySelector('complaint-form').statfeed=tak;    
           }
@@ -403,7 +404,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
       },
       querypostFn:function(student_id,name,email,category,complaint,mob){
-        alert('hai');
+        //alert('hai');
         stud_id=student_id;
         sname=name;
         semail=email;
@@ -462,12 +463,15 @@ querypostResponse:function(e)
       document.querySelector('complaint-form').refresh(); 
       document.querySelector('transport-app').setPage('feedbacksubmited'); 
     } else if (usern=='admin') {
-      alert("Reply sent");
+      reply="Reply sent";
+      document.querySelector('parent-inbox-card').dialogshow(reply); 
     } else {
-      alert("Feedback Submited");
+      reply="Feedback Submited";
+      document.querySelector('complaint-form').dialogshow(reply);
     }
   } else {
-    alert("Feedback not submited");
+    reply="Feedback not submited";
+    document.querySelector('complaint-form').dialogshow(reply);
   }
 },
 getmsg:function(){
@@ -724,17 +728,21 @@ updatefwdResponse:function(e){
   var user=sessionStorage.getItem("role");
   if(res=='success'){
       if(user=='principal'){
-          alert('Escalated to Management');
+          reply='Escalated to Management';
+          document.querySelector('parent-inbox-card').showdialog(reply);
       }
       else if(user=='Transport'){
-          alert('Escalated to Management');
+          reply='Escalated to Management';
+          document.querySelector('parent-inbox-card').showdialog(reply);
       }
       else{
-          alert('Escalated to Principal');
+           reply='Escalated to Principal';
+          document.querySelector('parent-inbox-card').showdialog(reply);
       }
     }
   else{
-   alert('Not Forwarded'); 
+   reply='Not Forwarded'; 
+          document.querySelector('parent-inbox-card').showdialog(reply);
   }
 },
 getreport:function(){
@@ -994,7 +1002,8 @@ verifymobResponse:function(e){
   var res=e.detail.response.returnval;
   //alert('resdf'+res);
   if(res=='0'){
-    alert('Given number is not Registered');
+    var resp='Given number is not Registered';
+    document.querySelector('registration-form').showdialog(resp);
     document.querySelector('registration-form').Fnclear();
   }
 },
@@ -1130,7 +1139,9 @@ rating:function(queryid, rating){
 ratingResponse:function(e){
   var res=e.detail.response.returnval;
   if(res=='success'){
-  document.querySelector('parent-inbox-card').ratingres();}
+  document.querySelector('parent-inbox-card').ratingres();
+document.querySelector('complaint-form').ratingres();
+}
 },
 catereport:function(categ){
     this.catereporturl=sessionStorage.getItem("haddrinfo")+"/catereport";

@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         position: absolute;
         right: 0;
         width: 230px;
-        margin-right: 40%;
+        margin-right: 44%;
       }
       #three{
         float: right; 
@@ -115,6 +115,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-icon-button id="teacher" class="iconbutton" on-click="loginform" src="../../images/teacher.png"></paper-icon-button>
     </div>
     </div>
+    <paper-dialog id="dialogqwertyu">
+          <h2>{{replyhere}}</h2>
+          
+          <div class="buttons">
+            <paper-button on-click="exit">Ok</paper-button>
+          </div>
+        </paper-dialog>
   </template>
   <script>
   (function() {
@@ -143,6 +150,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         sessionStorage.setItem("icons",qwert);
         document.querySelector('app-card').setPage('login');
         document.querySelector('login-form').hideParentLogin();
+      },
+      zxcvdialog:function(reply){
+        this.replyhere=reply;
+        var id = 'dialogqwertyu';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      exit:function(){
+        var id = 'dialogqwertyu';
+        var dialog = document.getElementById(id);
+        dialog.close();
       }
     });
   })();

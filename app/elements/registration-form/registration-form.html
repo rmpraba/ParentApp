@@ -67,6 +67,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-button on-click="close" dialog-dismiss>Close</paper-button>
           </div>
         </paper-dialog>
+        <paper-dialog id="asdf" modal>
+           <div class="content">
+<h3><center>{{replydialog}}</center></h3>
+  
+<div>
+  <paper-button on-click="exit">Ok</paper-button>
+</div>
+</div>
+ </paper-dialog>
       <query-post id='qpostid'></query-post>
   </template>
   <script>
@@ -110,6 +119,17 @@ var relation;
       },
       close:function(){
         document.querySelector('app-card').setPage("login");
+      },
+      showdialog:function(qwerty){
+        this.replydialog=qwerty;
+          var id = 'asdf';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      exit:function(){
+          var id = 'asdf';
+        var dialog = document.getElementById(id);
+        dialog.close();
       }
     
     });
