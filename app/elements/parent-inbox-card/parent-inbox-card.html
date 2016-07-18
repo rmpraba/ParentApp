@@ -146,10 +146,6 @@ label.star:before {
             <input class="star star-1" id="star-1" type="radio" name="star" on-click="rating" value="1"/><label class="star star-1" for="star-1"></label>
           </form>
         </div>
-        <div class="stars" id="stat">
-          Thanks for your rating... :)
-        </div>
-
         <div class="buttons">
           <paper-button id="reply-button" on-click="answer">Reply</paper-button>
           <paper-button id="fwd" on-click="send">Escalate</paper-button>
@@ -173,15 +169,6 @@ label.star:before {
       </iron-collapse>
     </div>
      <paper-toast id="toast" text="Priority level Changed.."></paper-toast>
-     <paper-dialog id="showdial" modal>
-           <div class="content">
-<h3><center>{{replydialog}}</center></h3>
-  
-<div>
-  <paper-button on-click="exit1">Ok</paper-button>
-</div>
-</div>
- </paper-dialog>
     <query-post id='qpostid'></query-post>
   </template> 
   <script>
@@ -197,16 +184,9 @@ label.star:before {
       /*setInterval(function(){
         alert("Hi");
       }, 3000)*/
-      //alert(this.feedback);
+      
       this.$.studentname.hidden = true;
       this.$.feedback_rating.hidden = true;
-      this.$.stat.hidden=true;
-
-      if(this.feedback>0){
-        this.$.feedback_rating.hidden=true;
-        this.$.stat.hidden=false;        
-      }
-
       if(this.studentname){
         this.$.studentname.hidden = false;
       }
@@ -240,7 +220,7 @@ this.$.prio1.hidden=true;
       }
       if(id=='parent'){
         this.$.details.hidden=true;
-        
+        this.$.feedback_rating.hidden = false;
         this.$.prio.hidden=true;
         this.$.a1.hidden=true;
         this.$.a2.hidden=true;
@@ -248,9 +228,7 @@ this.$.prio1.hidden=true;
         this.$.a4.hidden=true;
         this.$.fwd.hidden=true;
         this.$.reads.hidden=true;
-          if(this.feedback==0){
-            this.$.feedback_rating.hidden = false;    
-          }
+
       }
       if(id=='teacher'){
         this.$.fwd.hidden=true;
@@ -310,11 +288,9 @@ this.$.prio1.hidden=true;
       } else {
         rating = 1;
       }
+      alert(this.queryid);
+      alert(rating);
       this.$.qpostid.rating(this.queryid, rating);
-    },
-    ratingres:function(){
-      this.$.feedback_rating.hidden=true;
-      this.$.stat.hidden=false;
     },
     answer:function(){
       //alert("reply");
@@ -359,9 +335,12 @@ this.$.prio1.hidden=true;
           statusx="open";
         }
         else{
-                
+                if(e.target.checked==true){
                   statusx="closed";
-                
+                }
+                else{
+                  statusx="open"; 
+                }  
         }
         
       this.$.qpostid.postreply(this.queryid,this.adminreply,statusx,this.date,this.time);
@@ -378,17 +357,6 @@ this.$.prio1.hidden=true;
     },
     prioreply:function(){
            this.$.toast.open();
-    },
-    showdialog:function(reply){
-          this.replydialog=reply;
-          var id = 'showdial';
-        var dialog = document.getElementById(id);
-        dialog.open();
-    },
-    exit1:function(){
-      var id = 'showdial';
-        var dialog = document.getElementById(id);
-        dialog.close();
     }
     
     });

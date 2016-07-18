@@ -1134,6 +1134,7 @@ rating:function(queryid, rating){
   obj.queryid=queryid;
   obj.rating=rating;
   this.ratingparam=obj;
+  alert(JSON.stringify(obj));
   this.$.ratingajax.generateRequest();
 },
 ratingResponse:function(e){

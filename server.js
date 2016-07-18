@@ -57,6 +57,8 @@ app.post('/mobile',  urlencodedParser,function (req, res){
       } else {
         res.status(200).json({'returnval': 'no'});
       }
+    } else {
+      console.log(err);
     }
   });
 });
@@ -1019,6 +1021,7 @@ app.post('/rating',  urlencodedParser,function (req, res)
   var queryid={"query_id":req.query.queryid};
   var rating = {"feedback_rating":req.query.rating};
   var school={"school_id":req.query.schol};
+  
        connection.query('UPDATE query SET ? where ? and ?',[rating,queryid,school],
         function(err, rows)
         {
