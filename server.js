@@ -4,7 +4,7 @@ var email   = require("emailjs/email");
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'admin',
+  password : '',
   database : 'helpdesk'
  });
 var bodyParser = require('body-parser');
@@ -1060,6 +1060,42 @@ app.post('/catereport',  urlencodedParser,function (req, res)
     }
 });
   });
+
+
+var Pusher = require('pusher');
+
+var pusher = new Pusher({
+  appId: 'helpdesk-1377',
+  key: 'AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0',
+  secret: 'fa9a2c3c21b0066fe483ef88260912040c6dd883'
+});
+
+/*pusher.trigger('test_channel', 'my_evenHt', {"message": "hello world"});
+*/
+
+
+app.post( '/notify-service', urlencodedParser,function( req, res ) {
+ console.log(config.pusher.key);
+  var pusher = new Pusher( config.pusher );
+  var data =  {
+                message: 'Hello World using Pusher on OpenShift!'
+              };
+  pusher.trigger( 'test-channel', 'test-event', data, null, function( err, pusherReq, pusherRes ) {
+      res.json( pusherRes.statusCode, { status: pusherRes.statusCode } );
+  } );
+} );
+
+/*app.post('/notify-service',  urlencodedParser,function (req, res)
+{
+var pusher = new Pusher({
+  appId: 'helpdesk-1373',
+  key: '256934321627',
+  secret: 'AIzaSyAC8w7KfjYEuxjPyV-5KY5J-JeakEiyxlo'
+});
+
+pusher.trigger('test_channel', 'my_evenHt', {"message": "hello world"});
+});*/
+
 
 
 
