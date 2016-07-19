@@ -10,7 +10,9 @@
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../login-service/login-service.html">
-
+<!-- <script src="https://js.pusher.com/3.1/pusher.min.js"></script> -->
+<!-- <script src="bower_components/pusher/dist/web/pusher.min.js"></script> -->
+<script src="../scripts/pusher.min.js"></script>
 <dom-module id="login-form">
   <template>
     <style>
@@ -104,13 +106,90 @@
         <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
     </body>
     <login-service id="login"></login-service>
+     <!-- <paper-button on-click="FnClick">Click</paper-button> -->
+      <iron-ajax        
+        id="notifyajax"
+        method="post"
+        url="{{notifyurl}}"
+        params="{{notifyparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="notifyResponse"
+        debounce-duration="300"
+      >
   </template>
+    <script src="//d3dy5gmtp8yhk7.cloudfront.net/2.0/pusher.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script>
+    // Log debug information to the JavaScript console, if possible
+    Pusher.log = function( msg ) {
+      if( window.console && window.console.log ) {
+        window.console.log( msg );
+      }
+      $( '#debug' ).prepend( "  " + msg + "\n" );
+    };
+
+    // Create new Pusher instance and connect
+    var pusher = new Pusher( "AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0" );
+
+    // Subscribe to the channel that the event will be published on
+    var channel = pusher.subscribe( 'test-channel' );
+
+    // Bind to the event on the channel and handle the event when triggered
+    channel.bind( 'test-event', function( data ) {
+      // For now, alert the message.
+      // document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+// });
+
+// function notifyMe() {
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification('Notification title', {
+      icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
+      body: "Hey there! You've been notified!",
+    });
+
+    notification.onclick = function () {
+      window.open("http://stackoverflow.com/a/13328397/1269037");      
+    };
+    
+  }
+});
+
+// }
+    // } );
+
+   
+  </script>
+  <script>
+
   (function() {
     'use strict';
+
     Polymer({
       is: 'login-form',
     ready:function(){
+        //var Pusher = require('pusher-js/node');
+  /*      var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0', { cluster: "eu" });
+       var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0');
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+  alert('An event was triggered with message: ' + data.message);
+});*/
+    },FnClick:function(){
+      this.notifyurl=sessionStorage.getItem("haddrinfo")+"/notify-service";
+      this.$.notifyajax.generateRequest();
+    },
+    notifyResponse:function(e){
+      // alert(e.detail.response);
     },
     loginid:function(){
       var smuserid = this.username;

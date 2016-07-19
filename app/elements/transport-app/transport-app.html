@@ -27,6 +27,7 @@
     <link rel="import" href="../category-report-card/category-report-card.html">
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 <link rel="import" href="../feedbacksubmited-card/feedbacksubmited-card.html">
+
   <dom-module id="transport-app">
   <template>
   <style>
@@ -124,6 +125,8 @@
     ready: function()
     {
     this.school_name = sessionStorage.getItem("school_name");
+
+   
   //alert(this.school_name);
     },
     setPage:function(page)
