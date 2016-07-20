@@ -40,11 +40,7 @@
     </style>
     <body>
         <div class="row">
-          <input type="hidden" name="role" value="{{role}}">
           <div class="container login-card">
-          <div class="backicon">
-              <paper-icon-button class="iconbutton" on-click="back" src="../../images/back.png"></paper-icon-button>
-          </div>
             <div class="icon">
               <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
             </div>
@@ -60,18 +56,6 @@
                 </paper-menu>
               </paper-dropdown-menu>
             </div>
-            <div class="field">
-              <paper-input label="Username" value="{{username}}" id="user" on-change="loginid"></paper-input>
-            </div>
-            <div class="field">
-              <paper-input type="password" label="Password" value="{{password}}" id="pass"></paper-input>
-            </div>
-            <div class="button">
-              <paper-button id="sub" class="sub" on-click="login">LOGIN</paper-button>
-            </div>
-            <!-- <div>
-              <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
-            </div> -->
             <div id="id">
             <div class="or"><strong>OR</strong></div>
           <div class="field">
@@ -191,6 +175,7 @@
     notifyResponse:function(e){
       // alert(e.detail.response);
     },*/
+  },
     loginid:function(){
       var smuserid = this.username;
       var userid = smuserid.toUpperCase();
