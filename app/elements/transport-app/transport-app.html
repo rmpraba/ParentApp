@@ -52,13 +52,13 @@
       <label>{{school_name}}</label>
     </div>
     <div class="content" >
-    <paper-drawer-panel responsiveWith="300px">
-      <paper-header-panel drawer>
+    <paper-drawer-panel responsiveWith="300px" >
+      <paper-header-panel drawer style="background-color: #4e688c !important; "><!-- 
         <paper-toolbar>
            <div><paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button></div>
-        </paper-toolbar>
-        <div>
-      <paper-menu style="background-color: #4e688c !important; " class="content fit">
+        </paper-toolbar> -->
+        <div style="display:list-item;">
+      <paper-menu style="background-color: #4e688c !important; height: 900px; " class="content fit">
       
        <icon-card></icon-card>
        
@@ -73,7 +73,10 @@
             <div><paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button></div>
         <div><paper-item class="title">{{school_name}}</paper-item></div>
             <div class="flex"></div>
-          <paper-button style="background-color: #ffffff; color: #4e688c;" class="in" on-click="signout">signout</paper-button>
+      <div class="signout">
+        <paper-button style="background-color: #ffffff; color: #4e688c;" class="in" on-click="signout">signout</paper-button>
+      </div>
+          
           </paper-toolbar>
       <iron-pages class=" content-main" selected="{{page}}" attr-for-selected="data-category">
         <section data-category="login">
