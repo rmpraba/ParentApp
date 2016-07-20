@@ -1,0 +1,174 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">
+<link rel="import" href="../reportstatus-item-card/reportstatus-item-card.html">
+<dom-module id="reportstatus-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .headin{
+        margin: 2% 5%;
+      }
+      .summary{
+        text-align: center;
+        margin: 0 auto;
+      }
+      table { 
+        width: 100%; 
+        border-collapse: collapse;
+        margin: 2% 10%;
+      }
+      /* Zebra striping */
+      tr:nth-of-type(odd) { 
+        background: #eee; 
+      }
+      th { 
+        background: #333; 
+        color: white; 
+        font-weight: bold; 
+      }
+      td, th { 
+        padding: 6px; 
+        border: 1px solid #ccc; 
+        text-align: left; 
+      }
+      @media 
+      only screen and (max-width: 760px),
+      (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr { 
+          display: block; 
+        }
+        
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr { 
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+        
+        tr { border: 1px solid #ccc; }
+        
+        td { 
+          /* Behave  like a "row" */
+          border: none;
+          border-bottom: 1px solid #eee; 
+          position: relative;
+          padding-left: 50%; 
+        }
+        
+        td:before { 
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 45%; 
+          padding-right: 10px; 
+          white-space: nowrap;
+        }
+        
+        /*
+        Label the data
+        */
+        td:nth-of-type(1):before { content: "Request ID"; }
+        td:nth-of-type(2):before { content: "Name"; }
+       /*td:nth-of-type(3):before { content: "Subject"; }*/
+        td:nth-of-type(4):before { content: "Email ID"; }
+        td:nth-of-type(5):before { content: "MObile"; }
+        td:nth-of-type(5):before { content: "Days by Open"; }
+      }
+    </style>
+    <div class="report">
+       <div class="pending-card">
+          <div class="page-heading summary">
+            <h1>Pending Request</h1>
+          </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Name</th>
+              <!--<th>Subject</th>-->
+              <th>Email ID</th>
+              <th>Mobile</th>
+              <th>Days by Open</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template  is="dom-repeat" items="{{pendingarr}}" as="view">
+              <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
+              <tr><td>{{view.query_id}}</td><td>{{view.parent_name}}</td>
+              <!--<td>{{view.subject}}</td>-->
+              <td>{{view.mobile}}</td><td>{{view.parent_email}}</td><td>{{view.days}}</td></tr>
+            </template>
+          </tbody>
+        </table>
+        <div class="summary">
+          <!-- <p>Total Critical Issues : {{noofcricpend}}</p> -->
+          <p>Total Moderate Issues : {{noofmodpend}}</p>
+          <p>Total Low Issues      : {{nooflowpend}}</p>
+          <p>Total pending request : {{noofpend}}</p>
+        </div>
+        </div>
+      <div class="pending-card">
+        <div class="page-heading summary">
+          <h1>Closed Request</h1>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Name</th>
+              <!--<th>Subject</th>-->
+              <th>Email ID</th>
+              <th>Mobile</th>
+              <th>Day(s) Taken</th>
+              <th>Days after closen</th>
+            </tr>
+           </thead>
+           <tbody>
+            <template  is="dom-repeat" items="{{closedarr}}" as="view">
+              <!-- <reportstatus-item-card queryid="{{view.query_id}}" parentname="{{view.parent_name}}" email="{{view.parent_email}}" mobile="{{view.mobile}}" subject="{{view.subject}}"></reportstatus-item-card> -->
+              <tr><td>{{view.query_id}}</td><td>{{view.parent_name}}</td>
+              <!--<td>{{view.subject}}</td>-->
+              <td>{{view.mobile}}</td><td>{{view.parent_email}}</td><td>{{view.timetaken}}</td><td>{{view.days}}</td></tr>
+            </template>
+          </tbody>
+        </table>
+        <div class="summary">
+          <!-- <p>Total Critical Issues : {{noofcricclose}}</p> -->
+          <p>Total Moderate Issues : {{noofmodclose}}</p>
+          <p>Total Low Issues      : {{nooflowclose}}</p>
+          <p>Total closed request  : {{noofclose}}</p>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'reportstatus-card',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'reportstatus-card',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

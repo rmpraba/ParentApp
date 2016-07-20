@@ -1,0 +1,168 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="loginicon-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .icon{
+        width: 50%;
+        margin: 17% auto;
+        padding: 0 20%;
+        position: relative;
+      }
+      #one{
+        float: left;
+        position: absolute;
+        left: 0;
+        margin-left: 0;
+      }
+      #two{
+        float: center; 
+        position: absolute;
+        right: 0;
+        width: 230px;
+        margin-right: 44%;
+      }
+      #three{
+        float: right; 
+        position: absolute;
+        left: 60%;
+        width: 40%;
+      }
+      #admin{
+        width: 75%;
+      }
+      #parent-icon{
+        width: 38%;
+      }
+      @media screen and (min-width: 767px) and (max-width: 1225px){
+        #one { 
+          float: left;
+          width:33.33%;
+        }
+        #one paper-icon-button{
+          width: 75%;
+        }
+        #two{
+          float: none;
+          width:33.33%;
+        }
+        #two paper-icon-button{
+          width: 75%;
+          margin-left: 35%;
+        }
+
+        #three{
+          float: right;
+          margin-left: 8%;
+          width:33.33%;
+        }
+        #three paper-icon-button{
+          width: 75%;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        #one { 
+          float: none;
+          margin: 70% 0%;
+          width:100%;
+        }
+        #one paper-icon-button{
+          width: 50%;
+        }
+        #two{
+          float: none;
+          margin: 0;
+          padding: 0;
+          width:100%;
+        }
+        #three{
+          float: none;
+          width:50%;
+          margin: 135% 0 25% -35%;
+        }
+        #two paper-icon-button{
+          width: 50%;
+          padding-top: 2%;
+          margin-top: 2%;
+        }
+        #three paper-icon-button{
+          width:100%;
+
+        }
+      }
+    </style>
+    <div class="icon">
+    <div id="one">
+      <paper-icon-button id="parent-icon" class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
+    </div><!-- 
+    <div id="two">
+      <paper-icon-button id="admin" class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
+    </div>
+    <div id="three">
+      <paper-icon-button id="teacher" class="iconbutton" on-click="loginform" src="../../images/teacher.png"></paper-icon-button>
+    </div> -->
+    </div>
+    <paper-dialog id="dialogqwertyu">
+          <h2>{{replyhere}}</h2>
+          
+          <div class="buttons">
+            <paper-button on-click="exit">Ok</paper-button>
+          </div>
+        </paper-dialog>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'loginicon-card',
+
+      parents:function(){
+        //alert('1');
+        var qwert="parent";
+        document.querySelector('app-card').setPage('login');
+        document.querySelector('login-form').Fnparent();
+        sessionStorage.setItem("icons",qwert);
+      },
+      admins:function(){
+        //alert('2');
+        var qwert="manager";
+        //alert(qwert);
+        sessionStorage.setItem("icons",qwert);
+        document.querySelector('app-card').setPage('login');
+        document.querySelector('login-form').admin();
+      },
+      loginform:function(){
+        var qwert="staff";
+        sessionStorage.setItem("icons",qwert);
+        document.querySelector('app-card').setPage('login');
+        document.querySelector('login-form').hideParentLogin();
+      },
+      zxcvdialog:function(reply){
+        this.replyhere=reply;
+        var id = 'dialogqwertyu';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      exit:function(){
+        var id = 'dialogqwertyu';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      }
+    });
+  })();
+  </script>
+</dom-module>

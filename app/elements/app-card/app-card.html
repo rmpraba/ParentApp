@@ -13,7 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
  <link rel="import" href="../login-form/login-form.html">
   <link rel="import" href="../transport-app/transport-app.html">
-  
+  <link rel="import" href="../loginicon-card/loginicon-card.html">
+    <link rel="import" href="../iconflow-card/iconflow-card.html">
   
 <dom-module id="app-card">
   <template>
@@ -29,7 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <section data-category="transport">
           <transport-app></transport-app>
         </section>
-        
+        <section data-category="registration">
+          <registration-form></registration-form>
+        </section>
+        <section data-category="loginicon">
+          <loginicon-card></loginicon-card>
+        </section>
+        <section data-category="iconflow">
+          <iconflow-card></iconflow-card>
+        </section>
         
         </iron-pages>
   </template>
@@ -42,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         ready: function()
     {
-this.page="login";
+this.page="loginicon";
     },
     setPage:function(page)
     {
