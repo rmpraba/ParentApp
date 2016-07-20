@@ -4,7 +4,7 @@ var email   = require("emailjs/email");
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '',
+  password : 'admin',
   database : 'helpdesk'
  });
 var bodyParser = require('body-parser');
@@ -1062,7 +1062,7 @@ app.post('/catereport',  urlencodedParser,function (req, res)
   });
 
 
-var Pusher = require('pusher');
+/*var Pusher = require('pusher');
 
 var pusher = new Pusher({
   appId: 'helpdesk-1377',
@@ -1074,7 +1074,7 @@ var pusher = new Pusher({
 */
 
 
-app.post( '/notify-service', urlencodedParser,function( req, res ) {
+/*app.post( '/notify-service', urlencodedParser,function( req, res ) {
  console.log(config.pusher.key);
   var pusher = new Pusher( config.pusher );
   var data =  {
@@ -1083,7 +1083,7 @@ app.post( '/notify-service', urlencodedParser,function( req, res ) {
   pusher.trigger( 'test-channel', 'test-event', data, null, function( err, pusherReq, pusherRes ) {
       res.json( pusherRes.statusCode, { status: pusherRes.statusCode } );
   } );
-} );
+} );*/
 
 /*app.post('/notify-service',  urlencodedParser,function (req, res)
 {

@@ -12,7 +12,7 @@
 <link rel="import" href="../login-service/login-service.html">
 <!-- <script src="https://js.pusher.com/3.1/pusher.min.js"></script> -->
 <!-- <script src="bower_components/pusher/dist/web/pusher.min.js"></script> -->
-<script src="../scripts/pusher.min.js"></script>
+<!-- <script src="../scripts/pusher.min.js"></script> -->
 <dom-module id="login-form">
   <template>
     <style>
@@ -106,7 +106,7 @@
         <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
     </body>
     <login-service id="login"></login-service>
-     <!-- <paper-button on-click="FnClick">Click</paper-button> -->
+     <!-- <paper-button on-click="FnClick">Click</paper-button> 
       <iron-ajax        
         id="notifyajax"
         method="post"
@@ -116,9 +116,9 @@
         content-type="application/json"
         on-response="notifyResponse"
         debounce-duration="300"
-      >
+      >-->
   </template>
-    <script src="//d3dy5gmtp8yhk7.cloudfront.net/2.0/pusher.min.js"></script>
+    <!-- <script src="//d3dy5gmtp8yhk7.cloudfront.net/2.0/pusher.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script>
     // Log debug information to the JavaScript console, if possible
@@ -168,7 +168,7 @@
     // } );
 
    
-  </script>
+  </script> -->
   <script>
 
   (function() {
@@ -184,13 +184,13 @@
     channel.bind('my-event', function(data) {
   alert('An event was triggered with message: ' + data.message);
 });*/
-    },FnClick:function(){
+    /*},FnClick:function(){
       this.notifyurl=sessionStorage.getItem("haddrinfo")+"/notify-service";
       this.$.notifyajax.generateRequest();
     },
     notifyResponse:function(e){
       // alert(e.detail.response);
-    },
+    },*/
     loginid:function(){
       var smuserid = this.username;
       var userid = smuserid.toUpperCase();
