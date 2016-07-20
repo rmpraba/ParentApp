@@ -57,6 +57,8 @@ app.post('/mobile',  urlencodedParser,function (req, res){
       } else {
         res.status(200).json({'returnval': 'no'});
       }
+    } else{
+      console.log(err)
     }
   });
 });
@@ -1102,7 +1104,7 @@ pusher.trigger('test_channel', 'my_evenHt', {"message": "hello world"});
 function setvalue(){
   console.log("calling setvalue.....");
 }
-var server = app.listen(8082, function () {
+var server = app.listen(8086, function () {
 var host = server.address().address
 var port = server.address().port
 console.log("Example app listening at http://%s:%s", host, port)
