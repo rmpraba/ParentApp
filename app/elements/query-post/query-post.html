@@ -65,56 +65,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   ></iron-ajax>
    <iron-ajax
     method="post"
-    id="parentinboxid"
-    url="{{parentinboxurl}}"
-    params="{{parentinboxparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="parentinboxResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-<iron-ajax
-    method="post"
-    id="managerinboxid"
-    url="{{managerinboxurl}}"
-    params="{{managerinboxparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="managerinboxResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-  <iron-ajax
-    method="post"
-    id="updatefwdid"
-    url="{{updatefwdurl}}"
-    params="{{updatefwdparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="updatefwdResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-<iron-ajax
-    method="post"
-    id="openreportid"
-    url="{{openreporturl}}"
-    params="{{openreportparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="openreportResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-  <iron-ajax
-    method="post"
-    id="closereportid"
-    url="{{closereporturl}}"
-    params="{{closereportparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="closereportResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-   <iron-ajax
-    method="post"
     id="upmsgstatid"
     url="{{upmsgstaturl}}"
     params="{{upmsgstatparam}}"
@@ -153,27 +103,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="upmsgstatprResponse"
     debounce-duration="300"
   ></iron-ajax>
-  <iron-ajax
-    method="post"
-    id="uppriid"
-    url="{{uppriurl}}"
-    params="{{uppriparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="uppriResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-
-  <iron-ajax
-    method="post"
-    id="summaryreportid"
-    url="{{summaryreporturl}}"
-    params="{{summaryreportparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="summaryreportResponse"
-    debounce-duration="300"
-  ></iron-ajax>
 <!-- verify the registered number for new registration -->
    <iron-ajax
     method="post"
@@ -204,55 +133,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     handle-as="json"
     content-type="application/json"
     on-response="regmailResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-  <iron-ajax
-    method="post"
-    id="teacherinboxid"
-    url="{{teacherinboxurl}}"
-    params="{{teacherinboxparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="teacherinboxResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-  <iron-ajax
-    method="post"
-    id="unreadmsgteacherid"
-    url="{{unreadmsgteacherurl}}"
-    params="{{unreadmsgteacherparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="unreadmsgteacherResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-    <iron-ajax  
-        id="roleajax"
-        url="{{roleurl}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="roleResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-    <iron-ajax  
-        method="post"
-        id="schoolwisereport"
-        url="{{schoolwisereporturl}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="schoolwisereportResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <iron-ajax
-    method="post"
-    id="classwisereport"
-    url="{{classwisereporturl}}"
-    params="{{classwisereportparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="classwisereportResponse"
     debounce-duration="300"
   ></iron-ajax>
   <iron-ajax
@@ -313,16 +193,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     handle-as="json"
     content-type="application/json"
     on-response="ratingResponse"
-    debounce-duration="300"
-  ></iron-ajax>
-    <iron-ajax
-    method="post"
-    id="catereportajax"
-    url="{{catereporturl}}"
-    params="{{catereportparam}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="catereportResponse"
     debounce-duration="300"
   ></iron-ajax>
   <iron-ajax
@@ -459,73 +329,12 @@ querypostResponse:function(e)
   var usern=sessionStorage.getItem("user");
   var s=e.detail.response.returnval;
   if(s=='success'){
-    if(usern=='parent'){
       document.querySelector('complaint-form').refresh(); 
       document.querySelector('transport-app').setPage('feedbacksubmited'); 
-    } else if (usern=='admin') {
-      reply="Reply sent";
-      document.querySelector('parent-inbox-card').dialogshow(reply); 
-    } else {
-      reply="Feedback Submited";
-      document.querySelector('complaint-form').dialogshow(reply);
-    }
   } else {
     reply="Feedback not submited";
     document.querySelector('complaint-form').dialogshow(reply);
   }
-},
-getmsg:function(){
-  this.getmsgurl=sessionStorage.getItem("haddrinfo")+"/getmsg";
-  var obj={"schol":"","status":"","userid":""}
-  obj.schol=sessionStorage.getItem("schoolx");
-  obj.userid=sessionStorage.getItem("role");
-  this.getmsgparam=obj;
-  //alert(JSON.stringify(obj));
-  this.$.getmsgid.generateRequest();
-  this.unopenmsgurl=sessionStorage.getItem("haddrinfo")+"/unopenmsg";
-  var obj={"schol":"","status":"","userid":""}
-  obj.schol=sessionStorage.getItem("schoolx");
-  obj.userid=sessionStorage.getItem("role");
-  obj.status=1;
-  this.unopenmsgparam=obj;
-  //alert(JSON.stringify(obj));
-  this.$.unopenmsgid.generateRequest();
-  var id=sessionStorage.getItem("user");
-  var role=sessionStorage.getItem("role");
-  this.roleurl="../../configfile/roles.json";
-  this.$.roleajax.generateRequest();
-},
- roleResponse:function(e){
-      var role=sessionStorage.getItem("role");
-        //alert(e.detail.response);
-        var xx=e.detail.response;
-        for(var i=0;i<xx.length;i++){
-          //alert(i);
-          var us=JSON.stringify(xx[i].user);
-          //alert(i+'      '+us+'     '+role);
-          if(xx[i].user==role){
-            //alert('role '+i);
-            fwd=e.detail.response[i].frwd;
-            rep=e.detail.response[i].reply;
-          }
-        }
-       sessionStorage.setItem("frwd",fwd);
-       sessionStorage.setItem("reply",rep);
-    },
-getmsgResponse:function(e){
-  resarr=e.detail.response.returnval;
-  inboxlen=e.detail.response.returnval.length;
-  //alert(inboxlen);
-  if(resarr=="invalid")
-  {
-    document.querySelector('parent-inbox').showNomsg();
-  }
-  var inbox=resarr.slice(0,5);
-  inboxcount=5;
-  document.querySelector('parent-inbox').msgarr=inbox;
-  //var msgarr=e.detail.response.returnval;
-  //document.querySelector('parent-inbox').msgarr=msgarr;
-  //alert(JSON.stringify(msgarr));
 },
 postreply:function(queryid,reply,statusx,date,time){
    var d1=new Date();
@@ -578,43 +387,6 @@ parentinboxResponse:function(e){
   inboxcount=5;
   //alert(JSON.stringify(resarr));
   document.querySelector('parentinbox-itemcard').msgarr=inbox;
-},
-teacherinbox:function(){
-  this.teacherinboxurl=sessionStorage.getItem("haddrinfo")+"/teacherinbox";
-  var obj={"id":"","schol":"","status":""}
-  obj.id=sessionStorage.getItem("userid");
-  obj.schol=sessionStorage.getItem("schoolx");
-  obj.status="closed";
-  //alert(JSON.stringify(obj));
-  this.teacherinboxparam=obj;
-  this.$.teacherinboxid.generateRequest();
-
-  this.unreadmsgteacherurl=sessionStorage.getItem("haddrinfo")+"/unreadmsgteacher";
-  var obj={"sid":"","schol":"","status":""}
-  obj.sid=sessionStorage.getItem("userid");
-  obj.schol=sessionStorage.getItem("schoolx");
-  obj.status=1;
-  this.unreadmsgteacherparam=obj;
-  this.$.unreadmsgteacherid.generateRequest();
-},
-teacherinboxResponse:function(e){
-  resarr=e.detail.response.returnval;
-  //alert(JSON.stringify(resarr));
-  inboxlen=e.detail.response.returnval.length;
-  if(resarr=="invalid")
-  {
-    document.querySelector('parentinbox-itemcard').showNomsg();
-  }
-  //alert(resarr);
-  var inbox=resarr.slice(0,5);
-  inboxcount=5;
-  //alert(JSON.stringify(resarr));
-  document.querySelector('parentinbox-itemcard').msgarr=inbox;
-},
-unreadmsgteacherResponse:function(e){
-  var resno=e.detail.response.returnval[0].total;
-  document.querySelector('icon-card').unread=resno;
-  //alert('total parent unread msg for this id is'+JSON.stringify(resno));
 },
 Fnmoveforward:function()
 {
@@ -683,184 +455,6 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
        this.$.querypostid.generateRequest();
-},
-managerinbox:function(){
-       // alert('1'+sessionStorage.getItem("role"));
-this.managerinboxurl=sessionStorage.getItem("haddrinfo")+"/managerinbox";
-var obj={"schol":"","frwd":""}
-  obj.schol=sessionStorage.getItem("schoolx");
-  
-  obj.frwd=sessionStorage.getItem("role");
-  //alert(JSON.stringify(obj));
-this.managerinboxparam=obj;
-this.$.managerinboxid.generateRequest();
-
-this.roleurl="../../configfile/roles.json";
-          this.$.roleajax.generateRequest();
-},
-managerinboxResponse:function(e){
-  //alert('2');
-   var msgarr=e.detail.response.returnval;
-   if(msgarr.length!=0){
-  document.querySelector('parent-inbox').msgarr=msgarr;
-   }
-   else{
-    document.querySelector('parent-inbox').nomsg();
-}
-  //alert(JSON.stringify(msgarr));
-},
-updatefrwd:function(querid,msg,date,time){
-  this.updatefwdurl=sessionStorage.getItem("haddrinfo")+"/updatefwd";
-  var obj={"id":"","date":"","time":"","comments":"","frwd":"","schol":"","roles":""}
-  obj.id=querid;
-  obj.date=date;
-  obj.comments=msg;
-  obj.time=time;
-  obj.frwd=sessionStorage.getItem("frwd");
-  obj.roles=sessionStorage.getItem("role");
-  obj.schol=sessionStorage.getItem("schoolx");
-  this.updatefwdparam=obj;
-  //alert(JSON.stringify(obj));
-  this.$.updatefwdid.generateRequest();
-},
-updatefwdResponse:function(e){
-  var res=e.detail.response.returnval;
-  var user=sessionStorage.getItem("role");
-  if(res=='success'){
-      if(user=='principal'){
-          reply='Escalated to Management';
-          document.querySelector('parent-inbox-card').showdialog(reply);
-      }
-      else if(user=='Transport'){
-          reply='Escalated to Management';
-          document.querySelector('parent-inbox-card').showdialog(reply);
-      }
-      else{
-           reply='Escalated to Principal';
-          document.querySelector('parent-inbox-card').showdialog(reply);
-      }
-    }
-  else{
-   reply='Not Forwarded'; 
-          document.querySelector('parent-inbox-card').showdialog(reply);
-  }
-},
-getreport:function(){
-this.openreporturl=sessionStorage.getItem("haddrinfo")+"/openreport";
-var obj={"schol":"","status":"","role":""}
-obj.schol=sessionStorage.getItem("schoolx");
-obj.role=sessionStorage.getItem("role");
-obj.status="open";
-obj.flag=1;
-this.openreportparam=obj;
-this.$.openreportid.generateRequest();
-
-this.closereporturl=sessionStorage.getItem("haddrinfo")+"/closereport";
-var obj1={"schol":"","status":""}
-obj1.schol=sessionStorage.getItem("schoolx");
-obj.role=sessionStorage.getItem("role");
-obj1.status="closed";
-obj1.flag=1;
-this.closereportparam=obj1;
-this.$.closereportid.generateRequest();
-
-},
-openreportResponse:function(e){
-  var date=new Date();
-  var date2;
-  var days;
-  var zxarr=[];
-  var cp=0,mp=0,lp=0;
-  if(e.detail.response.returnval!=0){
-  var tex=e.detail.response.returnval;
-
-var len=tex.length;
-for(var i=0;i<len;i++){
-  //alert('1'+tex[0].priority);
-
-  if(tex[i].priority=='Critical'){
-    cp++;
-  }
-  else if(tex[i].priority=='Moderate'){
-    mp++;
-    //alert('1'+mp);
-  }
-  else if(tex[i].priority=='Low'){
-    lp++;
-  }
-  date2=new Date(tex[i].datetime);
-  days=date.getDate() - date2.getDate();
- // alert(days);
-  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":""}
-  obj.query_id=tex[i].query_id;
-  obj.priority=tex[i].priority;
-  obj.datetime=tex[i].datetime;
-  obj.parent_email=tex[i].parent_email;
-  obj.parent_name=tex[i].parent_name;
-  obj.mobile=tex[i].mobile;
-  obj.subject=tex[i].subject;
-  obj.days=days;
-//alert(JSON.stringify(obj));  
-zxarr.push(obj);
-}
-//alert(JSON.stringify(zxarr));
-document.querySelector('reportstatus-card').pendingarr=zxarr;
-//document.querySelector('reportstatus-card').noofcricpend=cp;
-document.querySelector('reportstatus-card').noofmodpend=mp;
-document.querySelector('reportstatus-card').nooflowpend=lp;
-document.querySelector('reportstatus-card').noofpend=len;
-}
-},
-closereportResponse:function(e){
-  var date=new Date();
-  var date2;
-  var days;
-  var zxarr=[];
-  var cc=0,mc=0,lc=0;
-  if(e.detail.response.returnval!=0){
-  var tex=e.detail.response.returnval; 
-
-  //alert(JSON.stringify(tex)); 
-  var len=tex.length;
-  for(var i=0;i<len;i++){
-  if(tex[0].priority=='Critical'){
-    cc++;
-  }
-  else if(tex[0].priority=='Moderate'){
-    mc++;
-  }
-  else if(tex[0].priority=='Low'){
-    lc++;
-  }
-  var read = tex[i].time_of_admin_read;
-  var close = tex[i].reply_date;
-  var from = read.split("/");
-  var to = close.split("/");
-  var readdate = new Date(from[2], from[1] - 1, from[0]);
-  var closeddate = new Date(to[2], to[1] - 1, to[0]);
-  var diffDays = closeddate.getDate() - readdate.getDate();
-  date2=new Date(tex[i].datetime);
-  days=date.getDate() - date2.getDate();
-  //alert(days);
-  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":"", "timetaken": ""}
-  obj.query_id=tex[i].query_id;
-  obj.priority=tex[i].priority;
-  obj.datetime=tex[i].datetime;
-  obj.parent_email=tex[i].parent_email;
-  obj.parent_name=tex[i].parent_name;
-  obj.mobile=tex[i].mobile;
-  obj.subject=tex[i].subject;
-  obj.days=days;
-  obj.timetaken = diffDays;
-//alert(JSON.stringify(obj));  
-zxarr.push(obj);
-}
-//document.querySelector('reportstatus-card').noofcricclose=cc;
-document.querySelector('reportstatus-card').noofmodclose=mc;
-document.querySelector('reportstatus-card').nooflowclose=lc;
-document.querySelector('reportstatus-card').closedarr=zxarr;
-document.querySelector('reportstatus-card').noofclose=len;
-}
 },
 upmsgstat:function(id,sid,time,date){
   queryy_id = id;
@@ -965,31 +559,6 @@ unreadmsgResponse:function(e){
    document.querySelector('icon-card').unread=resno;
   //alert('total parent unread msg for this id is'+JSON.stringify(resno));
 },
-uppri:function(level,qid,date,time){
-this.uppriurl=sessionStorage.getItem("haddrinfo")+"/uppri";
-var obj={"queryid":"","level":"","date":"","time":"","schol":""}
-obj.queryid=qid;
-obj.level=level;
-obj.date=date;
-obj.time=time;
-obj.schol=sessionStorage.getItem("schoolx");
-this.uppriparam=obj;
-this.$.uppriid.generateRequest();
-},
-uppriResponse:function(e){
-  var res=e.detail.response.returnval;
-  if(res=='success'){
-     document.querySelector('parent-inbox-card').prioreply();
-  }
-},
-FnFetchSummaryReport:function(){
-this.summaryreporturl=sessionStorage.getItem("haddrinfo")+"/fetchsummaryreport";
-this.$.summaryreportid.generateRequest();
-},
-summaryreportResponse:function(e){
-// alert(JSON.stringify(e.detail.response));e.detail.response
-document.querySelector('issue-summary-report').summaryarr=e.detail.response.returnval;
-},
 verifymob:function(oldmob){
   this.verifymoburl=sessionStorage.getItem("haddrinfo")+"/verifymob";
   var obj={"exmob":""}
@@ -1042,28 +611,7 @@ regmobResponse:function(e){
     this.$.regmailajax.generateRequest();
     document.querySelector('app-card').setPage("login");
   }
-},
-
-  FnFetchSchoolReport:function(e){
-    this.schoolwisereporturl=sessionStorage.getItem("haddrinfo")+"/schoolwisereport";
-    this.$.schoolwisereport.generateRequest();
-    
-  },
-  schoolwisereportResponse:function(e){
-    document.querySelector('schoolwise-report').schoolreportarr=e.detail.response.returnval;
-  },
-  FnFetchClassReport:function(e){
-    this.classwisereporturl=sessionStorage.getItem("haddrinfo")+"/classwisereport";
-    var obj={"schol":""};
-    obj.schol=sessionStorage.getItem("schoolx");
-    this.classwisereportparam=obj;
-    this.$.classwisereport.generateRequest();
-    
-  },
-  classwisereportResponse:function(e){
-    document.querySelector('gradewise-report').classreportarr=e.detail.response.returnval;
-  },
-  sentmsg:function(sid){
+} sentmsg:function(sid){
     this.sentmsgurl=sessionStorage.getItem("haddrinfo")+"/sentmsg";
     var obj={"schol":"","studid":""}
     obj.schol=sessionStorage.getItem("schoolx");
@@ -1142,20 +690,6 @@ ratingResponse:function(e){
   document.querySelector('parent-inbox-card').ratingres();
 document.querySelector('complaint-form').ratingres();
 }
-},
-catereport:function(categ){
-    this.catereporturl=sessionStorage.getItem("haddrinfo")+"/catereport";
-    var obj={"schol":"","cate":""}
-    obj.schol=sessionStorage.getItem("schoolx");
-    obj.cate=categ;
-    this.catereportparam=obj;
-    //alert(JSON.stringify(obj));
-    this.$.catereportajax.generateRequest();
-},
-catereportResponse:function(e){
-var res=e.detail.response.returnval;
-//alert(JSON.stringify(res));
-document.querySelector('category-report-card').msgarr=res;
 }
   });
   })();

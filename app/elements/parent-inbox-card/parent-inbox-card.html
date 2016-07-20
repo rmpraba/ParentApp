@@ -96,32 +96,7 @@ label.star:before {
             <div style="display:inline;">
               <p style="display:inline;" id="studentname">{{studentname}} - </p><p style="display:inline; font-size:15px;">{{stid}}</p>
             </div>
-            <div class="when">
-              <!-- <div class="date">
-                <div class="time1">
-                  {{time}}
-                </div>
-                  {{date}}
-              </div> -->
-              <div class="field" id="reads">
-                <div class="buttons">
-                  Status : Close <paper-checkbox id="read" on-change="changeHandler" checked></paper-checkbox>
-                </div>
-              </div>
-               <div class="field" id="readson">
-                <div class="buttons">
-                  Status : {{status}}
-                </div>
-              </div>
-              <div class="field" id="prio">
-                <paper-dropdown-menu id="prio1" label="Priority">
-                  <paper-menu id="sets01" class="dropdown-content" on-iron-select="priority" >
-                    <paper-item >Moderate</paper-item>
-                    <paper-item >Low</paper-item>
-                  </paper-menu>
-                </paper-dropdown-menu>
-              </div>
-            </div>
+           
           </div>
           <div class="feedback">
             <div class="greeting">
@@ -150,18 +125,9 @@ label.star:before {
           Thanks for your rating... :)
         </div>
  -->
-        <div class="buttons">
-          <paper-button id="reply-button" on-click="answer">Reply</paper-button>
-          <paper-button id="fwd" on-click="send">Escalate</paper-button>
-        </div>
+        
       </iron-collapse>
-       <iron-collapse id="comments{{queryid}}" class="dialog">
-        <div class="field textarea">
-          <iron-autogrow-textarea value="{{comment123}}" id="reply"  error-message="needs comments!" placeholder="Comments..." required ></iron-autogrow-textarea>
-        </div>
-        <div class="buttons">
-          <paper-button on-click="frwd">SUBMIT</paper-button>
-        </div>
+       
       </iron-collapse>
       <iron-collapse id="adminmsg{{queryid}}" class="dialog">
         <div class="field textarea">
@@ -172,7 +138,7 @@ label.star:before {
         </div>
       </iron-collapse>
     </div>
-     <paper-toast id="toast" text="Priority level Changed.."></paper-toast>
+     
      <paper-dialog id="showdial" modal>
            <div class="content">
 <h3><center>{{replydialog}}</center></h3>
@@ -207,38 +173,8 @@ label.star:before {
         this.$.stat.hidden=false;        
       }
 
-      if(this.studentname){
-        this.$.studentname.hidden = false;
-      }
-      if(this.admincomment==null){
-        this.$.a1.hidden=true;
-      }
-      if(this.principalcomment==null){
-        this.$.a2.hidden=true;  
-      }
-      if(this.managerreply==null){
-        this.$.a3.hidden=true;
-      }
-      if(this.principalreply==null){
-        this.$.a4.hidden=true;
-      }
-
-this.$.prio1.hidden=true;
-
-      var message_time = new Date(this.datetime);
-      message_time.setHours(message_time.getHours() + 48);
-      var current_time = new Date();
-      if(current_time >= message_time){
-        this.$.qpostid.updatefrwd(this.queryid,this.date,this.time);
-      }
       
-      var id=sessionStorage.getItem("user");
-      var role=sessionStorage.getItem("role");
-      if(id=='admin'){
-        this.$.readson.hidden=true;
-        this.$.reads.hidden=true;
-      }
-      if(id=='parent'){
+      
         this.$.details.hidden=true;
         
         this.$.prio.hidden=true;
@@ -251,21 +187,6 @@ this.$.prio1.hidden=true;
           if(this.feedback==0){
             this.$.feedback_rating.hidden = false;    
           }
-      }
-      if(id=='teacher'){
-        this.$.fwd.hidden=true;
-        this.$.feedback_rating.hidden = false;
-       this.$.details.hidden=true;
-      }
-      if(role=='manager'){
-       this.$.fwd.hidden=true; 
-      }
-    /*var str = 'Reply sdkjghfkjhf udhgdkf j chskd ufhksjf kjhkjdhfkjsdhfkj ihf ksdjhfkg ksdfk ksd';
-    if(str.length > 60){
-      this.mess = str.substring(0,60);
-      this.ess = str.replace(str,this.mess+'...');
-    } */
-      //this.querySelector('#parent-message').close();
     },
     /*click:function(){
       this.querySelector("#parent-message").open();
@@ -279,22 +200,7 @@ this.$.prio1.hidden=true;
       if(document.querySelector("#adminmsg"+this.queryid).opened = true){
         document.querySelector("#adminmsg"+this.queryid).opened = false;
       }
-      if(document.querySelector("#comments"+this.queryid).opened = true){
-        document.querySelector("#comments"+this.queryid).opened = false;
-      }
-      var id=sessionStorage.getItem("user");
-      var role=sessionStorage.getItem("role");
-      if(id=='parent')
-      {
         this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
-      }else if(id=='teacher'){
-        this.$.qpostid.upmsgstatpr(this.queryid,this.stid,this.time,this.date);
-      }else if((role=='manager')||(role=='principal')){
-        this.$.qpostid.upsupmsgstat(this.queryid,this.stid,this.time,this.date);
-      }
-      else{
-      this.$.qpostid.upmsgstat(this.queryid,this.stid,this.time,this.date);
-      }
 
     },
     rating:function(){
@@ -316,32 +222,7 @@ this.$.prio1.hidden=true;
       this.$.feedback_rating.hidden=true;
       this.$.stat.hidden=false;
     },
-    answer:function(){
-      //alert("reply");
-      document.querySelector("#adminmsg"+this.queryid).toggle();
-      document.querySelector("#read").checked=false;
-      document.querySelector("#comments"+this.queryid).opened = false;
-    },
-    send:function(){
-      this.$.prio1.hidden=false;
-      document.querySelector("#comments"+this.queryid).toggle();
-      document.querySelector("#adminmsg"+this.queryid).opened = false;
-    },
-    changeHandler:function(e){
-      if(e.target.checked==true){
-        statusx="closed";
-      }
-      else{
-        statusx="open"; 
-      }
-      //alert(statusx);
-    },
     submit:function(e){
-      //alert(this.queryid+   +this.adminreply);
-      var role=sessionStorage.getItem("role");
-      var id=sessionStorage.getItem("user");
-      if(id=='parent'){
-        
         var flag=this.flag+1;  
         var id=sessionStorage.getItem("id");
         var par=sessionStorage.getItem("prname");
@@ -349,35 +230,6 @@ this.$.prio1.hidden=true;
         var mob=sessionStorage.getItem("mob");
       this.$.qpostid.postquery(this.queryid,this.adminreply,statusx,flag,id,par,mail,this.category,mob);
       this.querySelector("#adminmsg").close();  
-      }
-      else{
-        if(role=='principal')
-        {
-          statusx="open";
-        }
-        else if(role=='manager'){
-          statusx="open";
-        }
-        else{
-                
-                  statusx="closed";
-                
-        }
-        
-      this.$.qpostid.postreply(this.queryid,this.adminreply,statusx,this.date,this.time);
-      document.querySelector("#adminmsg"+this.queryid).opened = false;
-        }
-    },
-    frwd:function(){
-      this.$.qpostid.updatefrwd(this.queryid,this.comment123,this.date,this.time);
-      document.querySelector("#comments"+this.queryid).opened = false;
-    },
-    priority:function(e){
-        var level=(e.target.selectedItem.textContent).trim();
-        this.$.qpostid.uppri(level,this.queryid,this.date,this.time);
-    },
-    prioreply:function(){
-           this.$.toast.open();
     },
     showdialog:function(reply){
           this.replydialog=reply;
