@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+b<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../query-post/query-post.html">
 <link rel="import" href="../transport-app/transport-app.html">
@@ -104,6 +104,8 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+    
    
    <query-post id="qpostid"></query-post>
   </template>
@@ -185,85 +187,7 @@ var res=e.detail.response.returnval;
     } 
 
     },
-/*    adminlogin:function(username,password){
-      var staff_id=username;
-      sessionStorage.setItem("staffid",staff_id);
-      this.adminloginurl=sessionStorage.getItem("haddrinfo")+"/adminlogin";
-      sessionStorage.setItem("userid",username);
-      var obj={"user":"","pass":""}
-      obj.user=username;
-      obj.pass=password;
-      this.adminloginparam=obj;
-      //alert(JSON.stringify(obj));
-      this.$.adminloginajax.generateRequest();
-    },
-    adminloginResponse:function(e){
-      var res=e.detail.response.returnval;
-      if(res!=0){
-        var role=e.detail.response.returnval[0].role;
-        teacher_id = e.detail.response.returnval[0].id;
-        var role1=e.detail.response.returnval[0].role;
-        var schoolx=e.detail.response.returnval[0].school_id;
-        sessionStorage.setItem("schoolx",schoolx);
-        sessionStorage.setItem("role",role1);
-        var id=sessionStorage.getItem("user");
-        var role=sessionStorage.getItem("role");
-        var icon=sessionStorage.getItem("icons");
-        //alert(id+'    '+role+'   '+role1);
-        if((id=="admin")&&(((role=='manager')&&(icon="manager"))||((role=='principal')&&(icon="staff")))){
-          this.$.qpostid.supstatcount();
-          if(role=='principal'){
-          document.querySelector('icon-card').Fnadmin();
-        }
-          //alert('hello');
-          if((role=='manager')&&(icon=="manager")){
-          document.querySelector('icon-card').FnSupreme();
-        }
-          this.$.qpostid.managerinbox();
-          document.querySelector('app-card').setPage("transport");
-          document.querySelector('transport-app').setPage("parent-inbox");
-        } else if ((id == "teacher")&&(icon=="staff")){
-          //alert(sessionStorage.getItem("staffid"));
-          this.$.qpostid.teacherinbox();
-          if (id == "teacher") {document.querySelector('icon-card').Fnteacher();}
-          document.querySelector('app-card').setPage("transport");
-          this.teacherdetailsurl=sessionStorage.getItem("haddrinfo")+"/teacherdetails";
-          var obj={"id":"","school":""}
-          obj.id=sessionStorage.getItem("staffid");
-          obj.school=sessionStorage.getItem("schoolx");
-          this.teacherdetailsparam=obj;
-          this.$.teacherdetailsajax.generateRequest();
-        } else if((id=="parent")&&(icon=="parent")) {
-          this.$.qpostid.parentinbox();
-          document.querySelector('app-card').setPage("transport");
-          document.querySelector('transport-app').setPage("complaintpage");
-        } else if ((id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities")&&(icon=="staff")) {
-          document.querySelector('icon-card').Fnadmin();
-          this.$.qpostid.getmsg(); 
-          document.querySelector('app-card').setPage("transport");
-          document.querySelector('transport-app').setPage("parent-inbox");       
-        }
-        else{
-          reply='Login in Your Proper Gateway';
-
-          document.querySelector('app-card').setPage("loginicon");
-          document.querySelector('loginicon-card').zxcvdialog(reply);
-        }
-      } else {
-        reply='Wrong Username and Password';
-        document.querySelector('login-form').zxcvdialog(reply);
-        document.querySelector('login-form').Fnclear();
-      }
-    },
-    teacherdetailsResponse:function(e){
-      //alert(JSON.stringify(e.detail.response.returnval));
-      var teachers_id=e.detail.response.returnval[0].teacher_id;
-      var teacher_name=e.detail.response.returnval[0].teacher_name;
-      document.querySelector('transport-app').setPage("complaintteacher");
-      document.querySelector('complaint-teacher').teachers_id=teachers_id;
-      document.querySelector('complaint-teacher').teacher_name=teacher_name;
-    },
-*/    getdetails:function(id){
+   getdetails:function(id){
         this.getdetailsurl=sessionStorage.getItem("haddrinfo")+"/getdetails";
         var obj={"id":"","schol":""}
         obj.id=id;
@@ -273,8 +197,6 @@ var res=e.detail.response.returnval;
         this.$.getdetailsajax.generateRequest();
     },
     getdetailsResponse:function(e){
-      //document.querySelector('app-card').setPage("transport");
-      //document.querySelector('transport-app').setPage("iconpage");
          this.$.qpostid.parentinbox();
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("complaintpage");

@@ -335,6 +335,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="feedcheckResponse"
     debounce-duration="300"
   ></iron-ajax>
+   <iron-ajax
+        method="post"
+        id="studinfoajax"
+        url="{{studinfourl}}"
+        params="{{studinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studinfoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     <style>
       :host {
         display: block;
@@ -579,43 +590,6 @@ parentinboxResponse:function(e){
   //alert(JSON.stringify(resarr));
   document.querySelector('parentinbox-itemcard').msgarr=inbox;
 },
-teacherinbox:function(){
-  this.teacherinboxurl=sessionStorage.getItem("haddrinfo")+"/teacherinbox";
-  var obj={"id":"","schol":"","status":""}
-  obj.id=sessionStorage.getItem("userid");
-  obj.schol=sessionStorage.getItem("schoolx");
-  obj.status="closed";
-  //alert(JSON.stringify(obj));
-  this.teacherinboxparam=obj;
-  this.$.teacherinboxid.generateRequest();
-
-  this.unreadmsgteacherurl=sessionStorage.getItem("haddrinfo")+"/unreadmsgteacher";
-  var obj={"sid":"","schol":"","status":""}
-  obj.sid=sessionStorage.getItem("userid");
-  obj.schol=sessionStorage.getItem("schoolx");
-  obj.status=1;
-  this.unreadmsgteacherparam=obj;
-  this.$.unreadmsgteacherid.generateRequest();
-},
-teacherinboxResponse:function(e){
-  resarr=e.detail.response.returnval;
-  //alert(JSON.stringify(resarr));
-  inboxlen=e.detail.response.returnval.length;
-  if(resarr=="invalid")
-  {
-    document.querySelector('parentinbox-itemcard').showNomsg();
-  }
-  //alert(resarr);
-  var inbox=resarr.slice(0,5);
-  inboxcount=5;
-  //alert(JSON.stringify(resarr));
-  document.querySelector('parentinbox-itemcard').msgarr=inbox;
-},
-unreadmsgteacherResponse:function(e){
-  var resno=e.detail.response.returnval[0].total;
-  document.querySelector('icon-card').unread=resno;
-  //alert('total parent unread msg for this id is'+JSON.stringify(resno));
-},
 Fnmoveforward:function()
 {
   //alert(inboxcount+''+inboxlen);
@@ -683,184 +657,6 @@ postquery:function(queryid,reply,status,flag,id,par,mail,category,mobile){
         this.querypostparam=obj;
        // alert(JSON.stringify(obj));
        this.$.querypostid.generateRequest();
-},
-managerinbox:function(){
-       // alert('1'+sessionStorage.getItem("role"));
-this.managerinboxurl=sessionStorage.getItem("haddrinfo")+"/managerinbox";
-var obj={"schol":"","frwd":""}
-  obj.schol=sessionStorage.getItem("schoolx");
-  
-  obj.frwd=sessionStorage.getItem("role");
-  //alert(JSON.stringify(obj));
-this.managerinboxparam=obj;
-this.$.managerinboxid.generateRequest();
-
-this.roleurl="../../configfile/roles.json";
-          this.$.roleajax.generateRequest();
-},
-managerinboxResponse:function(e){
-  //alert('2');
-   var msgarr=e.detail.response.returnval;
-   if(msgarr.length!=0){
-  document.querySelector('parent-inbox').msgarr=msgarr;
-   }
-   else{
-    document.querySelector('parent-inbox').nomsg();
-}
-  //alert(JSON.stringify(msgarr));
-},
-updatefrwd:function(querid,msg,date,time){
-  this.updatefwdurl=sessionStorage.getItem("haddrinfo")+"/updatefwd";
-  var obj={"id":"","date":"","time":"","comments":"","frwd":"","schol":"","roles":""}
-  obj.id=querid;
-  obj.date=date;
-  obj.comments=msg;
-  obj.time=time;
-  obj.frwd=sessionStorage.getItem("frwd");
-  obj.roles=sessionStorage.getItem("role");
-  obj.schol=sessionStorage.getItem("schoolx");
-  this.updatefwdparam=obj;
-  //alert(JSON.stringify(obj));
-  this.$.updatefwdid.generateRequest();
-},
-updatefwdResponse:function(e){
-  var res=e.detail.response.returnval;
-  var user=sessionStorage.getItem("role");
-  if(res=='success'){
-      if(user=='principal'){
-          reply='Escalated to Management';
-          document.querySelector('parent-inbox-card').showdialog(reply);
-      }
-      else if(user=='Transport'){
-          reply='Escalated to Management';
-          document.querySelector('parent-inbox-card').showdialog(reply);
-      }
-      else{
-           reply='Escalated to Principal';
-          document.querySelector('parent-inbox-card').showdialog(reply);
-      }
-    }
-  else{
-   reply='Not Forwarded'; 
-          document.querySelector('parent-inbox-card').showdialog(reply);
-  }
-},
-getreport:function(){
-this.openreporturl=sessionStorage.getItem("haddrinfo")+"/openreport";
-var obj={"schol":"","status":"","role":""}
-obj.schol=sessionStorage.getItem("schoolx");
-obj.role=sessionStorage.getItem("role");
-obj.status="open";
-obj.flag=1;
-this.openreportparam=obj;
-this.$.openreportid.generateRequest();
-
-this.closereporturl=sessionStorage.getItem("haddrinfo")+"/closereport";
-var obj1={"schol":"","status":""}
-obj1.schol=sessionStorage.getItem("schoolx");
-obj.role=sessionStorage.getItem("role");
-obj1.status="closed";
-obj1.flag=1;
-this.closereportparam=obj1;
-this.$.closereportid.generateRequest();
-
-},
-openreportResponse:function(e){
-  var date=new Date();
-  var date2;
-  var days;
-  var zxarr=[];
-  var cp=0,mp=0,lp=0;
-  if(e.detail.response.returnval!=0){
-  var tex=e.detail.response.returnval;
-
-var len=tex.length;
-for(var i=0;i<len;i++){
-  //alert('1'+tex[0].priority);
-
-  if(tex[i].priority=='Critical'){
-    cp++;
-  }
-  else if(tex[i].priority=='Moderate'){
-    mp++;
-    //alert('1'+mp);
-  }
-  else if(tex[i].priority=='Low'){
-    lp++;
-  }
-  date2=new Date(tex[i].datetime);
-  days=date.getDate() - date2.getDate();
- // alert(days);
-  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":""}
-  obj.query_id=tex[i].query_id;
-  obj.priority=tex[i].priority;
-  obj.datetime=tex[i].datetime;
-  obj.parent_email=tex[i].parent_email;
-  obj.parent_name=tex[i].parent_name;
-  obj.mobile=tex[i].mobile;
-  obj.subject=tex[i].subject;
-  obj.days=days;
-//alert(JSON.stringify(obj));  
-zxarr.push(obj);
-}
-//alert(JSON.stringify(zxarr));
-document.querySelector('reportstatus-card').pendingarr=zxarr;
-//document.querySelector('reportstatus-card').noofcricpend=cp;
-document.querySelector('reportstatus-card').noofmodpend=mp;
-document.querySelector('reportstatus-card').nooflowpend=lp;
-document.querySelector('reportstatus-card').noofpend=len;
-}
-},
-closereportResponse:function(e){
-  var date=new Date();
-  var date2;
-  var days;
-  var zxarr=[];
-  var cc=0,mc=0,lc=0;
-  if(e.detail.response.returnval!=0){
-  var tex=e.detail.response.returnval; 
-
-  //alert(JSON.stringify(tex)); 
-  var len=tex.length;
-  for(var i=0;i<len;i++){
-  if(tex[0].priority=='Critical'){
-    cc++;
-  }
-  else if(tex[0].priority=='Moderate'){
-    mc++;
-  }
-  else if(tex[0].priority=='Low'){
-    lc++;
-  }
-  var read = tex[i].time_of_admin_read;
-  var close = tex[i].reply_date;
-  var from = read.split("/");
-  var to = close.split("/");
-  var readdate = new Date(from[2], from[1] - 1, from[0]);
-  var closeddate = new Date(to[2], to[1] - 1, to[0]);
-  var diffDays = closeddate.getDate() - readdate.getDate();
-  date2=new Date(tex[i].datetime);
-  days=date.getDate() - date2.getDate();
-  //alert(days);
-  var obj={"query_id":"","priority":"","datetime":"","parent_email":"","mobile":"","subject":"","parent_name":"","days":"", "timetaken": ""}
-  obj.query_id=tex[i].query_id;
-  obj.priority=tex[i].priority;
-  obj.datetime=tex[i].datetime;
-  obj.parent_email=tex[i].parent_email;
-  obj.parent_name=tex[i].parent_name;
-  obj.mobile=tex[i].mobile;
-  obj.subject=tex[i].subject;
-  obj.days=days;
-  obj.timetaken = diffDays;
-//alert(JSON.stringify(obj));  
-zxarr.push(obj);
-}
-//document.querySelector('reportstatus-card').noofcricclose=cc;
-document.querySelector('reportstatus-card').noofmodclose=mc;
-document.querySelector('reportstatus-card').nooflowclose=lc;
-document.querySelector('reportstatus-card').closedarr=zxarr;
-document.querySelector('reportstatus-card').noofclose=len;
-}
 },
 upmsgstat:function(id,sid,time,date){
   queryy_id = id;
@@ -965,31 +761,6 @@ unreadmsgResponse:function(e){
    document.querySelector('icon-card').unread=resno;
   //alert('total parent unread msg for this id is'+JSON.stringify(resno));
 },
-uppri:function(level,qid,date,time){
-this.uppriurl=sessionStorage.getItem("haddrinfo")+"/uppri";
-var obj={"queryid":"","level":"","date":"","time":"","schol":""}
-obj.queryid=qid;
-obj.level=level;
-obj.date=date;
-obj.time=time;
-obj.schol=sessionStorage.getItem("schoolx");
-this.uppriparam=obj;
-this.$.uppriid.generateRequest();
-},
-uppriResponse:function(e){
-  var res=e.detail.response.returnval;
-  if(res=='success'){
-     document.querySelector('parent-inbox-card').prioreply();
-  }
-},
-FnFetchSummaryReport:function(){
-this.summaryreporturl=sessionStorage.getItem("haddrinfo")+"/fetchsummaryreport";
-this.$.summaryreportid.generateRequest();
-},
-summaryreportResponse:function(e){
-// alert(JSON.stringify(e.detail.response));e.detail.response
-document.querySelector('issue-summary-report').summaryarr=e.detail.response.returnval;
-},
 verifymob:function(oldmob){
   this.verifymoburl=sessionStorage.getItem("haddrinfo")+"/verifymob";
   var obj={"exmob":""}
@@ -1043,27 +814,7 @@ regmobResponse:function(e){
     document.querySelector('app-card').setPage("login");
   }
 },
-
-  FnFetchSchoolReport:function(e){
-    this.schoolwisereporturl=sessionStorage.getItem("haddrinfo")+"/schoolwisereport";
-    this.$.schoolwisereport.generateRequest();
-    
-  },
-  schoolwisereportResponse:function(e){
-    document.querySelector('schoolwise-report').schoolreportarr=e.detail.response.returnval;
-  },
-  FnFetchClassReport:function(e){
-    this.classwisereporturl=sessionStorage.getItem("haddrinfo")+"/classwisereport";
-    var obj={"schol":""};
-    obj.schol=sessionStorage.getItem("schoolx");
-    this.classwisereportparam=obj;
-    this.$.classwisereport.generateRequest();
-    
-  },
-  classwisereportResponse:function(e){
-    document.querySelector('gradewise-report').classreportarr=e.detail.response.returnval;
-  },
-  sentmsg:function(sid){
+sentmsg:function(sid){
     this.sentmsgurl=sessionStorage.getItem("haddrinfo")+"/sentmsg";
     var obj={"schol":"","studid":""}
     obj.schol=sessionStorage.getItem("schoolx");
@@ -1143,20 +894,30 @@ ratingResponse:function(e){
 document.querySelector('complaint-form').ratingres();
 }
 },
-catereport:function(categ){
-    this.catereporturl=sessionStorage.getItem("haddrinfo")+"/catereport";
-    var obj={"schol":"","cate":""}
-    obj.schol=sessionStorage.getItem("schoolx");
-    obj.cate=categ;
-    this.catereportparam=obj;
-    //alert(JSON.stringify(obj));
-    this.$.catereportajax.generateRequest();
-},
-catereportResponse:function(e){
-var res=e.detail.response.returnval;
-//alert(JSON.stringify(res));
-document.querySelector('category-report-card').msgarr=res;
-}
+    studinfo:function(){
+      alert('1');
+        this.studinfourl=sessionStorage.getItem("haddrinfo")+"/studinfo";
+      var obj={"id":"","schol":""}
+      obj.id=sessionStorage.getItem("id");
+      obj.schol=sessionStorage.getItem("schoolx");
+      this.studinfoparam=obj;
+      alert(JSON.stringify(obj));
+      this.$.studinfoajax.generateRequest();
+    },
+    studinfoResponse:function(e){
+        var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
+        document.querySelector('student_details-card').studentname=res[0].student_name;
+        document.querySelector('student_details-card').classes=res[0].class;
+        document.querySelector('student_details-card').section=res[0].section;
+        document.querySelector('student_details-card').mobile=res[0].mobile;
+        document.querySelector('student_details-card').dob=res[0].dob;
+        document.querySelector('student_details-card').pickpoint=res[0].pickpoint;
+        document.querySelector('student_details-card').droppoint=res[0].droppoint;
+        document.querySelector('student_details-card').pickroute=res[0].pickroute;
+        document.querySelector('student_details-card').droproute=res[0].droproute;
+    }
+
   });
   })();
   </script>

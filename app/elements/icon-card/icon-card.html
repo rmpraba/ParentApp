@@ -82,9 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-var id;
-var role;
-var category;
+
     Polymer({
       is: 'icon-card',
 
@@ -92,121 +90,24 @@ var category;
      },
      insertfeedback:function()
      {
-       //document.querySelector('transport-app').setPage('iconlist');
-       id=sessionStorage.getItem("user");
-       if(id=="parent"){
         document.querySelector('transport-app').setPage("complaintpage");
-       } else {
-        document.querySelector('transport-app').setPage("complaintteacher");
-       }
      },
      studentdetails:function(){
       document.querySelector('transport-app').setPage("studentdetails");
+      this.$.qupostid.studinfo();
      },
      inbox:function()
      {
-     // document.querySelector('transport-app').setPage('iconlist');
-       //alert(this.unread);
-       id=sessionStorage.getItem("user");
-       role=sessionStorage.getItem("role");
-       //alert(id+'    '+role);
-       if((id=="admin")&&((role=='manager')||(role=='principal'))){
-        //alert('hello');
-        document.querySelector('transport-app').setPage("parent-inbox");
-
-        this.$.qupostid.managerinbox();
-       }
-       
-       else if(id=="parent")
-       {
         document.querySelector('transport-app').setPage("parentinbox-itemcard");
         this.$.qupostid.parentinbox();
-       }
-       else if(id == "teacher"){
-        this.$.qupostid.teacherinbox();
-        document.querySelector('app-card').setPage("transport");
-        document.querySelector('transport-app').setPage("parentinbox-itemcard");
-       }
-       else if(id=="admin")
-       {
-        document.querySelector('app-card').setPage("transport");
-        document.querySelector('transport-app').setPage("parent-inbox");
-       this.$.qupostid.getmsg(); 
-       }
      },
-     Fnparent:function(){
-      this.$.classreport.hidden=true;
-      this.$.report.hidden=true;
-      this.$.summaryreport.hidden=true;
-      this.$.pendingreport.hidden=true;
-     },
-     Fnadmin:function(){
-        this.$.form.hidden=true;
-        this.$.summaryreport.hidden=true;
-        this.$.sentbox.hidden=true;
-        this.$.report.hidden=true;
-        //this.$.pendingreport.hidden=true;
-     },
-     Fnteacher:function(){
-      this.$.classreport.hidden=true;
-      this.$.report.hidden=true;
-      this.$.summaryreport.hidden=true;
-      this.$.pendingreport.hidden=true;
-     },
-     FnSupreme:function(){
-      this.$.form.hidden=true;
-        this.$.sentbox.hidden=true;
-     },
-     report:function(){
-        
-        document.querySelector("#report_catogory").toggle();
-     },
-     pendingreport:function(){
-      document.querySelector('transport-app').setPage("report");
-        this.$.qupostid.getreport();
-     },
-     summaryreport:function(){
-        document.querySelector('transport-app').setPage("summaryreport");
-        this.$.qupostid.FnFetchSummaryReport();
-     },/*
-     schoolreport:function(){
-        document.querySelector('transport-app').setPage("schoolreport");
-        this.$.qupostid.FnFetchSchoolReport();
-     },*/
-     classreport:function(){
-        document.querySelector('transport-app').setPage("classreport");
-        this.$.qupostid.FnFetchClassReport();
-     },
+ 
      sentbox:function(){
         var stuid=sessionStorage.getItem("id");
         //alert(stuid);
         this.$.qupostid.sentmsg(stuid);
        document.querySelector('transport-app').setPage("sentbox");
-     },
-     academicsreport:function(){
-        category='Academics';
-        //alert(category);
-        document.querySelector('transport-app').setPage("catereport");
-        this.$.qupostid.catereport(category);
-     },
-     administrationreport:function(){
-       category='Adminstration'; 
-       //alert(category);
-       document.querySelector('transport-app').setPage("catereport");
-       this.$.qupostid.catereport(category);
-     },
-     transportreport:function(){
-        category='Transport';
-        //alert(category);
-        document.querySelector('transport-app').setPage("catereport");
-        this.$.qupostid.catereport(category);
-     },
-     facilitiesreport:function(){
-        category='Facilities';
-        //alert(category);
-        document.querySelector('transport-app').setPage("catereport");
-        this.$.qupostid.catereport(category);
-     }
+     }    
 
     });
   })();
