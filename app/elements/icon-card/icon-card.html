@@ -79,6 +79,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button  class="iconbutton" src="../../images/bus.png" on-click="transportfeedetails"></paper-icon-button>Transport Fee Detail
         </li>
       </a>
+       <a class="cur" on-click="attendancedetails">
+        <li id="attendancedetails">
+          <paper-icon-button  class="iconbutton" src="../../images/attendance.png" on-click="attendancedetails"></paper-icon-button>Attendance Detail
+        </li>
+      </a>
     </ul>
 
   </body>
@@ -103,6 +108,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      transportfeedetails:function(){
       document.querySelector('transport-app').setPage("transportfeedetails");
+     },
+     attendancedetails:function(){
+      document.querySelector('transport-app').setPage("attendancedetails");
      },
      inbox:function()
      {
