@@ -9,15 +9,144 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-collapse/iron-collapse.html">
 
 <dom-module id="transport_fee_detail-card">
   <template>
     <style>
-      :host {
-        display: block;
+      .detail{
+        margin: 2%;
+        padding: 3% 0 0 0;
+        height: 100
+      }
+      .profile-image{
+        margin: 0 auto;
+        text-align: center;
+      }
+      .info{
+        display: table;
+        margin: 5% auto; 
+        width: 100%;
+        padding: 1% 0;
+        background-color: #e6e6e6;
+      }
+      h4, h3{
+        display: inline-block;
+      }
+      h4{
+        width: 35%;
+      }
+      li{
+        list-style-type:none;
+      }
+      .installment{
+        margin: 2% 3%;
+        padding: 2% 0;
+        text-align: center;
+        box-shadow: 0 0 5px 0 #a6a6a6 ;
+      }
+      .installment label{
+      }
+      .installment ul{
+        text-align: left;
+        padding-left: 2%;
+      }
+      .due-date{
+        color: red;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="container">
+      <div class="profile-image">
+        <img src="../../images/adminflow.png">
+      </div>
+      <div class="info">
+        <ul>
+          <li class="name">
+            <h4>Name</h4><h3>:  Dhivakar</h3>
+          </li>
+          <li class="student-id">
+            <h4>Student ID</h4><h3>:  ENR1000</h3>
+          </li>
+          <li class="zone">
+            <h4>Zone</h4><h3>:  Zone 1</h3>
+          </li>
+          <li class="total-fee">
+            <h4>Total Fee</h4><h3>:  25000</h3>
+          </li>
+          <li class="fee-paid">
+            <h4>Fee Paid</h4><h3>:  12500</h3>
+          </li>
+        </ul>
+        <div class="installment" on-click="installment1">
+          <label><h3>Installment 1</h3></label>
+        </div>
+          <iron-collapse id="installment1toggle">
+            <ul>
+              <li class="amount">
+                <h4>Fee Amount</h4><h3>: 12500</h3>
+              </li>
+              <li id="due-date" class="due-date">
+                <h4>Due Date</h4><h3>: 20/07/2016</h3>
+              </li>
+              <li class="mode-cash">
+                <h4>Mode</h4><h3>: Cash</h3>
+              </li>
+              <li class="mode-cheque">
+                <h4>Mode</h4><h3>: Cheque</h3>
+              </li>
+              <li class="receipt">
+                <h4>Receipt NO</h4><h3>: 12500</h3>
+              </li>
+              <li class="cheque-no">
+                <h4>Cheque-no</h4><h3>: REC1234</h3>
+              </li>
+              <li class="cheque-date">
+                <h4>Cheque Date</h4><h3>: 20/07/2016</h3>
+              </li>
+              <li class="paid-on">
+                <h4>Date Paid</h4><h3>: 20/07/2016</h3>
+              </li>
+              <li class="cheque-status">
+                <h4>Cheque Status</h4><h3>: Cleared</h3>
+              </li>
+            </ul>
+          </iron-collapse>
+        <div class="installment" on-click="installment2">
+          <label><h3>Installment 2</h3></label>
+          <iron-collapse id="installment2toggle">
+            <ul>
+              <li class="amount">
+                <h4>Fee Amount</h4><h3>: 12500</h3>
+              </li>
+              <li id="due-date" class="due-date">
+                <h4>Due Date</h4><h3>: 20/07/2016</h3>
+              </li>
+              <li class="mode-cash">
+                <h4>Mode</h4><h3>: Cash</h3>
+              </li>
+              <li class="mode-cheque">
+                <h4>Mode</h4><h3>: Cheque</h3>
+              </li>
+              <li class="receipt">
+                <h4>Receipt NO</h4><h3>: 12500</h3>
+              </li>
+              <li class="cheque-no">
+                <h4>Cheque-no</h4><h3>: REC1234</h3>
+              </li>
+              <li class="cheque-date">
+                <h4>Cheque Date</h4><h3>: 20/07/2016</h3>
+              </li>
+              <li class="paid-on">
+                <h4>Date Paid</h4><h3>: 20/07/2016</h3>
+              </li>
+              <li class="cheque-status">
+                <h4>Cheque Status</h4><h3>: Cleared</h3>
+              </li>
+            </ul>
+          </iron-collapse>
+        </div>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
@@ -26,12 +155,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'transport_fee_detail-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'transport_fee_detail-card',
-          notify: true
-        }
+      ready:function(){ 
+      },
+      installment1:function(){
+        document.querySelector("#installment1toggle").toggle();
+      }, 
+      installment2:function(){
+        document.querySelector("#installment2toggle").toggle();
       }
     });
   })();
