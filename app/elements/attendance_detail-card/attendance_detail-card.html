@@ -14,7 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
   <style>
     .date-picker{
-      margin: 0 auto;
+      margin: 4% auto;
       text-align: center;
     }
     .status{
@@ -25,18 +25,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .trip{
       width: 50%;
     }
+    .page{
+    }
   </style>
-<div class="date-picker">
-  <paper-date-picker></paper-date-picker>
-</div>
-<div class="status">
-  <span class="trip">
-    <h3>Morning</h3>
-  </span>
-  <span class="trip">
-    <h3>Evening</h3>
-  </span>
-</div>
+  <div class="page">
+    <div class="date-picker">
+      <paper-date-picker></paper-date-picker>
+    </div>
+    <div class="status">
+      <span class="trip">
+        <h3>Morning</h3>
+          <div>
+            <paper-icon-button  class="iconbutton" src="../../images/absent.png"></paper-icon-button>
+          </div>
+      </span>
+      <span class="trip">
+        <h3>Evening</h3>
+          <div>
+            <paper-icon-button  class="iconbutton" src="../../images/present.png"></paper-icon-button>
+          </div>
+      </span>
+    </div>
+  </div>
   </template>
   <script>
   (function() {

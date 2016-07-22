@@ -88,6 +88,9 @@ section{
   margin: 7%; 
   padding:2%;
 }
+.clear{
+    clear: both;
+}
 table{
     width: 100%;
     display: block;
