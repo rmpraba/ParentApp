@@ -37,6 +37,26 @@
       .backicon{
         width:36%;
       }
+      .forgot-password{
+        float: right;
+        margin-top: -7% !important;
+      }
+      #duplicate, #duplicate h2,#duplicate p{
+        text-align: center;
+      }
+      #forgotpassword, #duplicate{
+        display: block;
+        background-color: White; 
+        width: 30%;
+      }
+      #forgotpassword h2{
+        text-align: center;
+      }
+      .forgot{
+        text-align: center;
+      }
+      .modal{
+      }
     </style>
     <body>
         <div class="row">
@@ -45,7 +65,10 @@
               <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
             </div>
             <div class="field" id="mob">
-              <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
+              <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
+            </div>
+            <div class="field">
+              <paper-input label="Password" type="password" value="{{pass}}" id="iop" on-change="loginpassword" required error-message="Password"></paper-input>
             </div>
             <div class="field">
               <paper-dropdown-menu label="Student" id="drop">
@@ -65,6 +88,9 @@
           <div class="field">
             
               <ahref class="admin" on-click="link2"><u>Activate the Account Here...!</u></ahref>
+          </div>
+          <div class="field forgot-password">
+              <ahref class="admin" on-click="link3"><u>Forgot Password</u></ahref>
           </div>
           </div>
           </div>
@@ -86,6 +112,24 @@
             <paper-button on-click="exit">Ok</paper-button>
           </div>
         </paper-dialog>
+        <div class="modal">
+          <paper-dialog id="forgotpassword">
+            <h2>Forgot Password</h2>
+            <paper-dialog-scrollable>
+                <paper-input class="field" label="Registered Email" value="{{regemail}}"></paper-input>
+                <paper-input class="field" label="Registered Mobile" value="{{regmobile}}"></paper-input>
+            </paper-dialog-scrollable>
+            <div class="forgot">
+              <paper-button on-click="forgot">Submit</paper-button>
+            </div>
+          </paper-dialog>
+          <paper-dialog id="duplicate">
+            <h2>Check your mail</h2>
+            <paper-dialog-scrollable>
+              <p>We ahe sent a duplicate password to you</p>
+            </paper-dialog-scrollable>
+          </paper-dialog>
+        </div>
         </div>
         <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
     </body>
@@ -181,9 +225,9 @@
       var userid = smuserid.toUpperCase();
       this.$.login.loginrole(userid);
     },
-    mobileno:function()
+    loginpassword:function()
     {
-      this.$.login.mobile(this.mobile);
+      this.$.login.mobile(this.mobile, this.pass);
     },
     student:function(e)
     {
@@ -241,6 +285,12 @@
     },
     link2:function(){
       document.querySelector('#registered').open();
+    },
+    link3:function(){
+      document.querySelector('#forgotpassword').open();
+    },
+    forgot:function(){
+      document.querySelector('#duplicate').open();
     },
     activate:function(){
       this.$.login.activate(this.newregmob,this.verify);

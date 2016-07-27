@@ -113,6 +113,7 @@ b<link rel="import" href="../../bower_components/polymer/polymer.html">
   (function() {
     'use strict';
     var mob;
+    var pass;
     var teacher_id;
     var fwd;
     var rep;
@@ -131,18 +132,22 @@ b<link rel="import" href="../../bower_components/polymer/polymer.html">
           document.querySelector('app-card').setPage('transport');
           document.querySelector('transport-app').setPage("complaintpage");*/
       },
-    mobile:function(mobile){
+    mobile:function(mobile, password){
       sessionStorage.setItem("mob",mobile);
       mob=mobile;
-      this.mobileurl=sessionStorage.getItem("haddrinfo")+"/mobile";
-      var obj={"mobile":""};
-      obj.mobile=mobile;
-      this.mobileparam=obj;
-      this.$.mobileajax.generateRequest();
+      pass = password;
+
+      this.loginalterurl=sessionStorage.getItem("haddrinfo")+"/loginalter";
+      var obj={"mobile":"" , "pass":""};
+      obj.mobile=mob;
+      obj.pass = pass;
+      this.loginalterparam=obj;
+      alert(JSON.stringify(obj));
+      this.$.loginalterajax.generateRequest();
     },
     mobileResponse:function(e)
     {
-//alert(JSON.stringify(e.detail.response.returnval));
+alert(JSON.stringify(e.detail.response.returnval));
 
 var res=e.detail.response.returnval;
               if(res!="no")
@@ -157,12 +162,6 @@ var res=e.detail.response.returnval;
               }
               else
               {
-                  this.loginalterurl=sessionStorage.getItem("haddrinfo")+"/loginalter";
-                  var obj={"mobile":""}
-                  obj.mobile=mob;
-                  this.loginalterparam=obj;
-                  //alert(JSON.stringify(obj));
-                  this.$.loginalterajax.generateRequest();
               }
 
     },

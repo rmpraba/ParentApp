@@ -84,6 +84,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button  class="iconbutton" src="../../images/attendance.png" on-click="attendancedetails"></paper-icon-button>Attendance Detail
         </li>
       </a>
+       <a class="cur" on-click="attendancechart">
+        <li id="attendancechart">
+          <paper-icon-button  class="iconbutton" src="../../images/attendance_chart.png" on-click="attendancechart"></paper-icon-button>Attendance Chart
+        </li>
+      </a>
     </ul>
 
   </body>
@@ -111,6 +116,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      attendancedetails:function(){
       document.querySelector('transport-app').setPage("attendancedetails");
+     },
+     attendancechart:function(){
+      document.querySelector('transport-app').setPage("attendancechart");
      },
      inbox:function()
      {
